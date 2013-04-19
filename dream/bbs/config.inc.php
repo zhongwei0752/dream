@@ -12,9 +12,9 @@
 // [CH] 以下变量请根据空间商提供的账号参数修改,如有疑问,请联系服务器提供商
 
 	$dbhost = 'localhost';			// 数据库服务器
-	$dbuser = 'username';			// 数据库用户名
-	$dbpw = '';				// 数据库密码
-	$dbname = 'discuz';			// 数据库名
+	$dbuser = 'root';			// 数据库用户名
+	$dbpw = '2316663';				// 数据库密码
+	$dbname = 'dream';			// 数据库名
 	$pconnect = 0;				// 数据库持久连接 0=关闭, 1=打开
 
 // [CH] Mysql 辅助服务器设置，只有当您拥有多个 Mysql 服务器且协同工作时请进行设置
@@ -23,7 +23,7 @@
 	
 // [CH] 如您对 cookie 作用范围有特殊要求, 或论坛登录不正常, 请修改下面变量, 否则请保持默认
 
-	$cookiepre = 'cdb_';			// cookie 前缀
+	$cookiepre = 'Azf_';			// cookie 前缀
 	$cookiedomain = ''; 			// cookie 作用域
 	$cookiepath = '/';			// cookie 作用路径
 
@@ -43,9 +43,9 @@
 
 // [CH] 论坛安全设置, 调整以下设置，可以增强论坛的安全性能和防御性能
 
-	$adminemail = 'admin@your.com';		// 系统管理员 Email
+	$adminemail = 'admin@admin.com';		// 系统管理员 Email
 
-	$forumfounders = '';			// 论坛创始人 UID, 可以支持多个创始人，之间使用 “,” 分隔。[出于安全考虑，请务必设置一名管理员为创始人]
+	$forumfounders = '1';			// 论坛创始人 UID, 可以支持多个创始人，之间使用 “,” 分隔。[出于安全考虑，请务必设置一名管理员为创始人]
 						// 论坛创始人可对其他管理员进行设置。如果不设置论坛创始人，则论坛管理员之间权利平等。
 
 	$dbreport = 0;				// 论坛出现数据库错误时，是否通过 email 发送错误报告给系统管理员
@@ -67,4 +67,17 @@
 	$admincp['dbimport'] = 1;		// 是否允许后台恢复论坛数据  1=是 0=否[安全]
 
 // ============================================================================
-
+define('UC_CONNECT', 'mysql');
+define('UC_DBHOST', 'localhost');
+define('UC_DBUSER', 'root');
+define('UC_DBPW', '2316663');
+define('UC_DBNAME', 'dream');
+define('UC_DBCHARSET', 'utf8');
+define('UC_DBTABLEPRE', '`dream`.uc_');
+define('UC_DBCONNECT', '0');
+define('UC_KEY', 'tazbedk2ddr32655qf2fo1wca156AdU4T9r1V1gbg6eda9g9U04cZ2D2faEaue7e');
+define('UC_API', 'http://localhost/dream/ucenter');
+define('UC_CHARSET', 'utf-8');
+define('UC_IP', '127.0.0.1');
+define('UC_APPID', '2');
+define('UC_PPP', '20');
