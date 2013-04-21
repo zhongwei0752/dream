@@ -103,6 +103,33 @@
 showreward();
 </script>
 <!--{/if}-->
+<!--{if $_SGLOBAL[supe_uid]}-->
+		<ul id="navigation">
+            <li class="home"><a href="" title="Home"></a></li>
+            <li class="about"><a href="" title="About"></a></li>
+            <li class="search"><a href="" title="Search"></a></li>
+            <li class="photos"><a href="" title="Photos"></a></li>
+            <li class="rssfeed"><a href="" title="Rss Feed"></a></li>
+            <li class="podcasts"><a href="" title="Podcasts"></a></li>
+            <li class="contact"><a href="" title="Contact"></a></li>
+        </ul>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+         <script type="text/javascript">
+         jQuery.noConflict();
+            jQuery(function() {
+                  jQuery('#navigation a').stop().animate({'margin-top':'-2px'},1000);
+
+                jQuery('#navigation > li').hover(
+                    function () {
+                        jQuery('a',jQuery(this)).stop().animate({'margin-top':'-50px'},200);
+                    },
+                    function () {
+                        jQuery('a',jQuery(this)).stop().animate({'margin-top':'-2px'},200);
+                    }
+                );
+            });
+        </script>
+        <!--{/if}-->
 </body>
 </html>
 <!--{/if}-->
