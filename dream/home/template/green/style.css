@@ -30,8 +30,11 @@ a { color: #3B5998; }
   .dropmenu_drop { border: 1px solid #CCC; }
 
 
-#main { background: url(image/appSidebar_bg.gif) repeat-y 0 0; }
+  #mainarea { float: left; width: 970px; overflow: hidden; }
 
+  #app_sidebar {  }
+/*************************************************CP SIDEBAR***/
+#sidebar { float: right; padding: 0; width: 250px; overflow: hidden; }
 /*************************************************APP SIDEBAR***/
 #app_sidebar { background: url(image/appSidebar_top_bg.gif) no-repeat 0 0; }
     .app_more a { background: url(image/tri.gif) no-repeat; }
@@ -43,7 +46,7 @@ a { color: #3B5998; }
                 .chostlp_drop li{ padding: 5px; width: 16px; height: 16px; }
 
 
-#content { float: left; margin: 0 20px 0 0; width: 540px; overflow: hidden; }
+#content { float: left; margin: 0 20px 0 0; width: 700px;  }
 
 /*************************************************COMPOSER***/
     .mgs_list div { border: 1px solid #CCC; }

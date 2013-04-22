@@ -24,7 +24,7 @@
 	<span id="docomment_form_{$doid}_{$id}">
 	<form id="docommform_{$doid}_{$id}" method="post" action="cp.php?ac=doing&op=comment&doid=$doid&id=$id" style="padding-left:10px;">
 		<a href="#" id="do_face_{$doid}_{$id}" title="插入表情" onclick="showFace(this.id, 'do_message_{$doid}_{$id}');return false;"><img src="image/facelist.gif" align="absmiddle" /></a>
-		<input type="text" id="do_message_{$doid}_{$id}" name="message" size="35" class="t_input" onkeydown="return ctrlEnter(event, 'docommform_btn_{$doid}_{$id}', 1);">
+		<input type="text" id="do_message_{$doid}_{$id}" name="message" size="15" class="t_input" onkeydown="return ctrlEnter(event, 'docommform_btn_{$doid}_{$id}', 1);">
 		<input type="hidden" name="commentsubmit" value="true" />
 		<input type="button" name="do_button" class="submit" id="docommform_btn_{$doid}_{$id}" onclick="ajaxpost('docommform_{$doid}_{$id}', 'docomment_get', 1)" value="回复">
 		<button type="button" name="btncancel" class="button" onclick="docomment_form_close($doid, $id);">取消</button>

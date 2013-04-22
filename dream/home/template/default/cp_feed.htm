@@ -16,7 +16,7 @@
 	<form id="feedform_{$feedid}" method="post" action="cp.php?ac=feed&feedid=$feedid" style="padding:0.5em;">
 		<a href="###" id="face_{$feedid}" title="插入表情" onclick="showFace(this.id, 'feedmessage_{$feedid}');return false;"><img src="image/facelist.gif" align="absmiddle" /></a>
 		<span id="note_{$feedid}"></span><br>
-		<textarea id="feedmessage_{$feedid}" name="message" rows="2" style="width:100%;"></textarea><br>
+		<textarea id="feedmessage_{$feedid}" name="message" rows="1" style="width:100%;"></textarea><br>
 		<input type="hidden" name="commentsubmit" value="true" />
 		<input type="button" name="feedbutton" class="submit" onclick="ajaxpost('feedform_{$feedid}', 'feedcomment_add')" value="评论">
 		<span id="__feedform_{$feedid}"></span>

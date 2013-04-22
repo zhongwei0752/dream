@@ -117,7 +117,7 @@ body { background: #FFF; }
         .dropmenu_drop li a { color: #2C629E; font-size: 12px; font-weight: normal; }
 		.dropmenu_drop .active { font-weight: bold; }
 
-#main { margin: 0 0 20px; width: 100%; background: url(image/appSidebar_bg.gif) repeat-y 0 0; overflow: hidden; }
+#main { margin: 0 0 20px; width: 100%;  overflow: hidden; }
 
 /*************************************************APP SIDEBAR***/
 #app_sidebar { float: left; margin: 0 20px 0 0; padding: 10px 0 0; width: 140px; background: url(image/appSidebar_top_bg.gif) no-repeat 0 0; font-size: 14px; }
@@ -336,7 +336,7 @@ a.button { padding: 5px; }
 .magichongbao a span{ font-size: 14px; color: red; }
 
 /*************************************************DOING***/
-.sub_doing { margin: 10px 0 0; padding: 10px 0 0; width: 477px; background: #E9F2FC url(image/subdoing_top.gif) no-repeat left top; color: #333; clear: both; }
+.sub_doing { margin: 10px 0 0; padding: 10px 0 0;  background: #E9F2FC url(image/subdoing_top.gif) no-repeat left top; color: #333; clear: both; }
     .sub_doing ol {  margin: 0; padding: 0 10px 10px; background: #E9F2FC url(image/subdoing_bottom.gif) no-repeat left bottom; overflow: hidden; }
         .sub_doing ol li { margin: 0; padding: 3px 0; width: auto; border: none; }
 
