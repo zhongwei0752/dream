@@ -1559,11 +1559,18 @@ function ckstart($start, $perpage) {
 
 //处理头像
 function avatar($uid, $size='small', $returnsrc = FALSE) {
-	global $_SCONFIG, $_SN;
+	global $_SGLOBAL,$_SCONFIG, $_SN;
 	
 	$size = in_array($size, array('big', 'middle', 'small')) ? $size : 'small';
 	$avatarfile = avatar_file($uid, $size);
-	return $returnsrc ? UC_API.'/data/avatar/'.$avatarfile : '<img src="'.UC_API.'/data/avatar/'.$avatarfile.'" onerror="this.onerror=null;this.src=\''.UC_API.'/images/noavatar_'.$size.'.gif\'">';
+	$query = $_SGLOBAL['db']->query("SELECT * FROM ".tname('space')." WHERE uid='$uid'");
+	$value = $_SGLOBAL['db']->fetch_array($query);
+	if($value['sex']=='1'){
+	return $returnsrc ? UC_API.'/data/avatar/'.$avatarfile : '<img src="'.UC_API.'/data/avatar/'.$avatarfile.'" onerror="this.onerror=null;this.src=\''.UC_API.'/images/noavatar_'.$size.'man.gif\'">';
+}else{
+	return $returnsrc ? UC_API.'/data/avatar/'.$avatarfile : '<img src="'.UC_API.'/data/avatar/'.$avatarfile.'" onerror="this.onerror=null;this.src=\''.UC_API.'/images/noavatar_'.$size.'woman.gif\'">';
+}
+
 }
 
 //得到头像

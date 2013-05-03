@@ -79,7 +79,7 @@ if($list) {
 	}
 	realname_get();
 }
-
+$_TPL['css'] = 'pm';
 include_once template("space_pm");
 
 ?>
