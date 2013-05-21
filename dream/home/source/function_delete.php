@@ -112,6 +112,64 @@ function deleteblogs($blogids) {
 
 	return $blogs;
 }
+//删除博客
+function deletediscussions($discussionids) {
+	global $_SGLOBAL;
+
+	//获取积分
+	$reward = getreward('deldiscussion', 0);
+	//获取博客信息
+	$spaces = $discussions = $newdiscussionids = array();
+	$allowmanage = checkperm('managediscussion');
+	$managebatch = checkperm('managebatch');
+	$delnum = 0;
+	$query = $_SGLOBAL['db']->query("SELECT * FROM ".tname('discussion')." WHERE discussionid IN (".simplode($discussionids).")");
+	while ($value = $_SGLOBAL['db']->fetch_array($query)) {
+		if($allowmanage || $value['uid'] == $_SGLOBAL['supe_uid']) {
+			$discussions[] = $value;
+			if(!$managebatch && $value['uid'] != $_SGLOBAL['supe_uid']) {
+				$delnum++;
+			}
+		}
+	}
+	if(empty($discussions) || (!$managebatch && $delnum > 1)) return array();
+	
+	foreach($discussions as $key => $value) {
+		$newdiscussionids[] = $value['discussionid'];
+		if($allowmanage && $value['uid'] != $_SGLOBAL['supe_uid']) {
+			//扣除积分
+			$_SGLOBAL['db']->query("UPDATE ".tname('space')." SET credit=credit-$reward[credit], experience=experience-$reward[experience] WHERE uid='$value[uid]'");
+		}
+		//tag
+		$tags = array();
+		$subquery = $_SGLOBAL['db']->query("SELECT tagid, discussionid FROM ".tname('tagdiscussion')." WHERE discussionid='$value[discussionid]'");
+		while ($tag = $_SGLOBAL['db']->fetch_array($subquery)) {
+			$tags[] = $tag['tagid'];
+		}
+		if($tags) {
+			$_SGLOBAL['db']->query("UPDATE ".tname('tag')." SET discussionnum=discussionnum-1 WHERE tagid IN (".simplode($tags).")");
+			$_SGLOBAL['db']->query("DELETE FROM ".tname('tagdiscussion')." WHERE discussionid='$value[discussionid]'");
+		}
+	}
+
+	//数据删除
+	$_SGLOBAL['db']->query("DELETE FROM ".tname('discussion')." WHERE discussionid IN (".simplode($newdiscussionids).")");
+	$_SGLOBAL['db']->query("DELETE FROM ".tname('discussionfield')." WHERE discussionid IN (".simplode($newdiscussionids).")");
+
+	//评论
+	$_SGLOBAL['db']->query("DELETE FROM ".tname('comment')." WHERE id IN (".simplode($newdiscussionids).") AND idtype='discussionid'");
+
+	//删除举报
+	$_SGLOBAL['db']->query("DELETE FROM ".tname('report')." WHERE id IN (".simplode($newdiscussionids).") AND idtype='discussionid'");
+
+	//删除feed
+	$_SGLOBAL['db']->query("DELETE FROM ".tname('feed')." WHERE id IN (".simplode($newdiscussionids).") AND idtype='discussionid'");
+	
+	//删除脚印
+	$_SGLOBAL['db']->query("DELETE FROM ".tname('clickuser')." WHERE id IN (".simplode($newdiscussionids).") AND idtype='discussionid'");
+
+	return $discussions;
+}
 
 //删除事件
 function deletefeeds($feedids) {

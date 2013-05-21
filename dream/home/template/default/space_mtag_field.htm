@@ -1,6 +1,71 @@
 <!--{eval $_TPL['titles'] = array($fieldtitle, '群组');}-->
 <!--{template header}-->
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="http://www.inwebson.com/demo/blocksit-js/blocksit.min.js"></script>
+<link rel='stylesheet' href='template/default/mtag.css' media='screen' />
+<script>
+$(document).ready(function() {
+	//vendor script
+	//$('#header')
+	//.css({ 'top':-50 })
+	//.delay(1000)
+	//.animate({'top': 0}, 800);
+	
+	//$('#footer')
+	//.css({ 'bottom':-15 })
+	//.delay(1000)
+	//.animate({'bottom': 0}, 800);
+	
+	//blocksit define
+	$(window).load( function() {
+		$('#container').BlocksIt({
+			numOfCol: 2,
+			offsetX: 8,
+			offsetY: 8
+		});
+	});
+	
+	//window resize
+	var currentWidth = 1100;
+	$(window).resize(function() {
+		var winWidth = $(window).width();
+		var conWidth;
+		//if(winWidth < 660) {
+		//	conWidth = 440;
+		//	col = 2
+		//} else if(winWidth < 880) {
+		//	conWidth = 660;
+		//	col = 3
+		//} else if(winWidth < 1100) {
+		//	conWidth = 880;
+		//	col = 4;
+		//} else {
+		//	conWidth = 1100;
+		//	col = 5;
+		//}
+		
+		if(conWidth != currentWidth) {
+			currentWidth = conWidth;
+			$('#container').width(conWidth);
+			$('#container').BlocksIt({
+				numOfCol: col,
+				offsetX: 8,
+				offsetY: 8
+			});
+		}
+	});
+	
+	//close ad
+	$('.buttonclose a').on('click', function() {
+		$(this).parent().parent().fadeOut(1000);
+		$(this).off('click');
+		return false;
+	});
+});
+</script>
 <div class="searchbar floatright">
 <form method="get" action="space.php">
 	<input name="searchkey" value="" size="15" class="t_input" type="text">
@@ -37,16 +102,24 @@
 <div class="box">
 	<!--{if $list}-->
 	<ul class="thread_list">
-	<!--{loop $list $value}-->
-		<li>
-			<div class="threadimg60"><a href="space.php?do=mtag&tagid=$value[tagid]"><img src="$value[pic]" style="width:60px;"></a></div>
-			<a href="space.php?do=mtag&tagid=$value[tagid]">$value[tagname]</a><br />
-			已有 <span class="num">$value[membernum]</span> 人加入
-			<div class="gray">
-				话题: $value[threadnum], 回帖: $value[postnum]
-			</div>
-		</li>
-	<!--{/loop}-->
+	<section id="wrapper" >
+
+<div id="container" style="width:640px;">
+			<!--{loop $list $key $value}-->
+
+	<div class="grid">
+		<div class="imgholder">
+			<div class="threadimg60"  style="float:left;"><a href="space.php?do=mtag&tagid=$value[tagid]"><img src="$value[pic]"/></a></div>
+		</div>
+		<strong>&nbsp;<a href="space.php?do=mtag&tagid=$value[tagid]" style="font-weight:bold;">$value[tagname]</a></strong>
+		<p>&nbsp;$value[title]</p>
+		&nbsp;已有 <span class="num">$value[membernum]</span> 人加入
+		<div class="meta">&nbsp;话题: $value[threadnum], 回帖: $value[postnum]</div>
+	</div>
+
+<!--{/loop}-->
+</div>
+</section>
 	</ul>
 	<div class="page">$multi</div>
 	<!--{else}-->

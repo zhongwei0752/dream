@@ -11,7 +11,7 @@ if(!defined('IN_UCHOME')) {
 include_once(S_ROOT.'./source/function_bbcode.php');
 
 //共用变量
-$tospace = $pic = $blog = $album = $share = $event = $poll = array();
+$tospace = $pic = $blog = $album = $share = $event = $poll =$discussion = array();
 
 if(submitcheck('commentsubmit')) {
 
@@ -158,6 +158,47 @@ if(submitcheck('commentsubmit')) {
 			$hotarr = array('blogid', $blog['blogid'], $blog['hotuser']);
 			$stattype = 'blogcomment';//统计
 			break;
+			case 'discussionid':
+			//读取日志
+
+			$query = $_SGLOBAL['db']->query("SELECT b.*, bf.target_ids, bf.hotuser
+				FROM ".tname('discussion')." b
+				LEFT JOIN ".tname('discussionfield')." bf ON bf.discussionid=b.discussionid
+				WHERE b.discussionid='$id'");
+			$discussion = $_SGLOBAL['db']->fetch_array($query);
+			//日志不存在
+			if(empty($discussion)) {
+				showmessage('view_to_info_did_not_exist');
+			}
+			
+			//检索空间
+			$tospace = getspace($discussion['uid']);
+			
+			//验证隐私
+			if(!ckfriend($discussion['uid'], $discussion['friend'], $discussion['target_ids'])) {
+				//没有权限
+				showmessage('no_privilege');
+			} elseif(!$tospace['self'] && $discussion['friend'] == 4) {
+				//密码输入问题
+				$cookiename = "view_pwd_discussion_$discussion[discussionid]";
+				$cookievalue = empty($_SCOOKIE[$cookiename])?'':$_SCOOKIE[$cookiename];
+				if($cookievalue != md5(md5($discussion['password']))) {
+					showmessage('no_privilege');
+				}
+			}
+
+			//是否允许评论
+			if(!empty($discussion['noreply'])) {
+				showmessage('do_not_accept_comments');
+			}
+			if($discussion['target_ids']) {
+				$discussion['target_ids'] .= ",$discussion[uid]";
+			}
+			
+			$hotarr = array('discussionid', $discussion['discussionid'], $discussion['hotuser']);
+			$stattype = 'discussioncomment';//统计
+
+			break;
 		case 'sid':
 			//读取日志
 			$query = $_SGLOBAL['db']->query("SELECT * FROM ".tname('share')." WHERE sid='$id'");
@@ -292,6 +333,18 @@ if(submitcheck('commentsubmit')) {
 			$fs['target_ids'] = $blog['target_ids'];
 			$fs['friend'] = $blog['friend'];
 			break;
+			case 'discussionid':
+			//更新评论统计
+			$_SGLOBAL['db']->query("UPDATE ".tname('discussion')." SET replynum=replynum+1 WHERE discussionid='$id'");
+			//事件
+			$fs['title_template'] = cplang('feed_comment_discussion');
+			$fs['title_data'] = array('touser'=>"<a href=\"space.php?uid=$tospace[uid]\">".$_SN[$tospace['uid']]."</a>", 'discussion'=>"<a href=\"space.php?uid=$tospace[uid]&do=discussion&id=$id\">$discussion[subject]</a>");
+			$fs['body_template'] = '';
+			$fs['body_data'] = array();
+			$fs['body_general'] = '';
+			$fs['target_ids'] = $discussion['target_ids'];
+			$fs['friend'] = $discussion['friend'];
+			break;
 		case 'sid':
 			//事件
 			$fs['title_template'] = cplang('feed_comment_share');
@@ -374,6 +427,17 @@ if(submitcheck('commentsubmit')) {
 			$magvalues = array();
 			$msgtype = 'blog_comment';
 			$q_msgtype = 'blog_comment_reply';
+			break;
+			case 'discussionid':
+			//通知
+			$n_url = "space.php?uid=$tospace[uid]&do=discussion&id=$id&cid=$cid";
+			$note_type = 'discussioncomment';
+			$note = cplang('note_discussion_comment', array($n_url, $discussion['subject']));
+			$q_note = cplang('note_discussion_comment_reply', array($n_url));
+			$msg = 'do_success';
+			$magvalues = array();
+			$msgtype = 'discussion_comment';
+			$q_msgtype = 'discussion_comment_reply';
 			break;
 		case 'sid':
 			//分享

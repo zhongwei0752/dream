@@ -81,7 +81,7 @@ if(empty($_SCONFIG['register_action'])) $_SCONFIG['register_action'] = md5('regi
 
 //ÕûÕ¾·ç¸ñ
 if(empty($_SCONFIG['template'])) {
-	$_SCONFIG['template'] = 'default';
+	$_SCONFIG['template'] = 'green';
 }
 if($_SCOOKIE['mytemplate']) {
 	$_SCOOKIE['mytemplate'] = str_replace('.','',trim($_SCOOKIE['mytemplate']));

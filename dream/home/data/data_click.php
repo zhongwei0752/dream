@@ -45,8 +45,35 @@ $_SGLOBAL['click']=Array
 			'displayorder' => '0'
 			)
 		),
+	'discussionid' => Array
+		(
+		16 => Array
+			(
+			'clickid' => 16,
+			'name' => '同意',
+			'icon' => 'xianhua.gif',
+			'idtype' => 'discussionid',
+			'displayorder' => '0'
+			),
+		17 => Array
+			(
+			'clickid' => 17,
+			'name' => '反对',
+			'icon' => 'jidan.gif',
+			'idtype' => 'discussionid',
+			'displayorder' => '0'
+			)
+		),
 	'tid' => Array
 		(
+		15 => Array
+			(
+			'clickid' => 15,
+			'name' => '鸡蛋',
+			'icon' => 'jidan.gif',
+			'idtype' => 'tid',
+			'displayorder' => '0'
+			),
 		14 => Array
 			(
 			'clickid' => 14,
@@ -76,14 +103,6 @@ $_SGLOBAL['click']=Array
 			'clickid' => 11,
 			'name' => '搞笑',
 			'icon' => 'gaoxiao.gif',
-			'idtype' => 'tid',
-			'displayorder' => '0'
-			),
-		15 => Array
-			(
-			'clickid' => 15,
-			'name' => '鸡蛋',
-			'icon' => 'jidan.gif',
 			'idtype' => 'tid',
 			'displayorder' => '0'
 			)

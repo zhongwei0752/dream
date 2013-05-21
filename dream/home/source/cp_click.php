@@ -38,6 +38,12 @@ switch ($idtype) {
 			WHERE t.tid='$id'";
 		$tablename = tname('thread');
 		break;
+		case 'discussionid':
+		$sql = "SELECT b.*, bf.hotuser FROM ".tname('discussion')." b
+			LEFT JOIN ".tname('discussionfield')." bf ON bf.discussionid=b.discussionid
+			WHERE b.discussionid='$id'";
+		$tablename = tname('discussion');
+		break;
 	default:
 		$idtype = 'blogid';
 		$sql = "SELECT b.*, bf.hotuser FROM ".tname('blog')." b
@@ -107,6 +113,16 @@ if($_GET['op'] == 'add') {
 			);
 			$note_type = 'clickblog';
 			$q_note = cplang('note_click_blog', array("space.php?uid=$item[uid]&do=blog&id=$item[blogid]", $item['subject']));
+			break;
+			case 'discussionid':
+			$fs['title_template'] = cplang('feed_click_discussion');
+			$fs['title_data'] = array(
+				'touser' => "<a href=\"space.php?uid=$item[uid]\">{$_SN[$item['uid']]}</a>",
+				'subject' => "<a href=\"space.php?uid=$item[uid]&do=discussion&id=$item[discussionid]\">$item[subject]</a>",
+				'click' => $click['name']
+			);
+			$note_type = 'clickdiscussion';
+			$q_note = cplang('note_click_discussion', array("space.php?uid=$item[uid]&do=discussion&id=$item[discussionid]", $item['subject']));
 			break;
 		case 'tid':
 			$fs['title_template'] = cplang('feed_click_thread');

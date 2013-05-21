@@ -92,7 +92,8 @@ $_SGLOBAL['usergroup']=Array
 		'managespacenote' => 1,
 		'managevideophoto' => 1,
 		'managelog' => 1,
-		'magicaward' => ''
+		'magicaward' => '',
+		'allowdiscussion' => 1
 		)
 	)
 ?>

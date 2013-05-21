@@ -1,0 +1,1117 @@
+/* CSS DA HOME */
+body {
+    background: #f3eee8 url(image/beijing.jpg)   fixed;
+}
+/* TOPO */
+#MenuHome {
+    background: url(../img/home/bg-menu.png) left top no-repeat;
+    width: 845px;
+    height: 28px;
+    z-index: 8;
+    position: fixed;
+    padding: 17px 25px;
+}
+#MenuHome ul {
+    float: left;
+}
+#MenuHome ul li {
+    float: left;
+    display: inline;
+}
+#MenuHome ul li a{
+    display: block;
+    margin-right: 19px;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #3F5777;
+}
+#MenuHome .nao_conhecia {
+    font-family: Georgia, Helvetica, Arial;
+    font-style: italic;
+    font-size: 0.9em;
+    color: #231f20;
+    margin-right: 44px;
+    position: relative;
+    top: -2px;
+}
+#MenuHome .nao_conhecia a {
+    color: #231f20;
+    display: block;
+    padding: 0 25px 0 0;
+    background: url(../img/home/interrogacao_menu.gif) right top no-repeat;
+    float: right;
+    height: 17px;
+    line-height: 17px;
+}
+
+/* BOXES DA HOME */
+.borderimage #Conteudo #BlocosConteudo .box {
+/*  border: 0 solid hsla(33, 5%, 95%, 0.2);*/
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+        
+}
+#Conteudo #BlocosConteudo .box .icon_topo {
+    display: inline-block;
+    overflow: hidden;  
+    text-indent: -9000px;
+    margin-top: 10px;
+}
+#Conteudo #BlocosConteudo  .box .marca_box,
+#Conteudo #BlocosConteudo  .box .topo_link
+{ 
+    width: 175px;
+    height: 130px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -60px 0 0 -88px;
+    display: table-cell;
+    vertical-align: middle;
+}
+#Conteudo #BlocosConteudo .novidades_bloco .box .marca_box {
+    width: 150px;
+    height: 110px;
+    margin: -60px 0 0 -75px;
+    padding-top: 20px;
+}
+#Conteudo #BlocosConteudo .novidades_bloco .box .marca_box .data {
+    font-weight: bold;
+    color: #fff;    
+}
+#Conteudo #BlocosConteudo .novidades_bloco .box .marca_box h3,
+#Conteudo #BlocosConteudo .novidades_bloco .box .marca_box p {
+    font-family: Georgia, Helvetica, Arial;
+    font-style: italic;    
+    line-height: 120%;
+    color: #504c00;
+}
+#Conteudo #BlocosConteudo .novidades_bloco .box .marca_box h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 8px 0;
+}
+#Conteudo #BlocosConteudo .novidades_bloco .box .marca_box h3 a,
+#Conteudo #BlocosConteudo .novidades_bloco .box .marca_box p a {
+    color: #504c00;
+}
+
+
+#Conteudo #BlocosConteudo .servicos_bloco .marcas_bottom {
+    position: absolute;
+    bottom: 15px;
+    left: 47%;
+    width: 114px;
+    margin-left: -57px;
+
+}
+#Conteudo #BlocosConteudo .servicos_bloco .marcas_bottom ul li {
+    text-indent: -9000px;
+    width: 114px;
+    height: 42px;
+    overflow: hidden;
+
+}
+#Conteudo #BlocosConteudo .box.veja_mais .marca_box {
+    display: block;
+    position: absolute;
+    width: 95px;
+    height: 90px;
+    top: 50%;
+    left: 50%;
+    margin: -48px 0 0 -53px;
+    text-indent: -9000px;
+    overflow: hidden;
+    /*background: url(../img/home/bt-vejamais.png) left top no-repeat;*/
+}
+.box_cinema{
+    background-image:url(../img/home/mais-filmes.png);
+}
+.box_lojas{
+    background-image:url(../img/home/mais-lojas.png);
+}
+.box_servicos{
+    background-image:url(../img/home/mais-servicos.png);
+}
+.box_noticias{
+    background-image:url(../img/home/mais-noticias.png);
+}
+
+#Conteudo .bloco #Lojas .box .inner_rotate {
+    display: tabble-cel;
+}
+#Conteudo #BlocosConteudo .box a.icon_topo:hover {
+    cursor: pointer;
+}
+#Conteudo #Cinema .thumb_cinema .border-thumb {
+    position: absolute;
+    top: 2px;
+    left: 36px;
+}
+#Conteudo #Cinema .thumb_cinema a{
+    position: relative;
+    z-index: 1;
+}
+#Conteudo #Cinema .thumb_cinema span {
+    display: block;
+
+}
+#Conteudo #Cinema .thumb_cinema .border-left {
+    background: #c41733;
+    height: 135px;  
+    width: 7px;
+    -sand-transform: skew(0, -47deg);
+}
+#Conteudo #Cinema .thumb_cinema .border-bottom {
+    background: #a90f28;
+    width: 90px;    
+    height: 7px;
+    -sand-transform: skew(-42deg, 0);
+    margin: -4px 0 0 3px;
+}
+#Conteudo #Cinema p {
+    color: #ffc2cc;
+    font-weight: bold;
+    font-size: 12px;
+    letter-spacing: -0.1em;
+    line-height: 130%;
+    position:relative;
+    top:20px;
+}
+#Conteudo #Cinema p strong {
+    color: #fff6d8;
+    font-size: 16px;    
+}
+#Conteudo #Cinema .info_topo {
+    position: relative;
+    top: 27px;
+}
+#Conteudo #Cinema .info_topo h3 {
+        color: #fff;
+        font-weight: bold;
+        letter-spacing: -0.1em;
+}
+#Conteudo #Cinema .info_topo h3 a{
+    color: #fff;
+    text-decoration: none;
+}
+#Conteudo #Cinema .info_bottom {
+        position: absolute;
+        bottom: -12px;
+        left: 51%;
+        width: 114px;
+        margin-left: -57px;
+}
+
+
+#Conteudo #BlocosConteudo .tooltip {
+    position: relative;
+    padding: 5px 7px;
+    font-weight: bold;
+}
+#Conteudo #BlocosConteudo .tooltip:after,
+#Conteudo #BlocosConteudo .tooltip:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+#Conteudo #BlocosConteudo #Novidades .tooltip {
+    background: #e7df33;
+    color: #363636;
+}
+.tooltipNovHover{
+    background:#000 !important;
+    color:#FFF !important;
+}
+
+#Conteudo #BlocosConteudo #Novidades .tooltipAfter {
+   width: 0; 
+   height: 0;
+   border-top: 6px solid #e7df33;
+   border-left: 6px solid transparent; 
+   border-right: 5px solid transparent;
+   position:absolute;
+   top:19px;
+   left:107px;
+}
+
+.tooltipAfterAtivo{
+    border-top: 5px solid #000 !important;
+    top:34px !important;
+    left:122px !important; 
+}
+
+/* 脥CONES INDICATIVOS DOS BLOCOS (CANTO ESQUERDO DE CADA BLOCO) */
+#Conteudo .icon_bloco {
+    position: absolute;
+    left: 45px;
+}
+#Conteudo .icon_bloco a {
+    display: block;
+    background: red;
+    text-indent: -9000px;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+}
+#Conteudo #Lojas .icon_bloco {
+    top: -67px;
+}
+#Conteudo #Lojas .icon_bloco a {
+    background: url(./ico-bloco-lojas.png) center center no-repeat;
+}
+#Conteudo #Servicos .icon_bloco {
+    top: 251px;
+}
+#Conteudo #Servicos .icon_bloco a {
+    background: url(../img/home/ico-bloco-servicos.png) center center no-repeat;
+}
+#Conteudo #Novidades .icon_bloco {
+    top: 569px;
+}
+#Conteudo #Novidades .icon_bloco a {
+    background: url(../img/home/ico-bloco-novidades.png) center center no-repeat;
+}
+#Conteudo #Cinema .icon_bloco {
+    top: 887px;
+}
+#Conteudo #Cinema .icon_bloco a {
+    background: url(../img/home/ico-bloco-cinema.png) center center no-repeat;
+}
+
+/* 脥CONES DAS SE脟脮ES (脥CONES SUPERIORES NOS BOXES) */
+#Conteudo #BlocosConteudo .box .rss_icon {
+    background: url(../img/home/icon-rss-lojas.png) left top no-repeat;
+    width: 15px;
+    height: 14px;
+}
+#Conteudo #BlocosConteudo .box .horario_icon {
+    background: url(../img/home/icon-horario-servicos.png) left top no-repeat;
+    width: 19px;
+    height: 18px;
+}
+#Conteudo #BlocosConteudo .box .like_icon {
+    background: url(../img/home/icon-like-novidades.png) left top no-repeat;
+    width: 20px;
+    height: 18px;
+}
+
+
+/* TOOLTIPS DAS SE脟脮ES */
+#Conteudo #BlocosConteudo .tooltip {
+    position: relative;
+    padding: 5px 7px;
+    font-weight: bold;
+}
+#Conteudo #BlocosConteudo .tooltip:after,
+#Conteudo #BlocosConteudo .tooltip:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+
+/* MATRIZ PADR脙O DOS ITENS DA HOME */
+#Conteudo #BlocosConteudo {
+    position: relative;
+    min-height: 1600px;
+    width: 100%;
+    margin-left: -38px;
+}
+#Conteudo {
+    padding-top: 210px;
+}
+
+/* TOPO */
+#Conteudo #PrincipalTopo {
+    height: 455px;
+    width: 910px;
+    border: 10px solid rgba(201, 197, 178, 0.2);
+    -webkit-transform: rotate(45deg); 
+     -moz-transform: rotate(45deg); 
+      -ms-transform: rotate(45deg); 
+       -o-transform: rotate(45deg); 
+          transform: rotate(45deg);
+               zoom: 1;
+   position: relative;
+   margin: 0 0 -189px -71px;
+   z-index: 3;
+
+
+   -webkit-border-radius: 5px; /* Saf3-4, iOS 1-3.2, Android 鈮�1.6 */
+     -moz-border-radius: 5px; /* FF1-3.6 */
+          border-radius: 5px; /* Opera 10.5, IE9, Saf5, Chrome, FF4, iOS 4, Android 2.1+ */
+
+  /* useful if you don't want a bg color from leaking outside the border: */
+  -moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
+}
+
+#Conteudo #PrincipalTopo .box {
+    width: 910px;
+    height: 455px;
+    background: #FFF;
+    position: absolute;
+}
+#Conteudo #PrincipalTopo #MarcaHome {
+    top: 0;
+    left: 0;
+}
+#Conteudo #PrincipalTopo #DestaquesPrincipal {
+    top: 0px;
+    left: 455px;
+}
+
+/* Facebook e cinema do topo */
+#Conteudo #Conectese {
+    -webkit-transform: rotate(45deg); 
+     -moz-transform: rotate(45deg); 
+      -ms-transform: rotate(45deg); 
+       -o-transform: rotate(45deg); 
+          transform: rotate(45deg);
+               zoom: 1;
+       width: 455px;
+       height: 455px;
+       background: #4d65a6;
+       position: absolute;
+       top: -262px;
+       left: 173px;
+       z-index: 0;
+}
+#Conteudo #DestaqueRotativoMenor {
+    -webkit-transform: rotate(45deg); 
+     -moz-transform: rotate(45deg); 
+      -ms-transform: rotate(45deg); 
+       -o-transform: rotate(45deg); 
+          transform: rotate(45deg);
+               zoom: 1;
+       width: 225px;
+       height: 225px;
+       position: absolute;
+       top: 175px;
+       left: 447px;
+       z-index: 0;
+
+}
+#Conteudo #DestaqueRotativoMenor.cinema_color {
+    background-image: linear-gradient(left top, rgb(225,49,79) 19%, rgb(239,62,91) 60%);
+        background-image: -o-linear-gradient(left top, rgb(225,49,79) 19%, rgb(239,62,91) 60%);
+        background-image: -moz-linear-gradient(left top, rgb(225,49,79) 19%, rgb(239,62,91) 60%);
+        background-image: -webkit-linear-gradient(left top, rgb(225,49,79) 19%, rgb(239,62,91) 60%);
+        background-image: -ms-linear-gradient(left top, rgb(225,49,79) 19%, rgb(239,62,91) 60%);
+
+        background-image: -webkit-gradient(
+                linear,
+                left top,
+                right bottom,
+                color-stop(0.19, rgb(225,49,79)),
+                color-stop(0.6, rgb(239,62,91))
+        );  
+}
+
+/* Bg do mosaico */
+#BgMosaico {
+    background: url(../img/home/bg-ladrilho.gif) left top repeat;
+width: 551px;
+height: 2300px;
+position: absolute;
+top: 0;
+left: 0;    
+}
+
+/* -------- */
+
+
+/* Linhas */
+#BlocosConteudo .l1 {top: -200px;}
+#BlocosConteudo .l2 {top: -41px;}
+#BlocosConteudo .l3 {top: 118px;}
+#BlocosConteudo .l4 {top: 277px;}
+#BlocosConteudo .l5 {top: 436px;}
+#BlocosConteudo .l5.veja_mais {top: 490px;}
+#BlocosConteudo .l6 {top: 595px;}
+#BlocosConteudo .l7 {top: 754px;}
+#BlocosConteudo .l7.veja_mais {top: 808px;}
+#BlocosConteudo .l8 {top: 913px;}
+#BlocosConteudo .l9 {top: 1072px;}
+#BlocosConteudo .l9.veja_mais {top: 1126px;}
+#BlocosConteudo .l10 {top: 1231px;}
+#BlocosConteudo .l11 {top: 1390px;}
+#BlocosConteudo .l11.veja_mais {top: 1444px;}
+#BlocosConteudo .l12 {top: 1549px;}
+#BlocosConteudo .l13 {top: 1633px;} /* especial */
+
+/* Colunas */
+#BlocosConteudo .c1 {left: 0;}
+#BlocosConteudo .c2 {left: 159px;}
+#BlocosConteudo .c3 {left: 318px;}
+#BlocosConteudo .c4 {left: 477px;}
+#BlocosConteudo .c5 {left: 642px;} /* especial */
+#BlocosConteudo .c5.veja_mais {left: 695px;}
+#BlocosConteudo .c6 {left: 795px;}
+#BlocosConteudo .c7 {left: 954px;}
+#BlocosConteudo .c8 {left: 1113px;}
+#BlocosConteudo .c9 {left: 1272px;}
+
+/* GRADIENTES DOS BOXES */
+#Conteudo #Lojas .box {
+        background-image: url(../img/home/Losango-BRANCO_ie.png) left top no-repeat;
+    background-image: linear-gradient(left top, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
+        background-image: -o-linear-gradient(left top, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
+        background-image: -moz-linear-gradient(left top, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
+        background-image: -webkit-linear-gradient(left top, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
+        background-image: -ms-linear-gradient(left top, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
+
+        background-image: -webkit-gradient(
+                linear,
+                left top,
+                right bottom,
+                color-stop(0, rgb(245,245,245)),
+                color-stop(1, rgb(255,255,255))
+        );        
+}
+#Conteudo #Lojas .box.veja_mais {
+   background: #5493a0;
+   background-image: none;
+   filter : '';
+}
+#Conteudo #Servicos .box {
+
+    margin: 8px 0;
+    background-image: linear-gradient(left top, rgb(241,151,7) 0%, rgb(250,168,26) 100%);
+        background-image: -o-linear-gradient(left top, rgb(241,151,7) 0%, rgb(250,168,26) 100%);
+        background-image: -moz-linear-gradient(left top, rgb(241,151,7) 0%, rgb(250,168,26) 100%);
+        background-image: -webkit-linear-gradient(left top, rgb(241,151,7) 0%, rgb(250,168,26) 100%);
+        background-image: -ms-linear-gradient(left top, rgb(241,151,7) 0%, rgb(250,168,26) 100%);
+
+        background-image: -webkit-gradient(
+                linear,
+                left top,
+                right bottom,
+                color-stop(0, rgb(241,151,7)),
+                color-stop(1, rgb(250,168,26))
+        );
+}
+#Conteudo #Novidades .box {
+    background-image: linear-gradient(left top, rgb(197,188,25) 19%, rgb(213,204,37) 60%);
+        background-image: -o-linear-gradient(left top, rgb(197,188,25) 19%, rgb(213,204,37) 60%);
+        background-image: -moz-linear-gradient(left top, rgb(197,188,25) 19%, rgb(213,204,37) 60%);
+        background-image: -webkit-linear-gradient(left top, rgb(197,188,25) 19%, rgb(213,204,37) 60%);
+        background-image: -ms-linear-gradient(left top, rgb(197,188,25) 19%, rgb(213,204,37) 60%);
+
+        background-image: -webkit-gradient(
+                linear,
+                left top,
+                right bottom,
+                color-stop(0.19, rgb(197,188,25)),
+                color-stop(0.6, rgb(213,204,37))
+        ); 
+}
+#Conteudo #Cinema .box {
+    background-image: linear-gradient(left top, rgb(225,49,79) 19%, rgb(239,62,91) 60%);
+        background-image: -o-linear-gradient(left top, rgb(225,49,79) 19%, rgb(239,62,91) 60%);
+        background-image: -moz-linear-gradient(left top, rgb(225,49,79) 19%, rgb(239,62,91) 60%);
+        background-image: -webkit-linear-gradient(left top, rgb(225,49,79) 19%, rgb(239,62,91) 60%);
+        background-image: -ms-linear-gradient(left top, rgb(225,49,79) 19%, rgb(239,62,91) 60%);
+
+        background-image: -webkit-gradient(
+                linear,
+                left top,
+                right bottom,
+                color-stop(0.19, rgb(225,49,79)),
+                color-stop(0.6, rgb(239,62,91))
+        ); 
+}
+#Conteudo #Cinema .box.voltar_topo { /* Especial de volta ao topo */
+    background: #fff;
+    cursor: pointer;
+}
+#Conteudo #Cinema .box.voltar_topo .topo_link { /* Especial de volta ao topo */
+    overflow: hidden;
+    background: url(../img/home/seta-voltar-topo.png) left top no-repeat;
+    width: 47px;
+    height: 25px;
+    display: block;
+    text-indent: -9000px;
+    margin: -80px 0 0 -24px;
+}
+
+
+/*--------- CONTE脷DO DOS BOXES ------------*/
+
+/* Facebook */
+#Conteudo #Conectese .inner_rotate {
+    position: absolute;
+    width: 325px;
+    height: 135px;
+    bottom: 35px;
+    right: -52px;
+    padding: 15px 0 0;
+        
+}
+#Conteudo #Conectese h3 {
+    color: #c1cff7;
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+#Conteudo #Conectese p {
+    font-size: 0.9em;
+    color: #fff;
+}
+#Conteudo #Conectese .login_fb {
+    display: block;
+    width: 180px;
+    height: 52px;
+    background: url(../img/home/bt-conectese-facebook.png) left top no-repeat;
+    overflow: hidden;
+    text-indent: -9000px;
+    margin: 18px auto 6px;
+}
+#Conteudo #Conectese .login_default {
+    color: #c4ffd7;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+/* Destaque */
+#Conteudo #DestaqueRotativoMenor {
+    overflow: visible;
+}
+#Conteudo #DestaqueRotativoMenor .inner_rotate {
+    width: 317px;
+    height: 317px;
+    margin: -48px 0 0 -48px;
+}
+#Conteudo  #DestaqueRotativoMenor .slider_box {
+    padding: 48px 0;
+}
+#Conteudo  #DestaqueRotativoMenor .slider_box #SlidesDestaqueTopo li {
+    position: relative;
+    width: 100%;
+}
+#Conteudo #DestaqueRotativoMenor .thumb_cinema .border-thumb {
+    position: absolute;
+    top: 45px;
+    left: 108px;
+}
+#Conteudo #DestaqueRotativoMenor .thumb_cinema a{
+    position: relative;
+    z-index: 1;
+}
+#Conteudo #DestaqueRotativoMenor .thumb_cinema span {
+    display: block;
+
+}
+#Conteudo #DestaqueRotativoMenor .thumb_cinema .border-left {
+    background: #c41733;
+    height: 135px;  
+    width: 7px;
+    -sand-transform: skew(0, -47deg);
+}
+#Conteudo #DestaqueRotativoMenor .thumb_cinema .border-bottom {
+    background: #a90f28;
+    width: 90px;    
+    height: 7px;
+    -sand-transform: skew(-42deg, 0);
+    margin: -4px 0 0 3px;
+}
+#Conteudo #DestaqueRotativoMenor.cinema_color p {
+    color: #ffc2cc;
+    font-weight: bold;
+    font-size: 12px;
+    letter-spacing: -0.1em;
+    line-height: 130%;
+    margin-bottom: 11px;
+}
+#Conteudo #DestaqueRotativoMenor.cinema_color p strong {
+    color: #fff6d8;
+    font-size: 16px;    
+}
+#Conteudo #DestaqueRotativoMenor.cinema_color #Paginacao {
+    margin: 195px auto 0;
+    float: left;
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+#Conteudo #DestaqueRotativoMenor.cinema_color #Paginacao li {   
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    text-indent: -9000px;
+    background: url(../img/geral/picker-inativo.png) left top no-repeat;
+    margin: 0 2px;
+    cursor: pointer;
+}
+#Conteudo #DestaqueRotativoMenor.cinema_color #Paginacao li.sel {   
+    background: url(../img/geral/picker-ativo.png) left top no-repeat;
+}
+#Conteudo #DestaqueRotativoMenor.cinema_color .passaresquerda {
+    width: 20px;
+    height: 32px;
+    display: block;
+    position: absolute;
+    top: 146px;
+    left: 35px;
+    background: url(../img/home/prevSessao_03.png) center top no-repeat;
+    text-indent: -9999px;
+    z-index: 5;
+}
+#Conteudo #DestaqueRotativoMenor.cinema_color a.passaresquerda:hover {
+    background: url(../img/home/prevSessao_03.png) center bottom no-repeat;
+}
+#Conteudo #DestaqueRotativoMenor.cinema_color .passardireita {
+    width: 20px;
+    height: 32px;
+    display: block;
+    position: absolute;
+    top: 146px;
+    right: 35px;
+    background: url(../img/home/nextSessao_03.png) center top no-repeat;
+    text-indent: -9999px;
+    z-index: 5;
+}
+#Conteudo #DestaqueRotativoMenor.cinema_color a.passardireita:hover {
+    background: url(../img/home/nextSessao_03.png) center bottom no-repeat;
+}
+
+
+/* Marca e etc */
+#PrincipalTopo #MarcaHome .logo h1 {
+    text-indent: -9000px;
+    overflow: hidden;
+    background: url(marca_03.png) left top no-repeat;
+    width: 202px;
+    height: 171px;
+    margin: 128% 28% 28% 88%;
+}
+#PrincipalTopo #MarcaHome .icons_top {
+    padding: 100px 0 0;
+    width: 100%;
+}
+#PrincipalTopo #MarcaHome .icons_top ul li {
+    display: inline;    
+    margin: 0 10px;
+}
+#PrincipalTopo #MarcaHome .icons_top ul li a,
+#PrincipalTopo #MarcaHome .icons_bottom ul li a {
+    display: inline-block;
+    overflow: hidden;
+    text-indent: -9000px;
+        position: relative;
+}
+#PrincipalTopo #MarcaHome .icons_top ul li.local_icon a {
+    background: url(../img/home/top-local_icon.gif) left top no-repeat;
+    width: 21px;
+    height: 32px;
+}
+#PrincipalTopo #MarcaHome .icons_top ul li.rss_icon a {
+    background: url(../img/home/top-rss_icon.gif) left top no-repeat;
+    width: 26px;
+    height: 32px;
+    margin: 0 10px 0 15px;
+}
+#PrincipalTopo #MarcaHome .icons_top ul li.horario_icon a {
+    background: url(../img/home/top-horario_icon.gif) left top no-repeat;
+    width: 28px;
+    height: 32px;
+}
+#PrincipalTopo #MarcaHome .icons_bottom {
+    padding: 40px 0 0;
+    width: 100%;
+}
+#PrincipalTopo #MarcaHome .icons_bottom ul li {
+    display: inline;    
+}
+#PrincipalTopo #MarcaHome .icons_bottom ul li a { 
+    width: 67px;
+    height: 69px;
+}
+#PrincipalTopo #MarcaHome .icons_bottom ul li.fb_icon a {
+    background: url(../img/home/top-fb_icon.jpg) left top no-repeat;
+}
+#PrincipalTopo #MarcaHome .icons_bottom ul li.tw_icon a {
+    background: url(../img/home/top-tw_icon.jpg) left top no-repeat;
+}
+
+/* Destaque Rotativo */
+#PrincipalTopo #DestaquesPrincipal .inner_rotate {
+    width: 642px;
+    height: 642px;
+    margin: -94px 0 0 -94px;
+}
+#PrincipalTopo .etiqueta  {
+    display: block;
+    width: 165px;
+    height: 150px;
+    background: url(../img/home/etiqueta_destaque.png) right top no-repeat;
+    position: absolute;
+    z-index: 10;
+    -webkit-transform: rotate(-45deg); 
+        -moz-transform: rotate(-45deg); 
+        -ms-transform: rotate(-45deg); 
+       -o-transform: rotate(-45deg); 
+        transform: rotate(-45deg);
+    right: -87px;
+        bottom: 238px;
+}
+#PrincipalTopo #DestaquesPrincipal .texto_destaque {
+        position: absolute;
+        z-index: 1;
+        top: 363px;
+        right: 176px;
+        width: 234px;
+        height: 63px;
+        background: #fff;
+        text-align: left;
+        padding: 35px 0 40px 32px;
+}
+#PrincipalTopo #DestaquesPrincipal .texto_destaque h2 {
+    font-weight: bold;
+    font-size: 1.75em;
+    line-height: 120%;
+    letter-spacing: -0.05em;
+}
+#PrincipalTopo #DestaquesPrincipal .texto_destaque a {
+    color: #aeaeae;
+}
+#PrincipalTopo #DestaquesPrincipal .texto_destaque a:hover {
+    text-decoration: none;
+}
+#PrincipalTopo #DestaquesPrincipal #PaginacaoDestaque {
+    width:155px;
+    height:60px;
+    position: absolute;
+    top: 566px;
+    left: 243px;
+    z-index: 1;
+    background-image:url(../img/geral/bgPaginacaoDestaque.png);
+    padding-top:18px;
+}
+#PrincipalTopo #DestaquesPrincipal #PaginacaoDestaque li {  
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    text-indent: -9000px;
+    background: url(../img/geral/picker-destaque-inativo.png) left top no-repeat;
+    margin: 0 2px;
+    cursor: pointer;
+}
+#PrincipalTopo #DestaquesPrincipal #PaginacaoDestaque li.sel {  
+    background: url(../img/geral/picker-destaque-ativo.png) left top no-repeat;
+}
+
+/************************************
+*         SIDEBAR DA HOME           *
+************************************/
+#SidebarHome {
+    width: 315px;
+    height: 505px;
+    position: absolute;
+    left: 0;
+    top: 1800px;
+    z-index: 0;
+    padding: 0 35px;
+}
+#SidebarHome  h3.marca_sidebar {
+    text-indent: -9000px;
+    width: 126px;
+    height: 92px;
+    overflow: hidden;
+    background: url(../img/home/marca-sidebar.png) left top no-repeat;
+    margin: 25px 0;
+}
+#SidebarHome .icons_sidebar {
+    float: left;
+}
+#SidebarHome .icons_sidebar ul li {
+    display: inline;
+    float: left;
+}
+#SidebarHome .icons_sidebar ul li a {
+    display: inline-block;
+    width: 42px;
+    height: 42px;
+    overflow: hidden;
+    text-indent: -9000px;
+}
+#SidebarHome .icons_sidebar ul li.fb_icon a {
+    background: url(../img/home/ico-fb-sidebar.png) center center no-repeat;
+}
+#SidebarHome .icons_sidebar ul li.tw_icon a {
+    background: url(../img/home/ico-tw-sidebar.png) center center no-repeat;
+}
+#SidebarHome .info {
+    font-family: Georgia, Helvetica, Arial;
+    font-style: italic;
+    color: #797979;
+    font-size: 0.9em;
+}
+#SidebarHome .info span{
+    font-style: normal;
+}
+#SidebarHome .info h4 {
+    font-weight: bold;
+}
+#SidebarHome .info ul li {
+    padding: 0 0 0 45px;
+    margin-bottom: 25px;
+}
+#SidebarHome .info ul li.tel_info {
+    background: url(../img/home/ico-sidebar-tel.png) left center no-repeat;
+}
+#SidebarHome .info ul li.email_info {
+    background: url(../img/home/ico-sidebar-email.png) left center no-repeat;
+}
+#SidebarHome .info ul li.endereco_info {
+    background: url(../img/home/ico-sidebar-local.png) left center no-repeat;
+}
+#SidebarHome .info ul li.horario_info {
+    background: url(../img/home/ico-sidebar-horario.png) left 4px no-repeat;
+}
+
+/* PR脡 RODAP脡 DA HOME */
+#PreRodape {
+    background: #e3e3e3 url(../img/home/bg-ladrilho-final.png) -1px top repeat-x;
+    position: absolute;
+    left: 0;
+    top: 2263px;
+    width: 550px;
+    font-size: 0.9em; 
+    padding: 30px 0 35px 35px;
+}
+#PreRodape p{
+    text-shadow: 2px 2px 1px #ffffff;
+    filter: dropshadow(color=#ffffff, offx=2, offy=2);  
+    background: #e3e3e3;
+}
+#PreRodape a.marca_iwwa {
+    display: block;
+    text-indent: -9000px;
+    width: 31px;
+    height: 27px;
+    background: url(../img/home/marca-iwwa-rodape.png) left top no-repeat;
+    overflow: hidden;
+    position: absolute;
+    top: 35px;
+    right: 185px;
+}
+
+/*SLIDER - - - - - - - - - */
+.info_bottom.home{
+    bottom:-35px !important;
+    margin-left:-59px !important;
+    }
+#slides{
+    }
+.slides_container {
+    width:120px;
+    padding:0 0 0 0px !important;
+    }
+.slides_container strong{
+    color: #fff6d8;
+    font-size: 16px;
+    }
+.slides_container div {
+    width:125px;
+    height:65px;
+    display:block;
+    text-align:center;
+    }
+.pagination {
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:none;
+    }
+.pagination .current a {
+    color:red;
+    }
+    
+.prev{
+    background:url(../img/cinema/voltaPreto.png) 4px 9px no-repeat;
+    width:20px;
+    height:40px;
+    float:left;
+    display:none;
+    margin:-43px 0 0 -17px;
+    }
+.prev:hover{
+    background:url(../img/cinema/voltaAtivo.png) 0px 5px no-repeat;
+    }
+.next{
+    background:url(../img/cinema/vaiPreto.png) 4px 9px no-repeat;
+    width:20px;
+    height:30px;
+    float:right;
+    display:none;
+    margin:-43px -28px 0 0;
+    }
+.next:hover{
+    background:url(../img/cinema/vaiAtivo.png) 0px 5px no-repeat;
+    }
+.slides_container.cinema{
+    margin-top:0 !important;
+    margin-left:7px;
+    }
+.slides_container.cinema div{
+    width:100px;
+    position: relative !important;
+    top: 25px;
+    }
+.info_bottom.home .prev{
+    margin:-50px 0 0 13px !important;
+    position:relative;
+    z-index:10;
+    display:none;
+    }
+.info_bottom.home .next{
+    margin:-50px 10px 0 0 !important;
+    position:relative;
+    z-index:10;
+    display:none;
+    }
+/*SLIDER - - - - - */
+
+
+
+/*Tool Esquerda - - - - - - - - - - - - - - - - - */
+.toolLocal, .toolNews, .toolHorariosEsq{
+    display:none;
+    width:240px;
+    background:#fff;
+    text-align:left;
+    box-shadow:1px 1px 2px #cecece;
+    border:1px solid #eaeaea;
+    position:absolute;
+    left:-8px;
+    margin-top:15px;
+    z-index:10;
+    }
+.setaToolLocal{
+    margin: -10px 0 0 47px;
+    position: absolute;
+    }
+ .setaToolNews{
+    margin: -10px 0 0 113px;
+    position: absolute;
+    }
+.setaToolHorario{
+    margin: -10px 0 0 170px;
+    position: absolute;
+    }
+
+.toolLocal h2, .toolNews h2, .toolHorariosEsq h2{
+    text-align:center;
+    padding:10px;
+    text-transform:uppercase;
+    background:#fcfcfc;
+    border-bottom:1px solid #efefef;
+    color:#999999;
+    font-weight:bold;
+    font-size:11px;
+    }
+.fecharTool{
+    float:right;
+    margin:-24px 10px 0 0;
+    }
+.contToolTip{
+    padding:20px;
+    }
+.contToolTip p.enderecoTool{
+    color:#828e9d;
+    padding:0 0 20px 0;
+    border-bottom:1px solid #eee;
+    margin:0 0 20px 0;
+    }
+.linkTool{
+    text-align:right;
+    display:block;
+    color:#3f5777;
+    font-weight:bold;
+    }
+.titReceba{
+    color:#3f5777;
+    font-weight:bold;
+    }
+.formNewsTool{
+    }
+.inputMailTool{
+    width:200px;
+    padding:12px 0;
+    margin:10px 0;
+    color:#66788a;
+    font-style:italic;
+    font-size:14px;
+    font-family: Georgia, Helvetica, sans-serif;
+    text-align:center;
+    background:url(../img/geral/bgInputNews.png) top left repeat-x;
+    border-top:1px solid #b2b6ba;
+    border-left:1px solid #d1d5d9;
+    border-right:1px solid #d1d5d9;
+    border-bottom:1px solid #e8eaec;
+    }
+.submitTool{
+    background:url(../img/geral/bgCadastreNews.png) bottom left repeat-x;
+    color:#464646;
+    text-align:center;
+    width:200px;
+    padding:12px 0;
+    font-weight:bold;
+    border-top:1px solid #efefef;
+    border-left:1px solid #efefef;
+    border-right:1px solid #efefef;
+    border-bottom:1px solid #d2d2d2;
+    }
+
+.segunda{
+    padding:0 0 30px 0;
+    margin:0 0 20px 0;
+    border-bottom:3px solid #f5f5f5;
+    }
+.segunda h3, .domingo h3{
+    color:#919599;
+    font-family:Georgia, "Times New Roman", Times, serif;
+    font-size:16px;
+    font-style:italic;
+    margin:0 0 10px 0;
+    }
+.corTipo{
+    color:#828e9d;
+    font-size:11px;
+    text-transform:uppercase;
+    float:left;
+    }
+.corHora{
+    float:right;
+    font-size:11px;
+    color:#355176;
+    font-weight:bold;
+    }
+
+.domingo{
+    }
+.liLoja, .liAlim,.liCine{
+    padding:0 0 10px 20px;
+    margin:0 0 10px 0;
+    border-bottom:1px solid #eee;
+    background:url(../img/geral/iconLoja.png) top left no-repeat;
+    }
+.liCine{
+    background:url(../img/geral/iconCine.png) top left no-repeat;
+    }
+.liAlim{
+    border-bottom:none;
+    background:url(../img/geral/iconRest.png) top left no-repeat;
+    }

@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/cache|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1367403992', 'admin/tpl/cache');?><?php $_TPL['menunames'] = array(
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/cache|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1368854849', 'admin/tpl/cache');?><?php $_TPL['menunames'] = array(
 		'index' => '管理首页',
 		'config' => '站点设置',
 		'privacy' => '隐私设置',
@@ -59,6 +59,7 @@
 <script language="javascript" type="text/javascript" src="source/script_manage.js"></script>
 <style type="text/css">
 @import url(template/default/style.css);
+@import url(template/green/style.css);
 <?php if($_TPL['css']) { ?>
 @import url(template/default/<?=$_TPL['css']?>.css);
 <?php } ?>
@@ -85,10 +86,13 @@
 <ul class="menu">
 <?php if($_SGLOBAL['supe_uid']) { ?>
 <li><a href="space.php?do=home">首页</a></li>
-<li><a href="space.php">个人主页</a></li>
+<li><a href="space.php?do=medicine">用药助手</a></li>
+<li><a href="space.php?do=activity">活动</a></li>
+<li><a href="space.php?do=group">群组</a></li>
+<li><a href="space.php?do=discussion">案例讨论</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
-<li><a href="space.php?do=medicine">用药助手</a></li>
+
 <?php } else { ?>
 <li><a href="index.php">首页</a></li>
 <?php } ?>
@@ -347,9 +351,9 @@ showreward();
 <?php } ?>
 <?php if($_SGLOBAL['supe_uid']) { ?>
 <ul id="navigation">
-            <li class="home"><a href="" title="Home"></a></li>
-            <li class="about"><a href="" title="About"></a></li>
-            <li class="search"><a href="" title="Search"></a></li>
+            <li class="home"><a href="space.php?do=home" title="首页"></a></li>
+             <li class="about"><a href="space.php?do=medicine" title="用药助手"></a></li>
+            <li class="search"><a href="space.php?do=activity" title="活动"></a></li>
             <li class="photos"><a href="" title="Photos"></a></li>
             <li class="rssfeed"><a href="" title="Rss Feed"></a></li>
             <li class="podcasts"><a href="" title="Podcasts"></a></li>

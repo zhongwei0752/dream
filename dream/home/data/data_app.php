@@ -9,6 +9,14 @@ $_SGLOBAL['app']=Array
 		'type' => 'UCHOME',
 		'open' => '0',
 		'icon' => 'uchome'
+		),
+	2 => Array
+		(
+		'name' => 'Discuz!',
+		'url' => 'http://localhost/dream/bbs',
+		'type' => 'DISCUZ',
+		'open' => 1,
+		'icon' => 'discuz'
 		)
 	)
 ?>
