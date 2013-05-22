@@ -1,4 +1,50 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_top|template/green/header|template/green/space_list|template/green/footer', '1368859068', 'template/green/space_top');?><?php $_TPL['titles'] = array('排名'); ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/log|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188615', 'admin/tpl/log');?><?php $_TPL['menunames'] = array(
+		'index' => '管理首页',
+		'config' => '站点设置',
+		'privacy' => '隐私设置',
+		'usergroup' => '用户组',
+		'credit' => '积分规则',
+		'profilefield' => '用户栏目',
+		'profield' => '群组栏目',
+		'eventclass' => '活动分类',
+		'magic' => '道具设置',
+		'task' => '有奖任务',
+		'spam' => '防灌水设置',
+		'censor' => '词语屏蔽',
+		'ad' => '广告设置',
+		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
+		'app' => 'UCenter应用',
+		'network' => '随便看看',
+		'cache' => '缓存更新',
+		'log' => '系统log记录',
+		'space' => '用户管理',
+		'feed' => '动态(feed)',
+		'share' => '分享',
+		'blog' => '日志',
+		'album' => '相册',
+		'pic' => '图片',
+		'comment' => '评论/留言',
+		'thread' => '话题',
+		'post' => '回帖',
+		'doing' => '记录',
+		'tag' => '标签',
+		'mtag' => '群组',
+		'poll' => '投票',
+		'event' => '活动',
+		'magiclog' => '道具记录',
+		'report' => '举报',
+		'block' => '数据调用',
+		'template' => '模板编辑',
+		'backup' => '数据备份',
+		'stat' => '统计更新',
+		'cron' => '系统计划任务',
+		'click' => '表态动作',
+		'ip' => '访问IP设置',
+		'hotuser' => '推荐成员设置',
+		'defaultuser' => '默认好友设置',
+	); ?>
+<?php $_TPL['nosidebar'] = 1; ?>
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -45,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -109,151 +156,177 @@
 <?php } ?>
 
 
-<div class="searchbar floatright">
-<form method="get" action="cp.php">
-<input name="searchkey" value="" size="15" class="t_input" type="text">
-<input name="searchsubmit" value="找人" class="submit" type="submit">
-<input type="hidden" name="searchmode" value="1" />
-<input type="hidden" name="ac" value="friend" />
-<input type="hidden" name="op" value="search" />
-</form>
-</div>
-<h2 class="title"><img src="image/icon/show.gif" />排行榜</h2>
-<div class="tabs_header">
-<ul class="tabs">
-<li<?=$actives['show']?>><a href="space.php?do=top"><span>竞价排行</span></a>
-<li<?=$actives['mm']?>><a href="space.php?do=top&view=mm"><span>美女排行</span></a>
-<li<?=$actives['gg']?>><a href="space.php?do=top&view=gg"><span>帅哥排行</span></a>
-<li<?=$actives['experience']?>><a href="space.php?do=top&view=experience"><span>经验排行</span></a>
-<li<?=$actives['credit']?>><a href="space.php?do=top&view=credit"><span>积分排行</span></a>
-<li<?=$actives['friendnum']?>><a href="space.php?do=top&view=friendnum"><span>好友数排行</span></a>
-<li<?=$actives['viewnum']?>><a href="space.php?do=top&view=viewnum"><span>访问量排行</span></a>
-<li<?=$actives['online']?>><a href="space.php?do=top&view=online"><span>在线成员</span></a>
-<li<?=$actives['updatetime']?>><a href="space.php?do=top&view=updatetime"><span>全部成员</span></a>
-</ul>
-</div>
+<style type="text/css">
+@import url(admin/tpl/style.css);
+</style>
 
-<script type="text/javascript">
-function checkCredit(id) {
-var maxCredit = parseInt(<?=$space['credit']?>);
-var idval = parseInt($(id).value);
-if(idval > maxCredit) {
-alert("您的当前积分为:"+maxCredit+",请填写一个小于该值的数字");
-return false;
-} else if(idval < 1) {
-alert("您所填写的积分值不能小于1");
-return false;
-}
-return true;
-}
-</script>
+<div id="cp_content">
 
-<div class="c_form">
 
-<?php if($now_pos >= 0) { ?>
-<div style="padding-bottom:20px;">
-<h3 class="l_status">排行榜公告：</h3>
-<?php if($_GET['view']=='show') { ?>
-<?php if($space['showcredit']) { ?>
-自己当前的竞价积分为：<?=$space['showcredit']?>，当前排名 <span style="font-size:20px;color:red;"><?=$now_pos?></span> ，再接再厉！
-<?php } else { ?>
-您现在还没有上榜。让自己上榜吧，这会大大提升您的主页曝光率。
-<?php } ?>
-<br>竞价积分越多，竞价排名越靠前，您的主页曝光率也会越高；
-<br>上榜用户的主页被别人有效浏览一次，其竞价积分将减少1个(恶意刷新访问不扣减)。
-<?php } else { ?>
-<?php if($_GET['view']=='credit') { ?>
-<a href="cp.php?ac=credit">自己当前的积分：<?=$space['credit']?></a>
-<?php } elseif($_GET['view']=='friendnum') { ?>
-<a href="space.php?do=friend">自己当前的好友数：<?=$space['friendnum']?></a>
-<?php } elseif($_GET['view']=='experience') { ?>
-自己当前的经验数：<?=$space['experience']?>
-<?php } else { ?>
-<a href="space.php">自己当前的访问量：<?=$space['viewnum']?></a>
-<?php } ?>
-，当前排名 <span style="font-size:20px;color:red;"><?=$now_pos?></span> ，再接再厉！
-<?php } ?>
-<?php if($cache_mode) { ?>
-<p>下面列出的为前100名排行，数据每 <?=$cache_time?> 分钟更新一次。</p>
-<?php } ?>
-</div>
-<?php } ?>
+<div class="mainarea">
+<div class="maininner">
 
-<?php if($_GET['view']=='show') { ?>
-<div style="padding: 0 0 20px 0;">
-<table width="100%">
-<tr><td width="50%" valign="top">
-<div class="l_status"><strong>帮助好友来上榜</strong></div>
-<div class="content">
-<form method="post" action="cp.php?ac=top" onsubmit="return checkCredit('stakecredit');">
-<p>
-要帮助的好友用户名<br />
-<input type="text" name="fusername" value="" size="20" class="t_input" /><br />
-赠送竞价积分(<span class="gray">不要超过自己的积分:<?=$space['credit']?></span>)<br />
-<input type="text" id="stakecredit" name="stakecredit" value="100" size="5" class="t_input" onblur="checkCredit('stakecredit');" /> <input type="submit" name="friend_submit" value="赠送" class="submit" />
-</p>
-<input type="hidden" name="friendsubmit" value="true" />
-<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
-</form>
-</div>
-</td>
-<td width="50%" valign="top">
-<div class="l_status"><strong>我也要上榜</strong></div>
-<div class="content">
-<form method="post" action="cp.php?ac=top" onsubmit="return checkCredit('showcredit');">
-<p>
-我的上榜宣言(<span class="gray">最多50个汉字，会显示在榜单中</span>)
-<br />
-<input type="text" name="note" value="" size="35" class="t_input" /><br />
-增加竞价积分(<span class="gray">不要超过自己的积分:<?=$space['credit']?></span>)<br />
-<input type="text" id="showcredit" name="showcredit" value="100" size="5" class="t_input" onblur="checkCredit('showcredit');" /> <input type="submit" name="show_submit" value="增加" class="submit" />
-</p>
-<input type="hidden" name="showsubmit" value="true" />
-<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" /></form>
-</div>
-</td>
-</tr></table>
-</div>
+<?php if($_GET['op'] == 'view') { ?>
+<div class="bdrcontent">	
+<table cellspacing="0" cellpadding="0" class="formtable" border="0">
+<tr>				
+<th width="80">时间</th>
+<td><?=$log['dateline']?></td>
+</tr>
+<th>IP</th>
+<td><?=$log['ip']?></td>
+</tr>
+<th>用户</th>
+<td><a href="space.php?uid=<?=$log['uid']?>" target="_blank"><?=$_SN[$log['uid']]?></a></td>
+</tr>
+<th>链接</th>
+<td><?=$log['link']?></td>
+</tr>
+<?php if($log['get']) { ?>
+</tr>
+<th>GET数据</th>
+<td><?=$log['get']?></td>
+</tr>
 <?php } ?>
-
-<div class="space_list">
-<?php if($list) { ?>
-<?php if(is_array($list)) { foreach($list as $key => $value) { ?>
-<table cellspacing="0" cellpadding="0" width="100%">
+<?php if($log['post']) { ?>
+</tr>
+<th>POST数据</th>
+<td><?=$log['post']?></td>
+</tr>
+<?php } ?>
+<?php if($log['extra']) { ?>
 <tr>
-<td width="65"><div class="avatar48"><a href="space.php?uid=<?=$value['uid']?>"><?php echo avatar($value[uid],small); ?></a></div></td>
-<td>
-<h2>
-<?php if($ols[$value['uid']]) { ?><img src="image/online_icon.gif" align="absmiddle"> <?php } ?>
-<a href="space.php?uid=<?=$value['uid']?>" title="<?=$_SN[$value['uid']]?>"<?php g_color($value[groupid]); ?>><?=$_SN[$value['uid']]?></a>
-<?php if($value['username'] && $_SN[$value['uid']]!=$value['username']) { ?><span class="gray">(<?=$value['username']?>)</span><?php } ?>
-<?php g_icon($value[groupid]); ?>
-<?php if($value['videostatus']) { ?>
-<img src="image/videophoto.gif" align="absmiddle">
+<th>参考信息</th>
+<td><?=$log['extra']?></td>
+</tr>
 <?php } ?>
-</h2>
-<?php if($value['sex']==2) { ?><p>美女</p><?php } elseif($value['sex']==1) { ?><p>帅哥</p><?php } ?></p>
-<p>
-<?php if($_GET['view']=='show') { ?>竞价<?php } ?>积分：<?=$value['credit']?> / <?php if($value['experience']) { ?>经验：<?=$value['experience']?> / <?php } ?>人气：<?=$value['viewnum']?> / 好友：<?=$value['friendnum']?></p>
-<?php if($value['note']) { ?><?=$value['note']?><?php } ?>
+</table>
+</div>
+<div class="footactions">
+<button onclick="location.href='<?=$_SGLOBAL['refer']?>'" class="submit">返回</button>
+</div>
+
+<?php } else { ?>
+
+<form method="get" action="admincp.php">
+<input type="hidden" name="ac" value="log">
+<div class="block style4">				
+<table cellspacing="3" cellpadding="3">				
+<tr>
+<th>选择log文件</th>
+<td colspan="3">
+<select name="file">
+<option value="">选择文件</option>	
+<?php if(is_array($logfiles)) { foreach($logfiles as $value) { ?>
+<option value="<?=$value?>"<?php if($_GET['file']==$value) { ?> selected=""<?php } ?>><?=$value?></option>
+<?php } } ?>				
+</select>
 </td>
-<td width="100">
-<ul class="line_list">
-<li><a href="space.php?uid=<?=$value['uid']?>">去串个门</a></li>
-<li><a href="cp.php?ac=poke&op=send&uid=<?=$value['uid']?>" id="a_poke_<?=$key?>" onclick="ajaxmenu(event, this.id, 1)" title="打招呼">打个招呼</a></li>
-<?php if(isset($value['isfriend']) && !$value['isfriend']) { ?><li><a href="cp.php?ac=friend&op=add&uid=<?=$value['uid']?>" id="a_friend_<?=$key?>" onclick="ajaxmenu(event, this.id, 1)" title="加好友">加为好友</a></li><?php } ?>	
-</ul>
+</tr>
+<tr>
+<tr>
+<td>用户UID</td>
+<td>
+<input type="text" name="uid" value="<?=$_GET['uid']?>" />
+</td>
+<th>IP地址</th>
+<td>
+<input type="text" name="ip" value="<?=$_GET['ip']?>" />
+</td>
+</tr>
+<th>记录时间</th>
+<td colspan="3">
+<script type="text/javascript" src="source/script_calendar.js" charset="<?=$_SC['charset']?>"></script>
+<input type="text" name="starttime" value="<?=$_GET['starttime']?>" onclick="showcalendar(event,this,1)"/> ~
+<input type="text" name="endtime" value="<?=$_GET['endtime']?>"  onclick="showcalendar(event,this,1)" />						
+</td>
+</tr>
+<tr>
+<th>关键词</th>
+<td colspan="3">
+<input type="text" name="keysearch" value="<?=$_GET['keysearch']?>" />
+<input type="submit" name="searchsubmit" value="搜索" class="submit">
 </td>
 </tr>
 </table>
+</div>
+</form>
+<?php if($list) { ?>		
+<div class="bdrcontent">		
+<table cellspacing="0" cellpadding="0" class="formtable" border="0">
+<tr>				
+<th width="160">时间</th>
+<th width="120">IP</th>
+<th width="120">用户</th>
+<th>链接</th>
+<th width="60">操作</th>
+</tr>			
+<?php if(is_array($list)) { foreach($list as $value) { ?>
+<tr>				
+<td><?=$value['dateline']?></td>
+<td><a href="admincp.php?ac=log&file=<?=$_GET['file']?>&uid=<?=$_GET['uid']?>&ip=<?=$value['ip']?>&starttime=<?=$_GET['starttime']?>&endtime=<?=$_GET['endtime']?>&keysearch=<?=$_GET['keysearch']?>"><?=$value['ip']?></a></td>
+<td>
+<a href="admincp.php?ac=log&file=<?=$_GET['file']?>&uid=<?=$value['uid']?>&ip=<?=$_GET['ip']?>&starttime=<?=$_GET['starttime']?>&endtime=<?=$_GET['endtime']?>&keysearch=<?=$_GET['keysearch']?>"><?=$_SN[$value['uid']]?></a>
+<p class="gray"><a href="space.php?uid=<?=$value['uid']?>" target="_blank">空间</a></p>
+</td>
+<td><?=$value['link']?></td>
+<td><a href="admincp.php?ac=log&op=view&file=<?=$_GET['file']?>&line=<?=$value['line']?>">详细</a></td>
+</tr>
 <?php } } ?>
-<div class="page"><?=$multi?></div>
+</table>			
+</div>
+<div class="footactions">
+<div class="pages"><?=$multi?></div>
+</div>
 <?php } else { ?>
-<div class="c_form">没有相关成员。</div>
+<div class="bdrcontent"><p>没有相关记录</p></div>
+<?php } ?>	
 <?php } ?>
 </div>
+</div>
 
+<div class="side">
+<?php if($menus['0']) { ?>
+<div class="block style1">
+<h2>基本设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['0'])) { foreach($acs['0'] as $value) { ?>
+<?php if($menus['0'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+</ul>
+</div>
+<?php } ?>
 
+<div class="block style1">
+<h2>批量管理</h2>
+<ul class="folder">
+<?php if(is_array($acs['3'])) { foreach($acs['3'] as $value) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } } ?>
+<?php if(is_array($acs['1'])) { foreach($acs['1'] as $value) { ?>
+<?php if($menus['1'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+</ul>
+</div>
+
+<?php if($menus['2']) { ?>
+<div class="block style1">
+<h2>高级设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['2'])) { foreach($acs['2'] as $value) { ?>
+<?php if($menus['2'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+<?php if($menus['0']['config']) { ?><li><a href="<?=UC_API?>" target="_blank">UCenter</a></li><?php } ?>
+</ul>
+</div>
+<?php } ?>
+</div>
 
 </div>
 
@@ -391,5 +464,4 @@ showreward();
         <?php } ?>
 </body>
 </html>
-<?php } ?>
-<?php ob_out();?>
+<?php } ?><?php ob_out();?>

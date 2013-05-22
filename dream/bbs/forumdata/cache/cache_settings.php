@@ -1,6 +1,6 @@
 <?php
 //Discuz! cache file, DO NOT modify me!
-//Created: May 18, 2013, 14:37
+//Created: May 22, 2013, 10:06
 //Identify: 857150d9e364d61f41b0265adca912da
 
 $_DCACHE['settings'] = array (

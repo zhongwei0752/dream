@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_index|template/green/header|template/green/space_status|template/green/space_feed_li|template/green/space_comment_li|template/green/footer', '1368859029', 'template/green/space_index');?><?php $_TPL['nosidebar']=1; ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_index|template/green/header|template/green/space_status|template/green/space_feed_li|template/green/space_comment_li|template/green/footer', '1369131847', 'template/green/space_index');?><?php $_TPL['nosidebar']=1; ?>
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -45,6 +45,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 

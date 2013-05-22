@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/doing|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369056263', 'admin/tpl/doing');?><?php $_TPL['menunames'] = array(
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/network|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188529', 'admin/tpl/network');?><?php $_TPL['menunames'] = array(
 		'index' => '管理首页',
 		'config' => '站点设置',
 		'privacy' => '隐私设置',
@@ -13,6 +13,7 @@
 		'censor' => '词语屏蔽',
 		'ad' => '广告设置',
 		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
 		'app' => 'UCenter应用',
 		'network' => '随便看看',
 		'cache' => '缓存更新',
@@ -90,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -164,90 +166,326 @@
 <div class="mainarea">
 <div class="maininner">
 
-<form method="get" action="admincp.php">
-
-<div class="block style4">
-<table cellspacing="3" cellpadding="3">
-
-<?php if($allowmanage) { ?>
-<tr><th>作者UID</th><td><input type="text" name="uid" value="<?=$_GET['uid']?>"></td>
-<th>作者名</th><td><input type="text" name="username" value="<?=$_GET['username']?>"></td>
-</tr>
-<?php } ?>
-<tr><th>内容*</th><td><input type="text" name="message" value="<?=$_GET['message']?>"></td>
-<th>IP</th><td><input type="text" name="ip" value="<?=$_GET['ip']?>"></td>
-</tr>
-<tr><th>发布时间</th><td colspan="3">
-<input type="text" name="dateline1" value="<?=$_GET['dateline1']?>" size="10"> ~
-<input type="text" name="dateline2" value="<?=$_GET['dateline2']?>" size="10"> (YYYY-MM-DD)
-</td></tr>
-
-<tr><th>结果排序</th>
-<td colspan="3">
-<select name="orderby">
-<option value="">默认排序</option>
-<option value="dateline"<?=$orderby['dateline']?>>发布时间</option>
-</select>
-<select name="ordersc">
-<option value="desc"<?=$ordersc['desc']?>>递减</option>
-<option value="asc"<?=$ordersc['asc']?>>递增</option>
-</select>
-<select name="perpage">
-<option value="20"<?=$perpages['20']?>>每页显示20个</option>
-<option value="50"<?=$perpages['50']?>>每页显示50个</option>
-<option value="100"<?=$perpages['100']?>>每页显示100个</option>
-<option value="1000"<?=$perpages['1000']?>>一次处理1000个</option>
-</select>
-<input type="hidden" name="ac" value="doing">
-<input type="submit" name="searchsubmit" value="搜索" class="submit">
-</td>
-</tr>
-</table>
-</div>
-</form>
-
-
-<?php if($list) { ?>
-<form method="post" action="admincp.php?ac=doing">
+<form method="post" action="admincp.php?ac=network">
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
 <div class="bdrcontent">
 
-<?php if($perpage>100) { ?>
-<p>总共有满足条件的数据 <strong><?=$count?></strong> 个</p>
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<input type="hidden" name="ids[]" value="<?=$value['doid']?>">
-<?php } } ?>
-
-<?php } else { ?>
-
+<div class="title">
+<h3>日志聚合设置</h3>
+<p>设置日志显示在随便看看页面的条件</p>
+</div>
 <table cellspacing="0" cellpadding="0" class="formtable">
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<tr><td width="25"><input type="<?php if($allowbatch) { ?>checkbox<?php } else { ?>radio<?php } ?>" name="ids[]" value="<?=$value['doid']?>"></td>
+<tr>
+<td style="width:10em;">指定日志(blogid)</td>
 <td>
-<?php if($allowmanage) { ?><a href="<?=$mpurl?>&uid=<?=$value['uid']?>"><?=$value['username']?></a> :&nbsp;<?php } ?>
-<?=$value['message']?> &nbsp;<?php echo sgmdate('Y-m-d H:i', $value[dateline]); ?></td></tr>
-<?php } } ?>
+<input name="network[blog][blogid]" type="text" size="50" value="<?=$network['blog']['blogid']?>" /> 多个blogid用","分隔
+</td>
+</tr>
+<tr>
+<td>指定作者(uid)</td>
+<td>
+<input name="network[blog][uid]" type="text" size="50" value="<?=$network['blog']['uid']?>" /> 多个uid用","分隔
+</td>
+</tr>
+<tr>
+<td>热度范围</td>
+<td>
+<input name="network[blog][hot1]" type="text" size="10" value="<?=$network['blog']['hot1']?>" /> ~ 
+<input name="network[blog][hot2]" type="text" size="10" value="<?=$network['blog']['hot2']?>" />
+</td>
+</tr>
+<tr>
+<td>查看数范围</td>
+<td>
+<input name="network[blog][viewnum1]" type="text" size="10" value="<?=$network['blog']['viewnum1']?>" /> ~ 
+<input name="network[blog][viewnum2]" type="text" size="10" value="<?=$network['blog']['viewnum2']?>" />
+</td>
+</tr>
+<tr>
+<td>回复数范围</td>
+<td>
+<input name="network[blog][replynum1]" type="text" size="10" value="<?=$network['blog']['replynum1']?>" /> ~ 
+<input name="network[blog][replynum2]" type="text" size="10" value="<?=$network['blog']['replynum2']?>" />
+</td>
+</tr>
+<tr>
+<td>发布时间范围</td>
+<td><input type="text" name="network[blog][dateline]" value="<?=$network['blog']['dateline']?>" size="10"> 内天发布的才显示</td>
+</tr>
+<tr>
+<td>列表排序</td>
+<td>
+<select name="network[blog][order]">
+<option value="dateline">发布时间</option>
+<option value="viewnum"<?=$orders['blog']['viewnum']?>>查看数</option>
+<option value="replynum"<?=$orders['blog']['replynum']?>>回复数</option>
+<option value="hot"<?=$orders['blog']['hot']?>>热度</option>
+</select>
+<select name="network[blog][sc]">
+<option value="desc">递减</option>
+<option value="asc"<?=$scs['blog']['asc']?>>递增</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>缓存有效时间</td>
+<td><input type="text" name="network[blog][cache]" value="<?=$network['blog']['cache']?>" size="10"> 单位:秒 (设为0将不使用缓存机制，这会增加服务器负担)</td>
+</tr>
 </table>
-<?php } ?>
+
+<br>
+<div class="title">
+<h3>图片聚合设置</h3>
+<p>设置图片显示在随便看看页面的条件</p>
+</div>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<td style="width:10em;">指定图片(picid)</td>
+<td>
+<input name="network[pic][picid]" type="text" size="50" value="<?=$network['pic']['picid']?>" /> 多个picid用","分隔
+</td>
+</tr>
+<tr>
+<td>指定作者(uid)</td>
+<td>
+<input name="network[pic][uid]" type="text" size="50" value="<?=$network['pic']['uid']?>" /> 多个uid用","分隔
+</td>
+</tr>
+<tr>
+<td>热度范围</td>
+<td>
+<input name="network[pic][hot1]" type="text" size="10" value="<?=$network['pic']['hot1']?>" /> ~ 
+<input name="network[pic][hot2]" type="text" size="10" value="<?=$network['pic']['hot2']?>" />
+</td>
+</tr>
+<tr>
+<td>发布时间范围</td>
+<td><input type="text" name="network[pic][dateline]" value="<?=$network['pic']['dateline']?>" size="10"> 内天发布的才显示</td>
+</tr>
+<tr>
+<td>列表排序</td>
+<td>
+<select name="network[pic][order]">
+<option value="dateline">发布时间</option>
+<option value="hot"<?=$orders['pic']['hot']?>>热度</option>
+</select>
+<select name="network[pic][sc]">
+<option value="desc">递减</option>
+<option value="asc"<?=$scs['pic']['asc']?>>递增</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>缓存有效时间</td>
+<td><input type="text" name="network[pic][cache]" value="<?=$network['pic']['cache']?>" size="10"> 单位:秒 (设为0将不使用缓存机制，这会增加服务器负担)</td>
+</tr>
+</table>
+<br>
+
+<div class="title">
+<h3>话题聚合设置</h3>
+<p>设置话题显示在随便看看页面的条件</p>
+</div>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<td style="width:10em;">指定话题(tid)</td>
+<td>
+<input name="network[thread][tid]" type="text" size="50" value="<?=$network['thread']['tid']?>" /> 多个tid用","分隔
+</td>
+</tr>
+<tr>
+<td>指定作者(uid)</td>
+<td>
+<input name="network[thread][uid]" type="text" size="50" value="<?=$network['thread']['uid']?>" /> 多个uid用","分隔
+</td>
+</tr>
+<tr>
+<td>热度范围</td>
+<td>
+<input name="network[thread][hot1]" type="text" size="10" value="<?=$network['thread']['hot1']?>" /> ~ 
+<input name="network[thread][hot2]" type="text" size="10" value="<?=$network['thread']['hot2']?>" />
+</td>
+</tr>
+<tr>
+<td>查看数范围</td>
+<td>
+<input name="network[thread][viewnum1]" type="text" size="10" value="<?=$network['thread']['viewnum1']?>" /> ~ 
+<input name="network[thread][viewnum2]" type="text" size="10" value="<?=$network['thread']['viewnum2']?>" />
+</td>
+</tr>
+<tr>
+<td>回复数范围</td>
+<td>
+<input name="network[thread][replynum1]" type="text" size="10" value="<?=$network['thread']['replynum1']?>" /> ~ 
+<input name="network[thread][replynum2]" type="text" size="10" value="<?=$network['thread']['replynum2']?>" />
+</td>
+</tr>
+<tr>
+<td>发布时间范围</td>
+<td><input type="text" name="network[thread][dateline]" value="<?=$network['thread']['dateline']?>" size="10"> 内天发布的才显示</td>
+</tr>
+<tr>
+<td>回复时间范围</td>
+<td><input type="text" name="network[thread][lastpost]" value="<?=$network['thread']['lastpost']?>" size="10"> 内天回复的才显示</td>
+</tr>
+<tr>
+<td>列表排序</td>
+<td>
+<select name="network[thread][order]">
+<option value="dateline">发布时间</option>
+<option value="viewnum"<?=$orders['thread']['viewnum']?>>查看数</option>
+<option value="replynum"<?=$orders['thread']['replynum']?>>回复数</option>
+<option value="hot"<?=$orders['thread']['hot']?>>热度</option>
+</select>
+<select name="network[thread][sc]">
+<option value="desc">递减</option>
+<option value="asc"<?=$scs['thread']['asc']?>>递增</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>缓存有效时间</td>
+<td><input type="text" name="network[thread][cache]" value="<?=$network['thread']['cache']?>" size="10"> 单位:秒 (设为0将不使用缓存机制，这会增加服务器负担)</td>
+</tr>
+</table>
+<br>
+
+<div class="title">
+<h3>活动聚合设置</h3>
+<p>设置活动显示在随便看看页面的条件</p>
+</div>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<td style="width:10em;">指定活动(eventid)</td>
+<td>
+<input name="network[event][eventid]" type="text" size="50" value="<?=$network['event']['eventid']?>" /> 多个eventid用","分隔
+</td>
+</tr>
+<tr>
+<td>指定作者(uid)</td>
+<td>
+<input name="network[event][uid]" type="text" size="50" value="<?=$network['event']['uid']?>" /> 多个uid用","分隔
+</td>
+</tr>
+<tr>
+<td>热度范围</td>
+<td>
+<input name="network[event][hot1]" type="text" size="10" value="<?=$network['event']['hot1']?>" /> ~ 
+<input name="network[event][hot2]" type="text" size="10" value="<?=$network['event']['hot2']?>" />
+</td>
+</tr>
+<tr>
+<td>参与人数范围</td>
+<td>
+<input name="network[event][membernum1]" type="text" size="10" value="<?=$network['event']['membernum1']?>" /> ~ 
+<input name="network[event][membernum2]" type="text" size="10" value="<?=$network['event']['membernum2']?>" />
+</td>
+</tr>
+<tr>
+<td>关注人数范围</td>
+<td>
+<input name="network[event][follownum1]" type="text" size="10" value="<?=$network['event']['follownum1']?>" /> ~ 
+<input name="network[event][follownum2]" type="text" size="10" value="<?=$network['event']['follownum2']?>" />
+</td>
+</tr>
+<tr>
+<td>发布时间范围</td>
+<td><input type="text" name="network[event][dateline]" value="<?=$network['event']['dateline']?>" size="10"> 内天发布的才显示</td>
+</tr>
+<tr>
+<td>列表排序</td>
+<td>
+<select name="network[event][order]">
+<option value="dateline">发布时间</option>
+<option value="membernum"<?=$orders['event']['membernum']?>>参与人数</option>
+<option value="follownum"<?=$orders['event']['follownum']?>>关注人数</option>
+<option value="hot"<?=$orders['event']['hot']?>>热度</option>
+</select>
+<select name="network[event][sc]">
+<option value="desc">递减</option>
+<option value="asc"<?=$scs['event']['asc']?>>递增</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>缓存有效时间</td>
+<td><input type="text" name="network[event][cache]" value="<?=$network['event']['cache']?>" size="10"> 单位:秒 (设为0将不使用缓存机制，这会增加服务器负担)</td>
+</tr>
+</table>
+<br>
+
+<div class="title">
+<h3>投票聚合设置</h3>
+<p>设置投票显示在随便看看页面的条件</p>
+</div>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<td style="width:10em;">指定投票(pid)</td>
+<td>
+<input name="network[poll][pid]" type="text" size="50" value="<?=$network['poll']['pid']?>" /> 多个pid用","分隔
+</td>
+</tr>
+<tr>
+<td>指定作者(uid)</td>
+<td>
+<input name="network[poll][uid]" type="text" size="50" value="<?=$network['poll']['uid']?>" /> 多个uid用","分隔
+</td>
+</tr>
+<tr>
+<td>热度范围</td>
+<td>
+<input name="network[poll][hot1]" type="text" size="10" value="<?=$network['poll']['hot1']?>" /> ~ 
+<input name="network[poll][hot2]" type="text" size="10" value="<?=$network['poll']['hot2']?>" />
+</td>
+</tr>
+<tr>
+<td>投票人数范围</td>
+<td>
+<input name="network[poll][voternum1]" type="text" size="10" value="<?=$network['poll']['voternum1']?>" /> ~ 
+<input name="network[poll][voternum2]" type="text" size="10" value="<?=$network['poll']['voternum2']?>" />
+</td>
+</tr>
+<tr>
+<td>回复人数范围</td>
+<td>
+<input name="network[poll][replynum1]" type="text" size="10" value="<?=$network['poll']['replynum1']?>" /> ~ 
+<input name="network[poll][replynum2]" type="text" size="10" value="<?=$network['poll']['replynum2']?>" />
+</td>
+</tr>
+<tr>
+<td>发布时间范围</td>
+<td><input type="text" name="network[poll][dateline]" value="<?=$network['poll']['dateline']?>" size="10"> 内天发布的才显示</td>
+</tr>
+<tr>
+<td>列表排序</td>
+<td>
+<select name="network[poll][order]">
+<option value="dateline">发布时间</option>
+<option value="voternum"<?=$orders['poll']['voternum']?>>参与人数</option>
+<option value="replynum"<?=$orders['poll']['replynum']?>>关注人数</option>
+<option value="hot"<?=$orders['poll']['hot']?>>热度</option>
+</select>
+<select name="network[poll][sc]">
+<option value="desc">递减</option>
+<option value="asc"<?=$scs['poll']['asc']?>>递增</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>缓存有效时间</td>
+<td><input type="text" name="network[poll][cache]" value="<?=$network['poll']['cache']?>" size="10"> 单位:秒 (设为0将不使用缓存机制，这会增加服务器负担)</td>
+</tr>
+</table>
+
 </div>
 
 <div class="footactions">
-<?php if($allowbatch && $perpage<=100) { ?><input type="checkbox" id="chkall" name="chkall" onclick="checkAll(this.form, 'ids')">全选<?php } ?>
-<input type="hidden" name="mpurl" value="<?=$mpurl?>">
-<input type="submit" name="batchsubmit" value="批量删除" onclick="return confirm('本操作不可恢复，确认删除？');" class="submit">
-
-<div class="pages"><?=$multi?></div>
+<input type="submit" name="networksubmit" value="提交" class="submit">
 </div>
-
 </form>
-<?php } else { ?>
-<div class="bdrcontent">
-<p>指定条件下还没有数据</p>
-</div>
-<?php } ?>
-</div>
-</div>
 
+</div>
+</div>
 <div class="side">
 <?php if($menus['0']) { ?>
 <div class="block style1">

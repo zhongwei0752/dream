@@ -1,0 +1,22 @@
+<!--{template admin/tpl/header}-->
+
+<div class="mainarea">
+<div class="maininner">
+
+
+
+	<form method="post" id="batchform" action="admincp.php?ac=joke">
+	笑话标题:<br/><input type="text" id="subject" name="subject" style="width:400px;"></input><br/>
+	笑话内容:<br/><textarea class="userData" name="message" id="message" style="width:400px;height:100px;"></textarea>
+	<input type="hidden" name="uploadsubmit" id="uploadsubmit" value="true" />
+	<input type="submit"></input>
+	</form>
+
+</div>
+</div>
+
+<div class="side">
+	<!--{template admin/tpl/side}-->
+</div>
+
+<!--{template admin/tpl/footer}-->

@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/comment|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369056256', 'admin/tpl/comment');?><?php $_TPL['menunames'] = array(
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/backup|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188618', 'admin/tpl/backup');?><?php $_TPL['menunames'] = array(
 		'index' => '管理首页',
 		'config' => '站点设置',
 		'privacy' => '隐私设置',
@@ -13,6 +13,7 @@
 		'censor' => '词语屏蔽',
 		'ad' => '广告设置',
 		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
 		'app' => 'UCenter应用',
 		'network' => '随便看看',
 		'cache' => '缓存更新',
@@ -90,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -163,114 +165,311 @@
 
 <div class="mainarea">
 <div class="maininner">
+<?php if($showform == 0) { ?>
 
-<form method="get" action="admincp.php">
-<div class="block style4">
-
-<table cellspacing="3" cellpadding="3">
-<tr>
-<th>评论类型</th>
-<td>
-<select name="idtype">
-<option value="">全部</option>
-<option value="uid"<?=$idtype['uid']?>>留言</option>
-<option value="blogid"<?=$idtype['blogid']?>>日志</option>
-<option value="picid"<?=$idtype['picid']?>>图片</option>
-<option value="eventid"<?=$idtype['eventid']?>>活动</option>
-<option value="sid"<?=$idtype['sid']?>>分享</option>
-</select>
-<th>评论ID</th><td><input type="text" name="id" value="<?=$_GET['id']?>"></td>
-</tr>
-<tr><th>评论UID</th><td><input type="text" name="authorid" value="<?=$_GET['authorid']?>"></td>
-<th>评论者</th><td><input type="text" name="author" value="<?=$_GET['author']?>"></td>
-</tr>
-<?php if($allowmanage) { ?>
-<tr><th>被评论UID</th><td colspan="3"><input type="text" name="uid" value="<?=$_GET['uid']?>"></td></tr>
-<?php } ?>
-<tr><th>发布时间</th><td colspan="3">
-<input type="text" name="dateline1" value="<?=$_GET['dateline1']?>" size="10"> ~
-<input type="text" name="dateline2" value="<?=$_GET['dateline2']?>" size="10"> (YYYY-MM-DD)
-</td></tr>
-<tr><th>内容*</th><td><input type="text" name="message" value="<?=$_GET['message']?>"></td>
-<th>发布IP</th><td><input type="text" name="ip" value="<?=$_GET['ip']?>"></td>
-</tr>
-
-<tr><th>结果排序</th>
-<td colspan="3">
-<select name="orderby">
-<option value="">默认排序</option>
-<option value="dateline"<?=$orderby['dateline']?>>评论时间</option>
-</select>
-<select name="ordersc">
-<option value="desc"<?=$ordersc['desc']?>>递减</option>
-<option value="asc"<?=$ordersc['asc']?>>递增</option>
-</select>
-<select name="perpage">
-<option value="20"<?=$perpages['20']?>>每页显示20个</option>
-<option value="50"<?=$perpages['50']?>>每页显示50个</option>
-<option value="100"<?=$perpages['100']?>>每页显示100个</option>
-<option value="1000"<?=$perpages['1000']?>>一次处理1000个</option>
-</select>
-<input type="hidden" name="ac" value="comment">
-<input type="submit" name="searchsubmit" value="搜索" class="submit">
-</td>
-</tr>
-</table>
-</div>
-</form>
-
-<?php if($list) { ?>
-
-<form method="post" action="admincp.php?ac=comment">
+<form method="post" action="admincp.php?ac=backup&op=export" enctype="multipart/form-data">
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
 <div class="bdrcontent">
 
-<?php if($perpage>100) { ?>
-<p>总共有满足条件的数据 <strong><?=$count?></strong> 个</p>
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<input type="hidden" name="ids[]" value="<?=$value['cid']?>">
-<?php } } ?>
+<div class="title">
+<h3>数据备份</h3>
+</div>
 
-<?php } else { ?>
 <table cellspacing="0" cellpadding="0" class="formtable">
-<?php if(is_array($list)) { foreach($list as $value) { ?>
 <tr>
-<td width="25"><input type="<?php if($allowbatch) { ?>checkbox<?php } else { ?>radio<?php } ?>" name="ids[]" value="<?=$value['cid']?>"></td>
-<td>
-<?=$value['message']?> <?php if($wheresql == 1 ) { ?><a href="admincp.php?ac=comment&cid=<?=$value['cid']?>">...</a><?php } ?>
+<th colspan="2"><input type="radio" name="type" value="uchomes" checked onclick="$('showtables').style.display='none'">UCenter Home 全部数据</th>
+</tr>
+<tr>
+<th><input type="radio" name="type" value="custom" onclick="$('showtables').style.display=''">自定义备份</th>
+<td>根据需要自行选择需要备份的数据表</td>
+</tr>
+<tr>
+<td colspan="2" align="right"><input type="checkbox"  onclick="$('advanceoption').style.display=$('advanceoption').style.display == 'none' ? '' : 'none'; this.value = this.value == 1 ? 0 : 1; this.checked = this.value == 1 ? false : true" value="1">更多选项</td>
+</tr>
+</table>
 
-<p>
-<?php if($value['author']) { ?>
-作者: <a href="admincp.php?ac=comment&author=<?=$value['author']?>"><?=$_SN[$value['authorid']]?></a>
+<div id="showtables" style="display:none">
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr><td><input type="checkbox" name="chkall" onclick="checkAll(this.form, 'customtables')" checked>全选 <strong>UCenter Home表</strong></td>
+</table>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<?php if(is_array($uchome_tablelist)) { foreach($uchome_tablelist as $key => $value) { ?>
+<?php if($key%4 == 0) { ?></tr><tr><?php } ?>
+<td><input type="checkbox" name="customtables[]" value="<?=$value['Name']?>" checked><?=$value['Name']?></td>
+<?php } } ?>
+</tr>
+</table>
+</div>
+
+<div id="advanceoption" style="display:none">
+
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th>备份方式</th>
+</tr>
+<tr>
+<td><input type="radio" name="method" value="shell" <?=$shelldisabled?> onclick="if(<?=$dbversion?> < '4.1'){if(this.form.sqlcompat[2].checked==true) this.form.sqlcompat[0].checked=true; this.form.sqlcompat[2].disabled=true; this.form.sizelimit.disabled=true;} else {this.form.sqlcharset[0].checked=true; for(var i=1; i<=5; i++) {if(this.form.sqlcharset[i]) this.form.sqlcharset[i].disabled=true;}}">系统 MySQL Dump (Shell) 备份</td>
+</tr>
+<tr>
+<td><input type="radio" name="method" value="multivol" checked onclick="this.form.sqlcompat[2].disabled=false; this.form.sizelimit.disabled=false; for(var i=1; i<=5; i++) {if(this.form.sqlcharset[i]) this.form.sqlcharset[i].disabled=false;}">UCenter Home 分卷备份: 文件长度限制 <input type="text" size="5" value="2048" name="sizelimit"> kb</td>
+</tr>
+</table>
+
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th colspan="2">备份选项</th>
+</tr>
+<tr>
+<th>使用扩展插入</th>
+<td><input type="radio" value="1" name="extendins" checked>是 <input type="radio" value="0" name="extendins" checked>否</td>
+</tr>
+<tr>
+<th>建表语句格式</th>
+<td><input type="radio" value="" name="sqlcompat" checked>默认(MySQL<?=$dbversion?>) <input type="radio" value="MYSQL40" name="sqlcompat">MySQL 3.23/4.0.x  <input type="radio" value="MYSQL41" name="sqlcompat">MySQL 4.1.x/5.x </td>
+</tr>
+<tr>
+<th>强制字符集</th>
+<td>
+<input class="radio" type="radio" name="sqlcharset" value="" checked>默认(<?=$_SC['dbcharset']?>)&nbsp;
+<?php if($_SC['dbcharset']) { ?>
+<input class="radio" type="radio" name="sqlcharset" value="<?=$_SC['dbcharset']?>"><?=$_SC['dbcharset']?>&nbsp;
+<?php } ?>
+<?php if($dbversion > '4.1' && $_SC['dbcharset'] != 'utf8') { ?>
+<input class="radio" type="radio" name="sqlcharset" value="utf8">utf-8</option>
+<?php } ?>
+</td>
+</tr>
+<tr>
+<th>十六进制方式</th>
+<td><input type="radio" value="1" name="usehex" checked>是 <input type="radio" value="0" name="usehex" checked>否</td>
+</tr>
+<tr <?=$zipdisplay?>>
+<th>压缩备份文件</th>
+<td><input type="radio" value="1" name="usezip">多分卷压缩成一个文件 <input type="radio" value="2" name="usezip">每个分卷压缩成单独文件 <input type="radio" value="0" name="usezip" checked>不压缩</td>
+</tr>
+<tr>
+<th>备份文件名</th>
+<td><input type="text" size="40" value="<?=$filename?>" name="filename">.sql</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="footactions">
+<input type="hidden" name="setup" value="1">
+<input type="submit" value="提 交" class="submit">
+</div>
+
+</form>
+
+<br />
+
+<form method="post" action="admincp.php?ac=backup" name="thevalueform">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<div class="bdrcontent">
+
+<div class="title">
+<h3>数据恢复</h3>
+</div>
+
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr><td>服务器备份文件名: ./data/<input type="text" name="datafile" value="<?=$backupdir?>/" size="50"></td></tr>
+</table>
+</div>
+<div class="footactions">
+<input type="submit" name="importsubmit" value="提交" class="submit">
+</div>
+
+</form>
+
+<br />
+
+<form method="post" action="admincp.php?ac=backup" name="thevalueform">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<div class="bdrcontent">
+
+<div class="title">
+<h3>数据备份记录</h3>
+</div>
+
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th width="4%">&nbsp;</th>
+<th>文件名</th>
+<th width="15%">版本</th>
+<th width="15%">类型</th>
+<th width="10%">操作</th>
+</tr>
+<?php if(is_array($exportlog)) { foreach($exportlog as $key => $value) { ?>
+<tr>
+<td>
+<input type="checkbox" name="delexport[]" value="<?=$value['filename']?>">
+</td>
+<td>
+<a href="./data/<?=$value['filename']?>"><?php echo basename($value['filename']) ?></a> (<?=$value['size']?>)<br /><?=$value['dateline']?> 
+<?php if($value['method'] == 'multivol' && $value['type'] != 'zip') { ?>
+多卷
+<?php } elseif($value['method'] == 'multivol') { ?>
+SHELL
 <?php } else { ?>
-作者：<a href="space.php?uid=<?=$value['authorid']?>" target="_blank">匿名</a>
+压缩
 <?php } ?>
-被评论对象: <a href="admincp.php?ac=comment&id=<?=$value['id']?>&idtype=<?=$value['idtype']?>"><?=$value['idtype']?>-<?=$value['id']?></a>
-<?php if($value['idtype'] == 'uid') { ?>
-(<a href="space.php?uid=<?=$value['id']?>&do=wall" target="_blank">访问</a>)
+<?php if(!empty($value['volume'])) { ?>
+(<?=$value['volume']?>)
 <?php } ?>
-IP: <a href="admincp.php?ac=comment&ip=<?=$value['ip']?>"><?=$value['ip']?></a>
-<?php echo sgmdate('Y-m-d H:i',$value[dateline]); ?>
-</p>
+</td>
+<td><?=$value['version']?></td>
+<td><?php if($value['type'] == 'custom') { ?>自定义备份<?php } else { ?>全部备份<?php } ?></td>
+<td>
+<?php if($value['type'] == 'zip') { ?>
+<a href="admincp.php?ac=backup&op=import&do=zip&datafile=<?=$value['filename']?>">[解压]
+<?php } else { ?>
+<?php if($value['version'] != $x_ver) { ?>
+<a href="admincp.php?ac=backup&op=import&do=import&datafile=<?=$value['filename']?>"  onclick="return confirm('确定导入?');">[导入]</a>
+<?php } else { ?>
+<a href="admincp.php?ac=backup&op=import&do=import&datafile=<?=$value['filename']?>">[导入]</a>
+<?php } ?>
+<?php } ?>
 </td>
 </tr>
 <?php } } ?>
 </table>
-<?php } ?>
 </div>
 
 <div class="footactions">
-<?php if($allowbatch && $perpage<=100) { ?><input type="checkbox" id="chkall" name="chkall" onclick="checkAll(this.form, 'ids')">全选<?php } ?>
-<input type="hidden" name="mpurl" value="<?=$mpurl?>">
-<input type="submit" name="deletesubmit" value="批量删除" onclick="return confirm('本操作不可恢复，确认删除？');" class="submit">
-<div class="pages"><?=$multi?></div>
+<input type="checkbox" name="chkall" onclick="checkAll(this.form, 'delexport')">全选
+<input type="submit" name="delexportsubmit" value="批量删除" class="submit">
 </div>
 
 </form>
-<?php } else { ?>
+
+<?php } elseif($showform == 1) { ?>
+
+<form method="get" action="admincp.php" name="thevalueform">
 <div class="bdrcontent">
-<p>指定条件下还没有数据</p>
+<div class="title">
+<h3>导入确认</h3>
 </div>
+
+<p>
+<?php echo basename($datafile) ?><br />
+导入版本:<?=$identify['1']?><br />
+导入类型:<?php if($identify['2'] == 'custom') { ?>自定义备份<?php } else { ?>全部备份<?php } ?><br />
+方式:<?php if($identify['3'] == 'multivol') { ?>多卷<?php } else { ?>Shell<?php } ?><br />
+<br />确定导入吗?
+</p>
+</div>
+
+<div class="footactions">
+<input type="hidden" name="ac"  value="backup">
+<input type="hidden" name="op" value="import">
+<input type="hidden" name="do" value="zip">
+<input type="hidden" name="datafile" value="<?=$datafile?>">
+<input type="hidden" name="confirm" value="yes">
+<input type="submit" name="confirmed" value="继续" class="submit">
+<input type="button" value="返回" onClick="location.href='admincp.php?ac=backup'">
+</div>
+</form>
+
+<?php } elseif($showform == 2) { ?>
+
+<form method="get" action="admincp.php" name="thevalueform">
+<div class="bdrcontent">
+<div class="title">
+<h3>自动导入确认</h3>
+</div>
+
+<p>所有分卷文件解压缩完毕，您需要自动导入备份吗？导入后解压缩的文件将会被删除。</p>
+
+</div>
+
+<div class="footactions">
+<input type="hidden" name="ac"  value="backup">
+<input type="hidden" name="op" value="import">
+<input type="hidden" name="do" value="import">
+<input type="hidden" name="datafile" value="<?=$datafile_vol1?>">
+<input type="hidden" name="delunzip" value="yes">
+<input type="submit" name="confirmed" value="继续" class="submit">
+<input type="button" value="返回" onClick="location.href='admincp.php?ac=backup'">
+</div>
+</form>
+
+<?php } elseif($showform == 3) { ?>
+
+<form method="get" action="admincp.php" name="thevalueform">
+<div class="bdrcontent">
+<div class="title">
+<h3>继续解压确认</h3>
+</div>
+
+<p><?=$info?><br />备份文件解压缩完毕，您需要自动解压缩其他的分卷文件吗？</p>
+</div>
+
+<div class="footactions">
+<input type="hidden" name="ac"  value="backup">
+<input type="hidden" name="op" value="import">
+<input type="hidden" name="do" value="zip">
+<input type="hidden" name="multivol" value="1">
+<input type="hidden" name="datafile_vol1" value="<?=$datafile?>">
+<input type="hidden" name="confirm" value="yes">
+<input type="submit" name="confirmed" value="继续" class="submit">
+<input type="button" value="返回" onClick="location.href='admincp.php?ac=backup'" class="submit">
+</div>
+</form>
+
+<?php } elseif($showform == 4) { ?>
+
+<form method="get" action="admincp.php" name="thevalueform">
+<div class="bdrcontent">
+<div class="title">
+<h3>自动导入备份确认</h3>
+</div>
+
+<p>
+<?php echo basename($datafile) ?><br />
+导入版本:<?=$identify['1']?><br />
+导入类型:<?php if($identify['2'] == 'custom') { ?>自定义备份<?php } else { ?>全部备份<?php } ?><br />
+方式:<?php if($identify['3'] == 'multivol') { ?>多卷<?php } else { ?>Shell<?php } ?><br />
+<br />备份文件解压缩完毕，您需要自动导入备份吗？导入后解压缩的文件将会被删除
+</p>
+</div>
+
+<div class="footactions">
+<input type="hidden" name="ac"  value="backup">
+<input type="hidden" name="op" value="import">
+<input type="hidden" name="do" value="import">
+<input type="hidden" name="datafile" value="<?=$backupdir?>/<?=$importfile?>">
+<input type="hidden" name="delunzip" value="yes">
+<input type="submit" name="confirmed" value="继续" class="submit">
+<input type="button" value="返回" onClick="location.href='admincp.php?ac=backup'" class="submit">
+</div>
+</form>
+<?php } elseif($showform == 5) { ?>
+
+<form method="get" action="admincp.php" name="thevalueform">
+<div class="bdrcontent">
+<div class="title">
+<h3>自动导入备份确认</h3>
+</div>
+
+<p>分卷数据成功导入数据库，您需要自动导入本次其他的备份吗？</p>
+</div>
+
+<div class="footactions">
+<input type="hidden" name="ac"  value="backup">
+<input type="hidden" name="op" value="import">
+<input type="hidden" name="do" value="import">
+<input type="hidden" name="datafile" value="<?=$datafile_next?>">
+<input type="hidden" name="autoimport" value="yes">
+<?php if(isset($_GET['unzip'])) { ?>
+<input type="hidden" name="delunzip" value="yes">
+<?php } ?>
+<input type="submit" name="confirmed" value="继续" class="submit">
+<input type="button" value="返回" onClick="location.href='admincp.php?ac=backup'" class="submit">
+</div>
+</form>
+
 <?php } ?>
 </div>
 </div>

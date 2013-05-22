@@ -14,7 +14,10 @@ $_CACHE['apps'] = array (
     'dbcharset' => 'utf8',
     'synlogin' => '1',
     'recvnote' => '1',
-    'extra' => '',
+    'extra' => 
+    array (
+      'apppath' => '',
+    ),
     'tagtemplates' => '<?xml version="1.0" encoding="ISO-8859-1"?>
 <root>
  <item id="template"><![CDATA[<a href="{url}" target="_blank">{subject}</a>]]></item>

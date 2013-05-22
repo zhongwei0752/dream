@@ -1,4 +1,50 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_pm|template/green/header|template/green/footer', '1368859082', 'template/green/space_pm');?><?php $_TPL['titles'] = array('短消息'); ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/credit|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188495', 'admin/tpl/credit');?><?php $_TPL['menunames'] = array(
+		'index' => '管理首页',
+		'config' => '站点设置',
+		'privacy' => '隐私设置',
+		'usergroup' => '用户组',
+		'credit' => '积分规则',
+		'profilefield' => '用户栏目',
+		'profield' => '群组栏目',
+		'eventclass' => '活动分类',
+		'magic' => '道具设置',
+		'task' => '有奖任务',
+		'spam' => '防灌水设置',
+		'censor' => '词语屏蔽',
+		'ad' => '广告设置',
+		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
+		'app' => 'UCenter应用',
+		'network' => '随便看看',
+		'cache' => '缓存更新',
+		'log' => '系统log记录',
+		'space' => '用户管理',
+		'feed' => '动态(feed)',
+		'share' => '分享',
+		'blog' => '日志',
+		'album' => '相册',
+		'pic' => '图片',
+		'comment' => '评论/留言',
+		'thread' => '话题',
+		'post' => '回帖',
+		'doing' => '记录',
+		'tag' => '标签',
+		'mtag' => '群组',
+		'poll' => '投票',
+		'event' => '活动',
+		'magiclog' => '道具记录',
+		'report' => '举报',
+		'block' => '数据调用',
+		'template' => '模板编辑',
+		'backup' => '数据备份',
+		'stat' => '统计更新',
+		'cron' => '系统计划任务',
+		'click' => '表态动作',
+		'ip' => '访问IP设置',
+		'hotuser' => '推荐成员设置',
+		'defaultuser' => '默认好友设置',
+	); ?>
+<?php $_TPL['nosidebar'] = 1; ?>
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -45,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -109,153 +156,203 @@
 <?php } ?>
 
 
-<h2 class="title"><img src="image/icon/pm.gif">消息</h2>
+<style type="text/css">
+@import url(admin/tpl/style.css);
+</style>
 
+<div id="cp_content">
+
+<?php $_TPL['rewardtype'] = array(
+		'0' => '扣分',
+		'1' => '加分'
+	);
+	$_TPL['cycletype'] = array(
+		'0' => '一次性',
+		'1' => '每天',
+		'2' => '整点',
+		'3' => '间隔分钟',
+		'4' => '不限周期'
+	);
+	$_TPL['norepeat'] = array(
+		'1' => '信息去重',
+		'2' => '人去重',
+		'3' => '应用去重'
+	); ?>
+<div class="mainarea">
+<div class="maininner">
 <div class="tabs_header">
 <ul class="tabs">
-<li class="active"><a href="space.php?do=pm"><span>短消息</span></a></li>
-<li><a href="space.php?do=notice"><span>通知</span></a></li>
-<?php if($_SCONFIG['my_status']) { ?>
-<li><a href="space.php?do=notice&view=userapp"><span>应用消息</span></a></li>
-<?php } ?>
-<li class="null"><a href="cp.php?ac=pm">发短消息</a></li>
+<li<?=$actives['1']?>><a href="admincp.php?ac=credit&rewardtype=1"><span>奖励规则</span></a></li>
+<li<?=$actives['0']?>><a href="admincp.php?ac=credit&rewardtype=0"><span>惩罚规则</span></a></li>
 </ul>
 </div>
-
-<div class="h_status">
-<?php if($touid) { ?>
-<div class="r_option">
-你们的历史记录：
-<a href="space.php?do=pm&subop=view&touid=<?=$touid?>&daterange=1"<?=$actives['1']?>>最近一天</a> | 
-<a href="space.php?do=pm&subop=view&touid=<?=$touid?>&daterange=2"<?=$actives['2']?>>最近两天</a> | 
-<a href="space.php?do=pm&subop=view&touid=<?=$touid?>&daterange=3"<?=$actives['3']?>>最近三天</a> | 
-<a href="space.php?do=pm&subop=view&touid=<?=$touid?>&daterange=4"<?=$actives['4']?>>本周</a> | 
-<a href="space.php?do=pm&subop=view&touid=<?=$touid?>&daterange=5"<?=$actives['5']?>>全部</a>
-</div>
-<?php } ?>
-<a href="space.php?do=pm&filter=newpm"<?=$actives['newpm']?>>未读消息</a><span class="pipe">|</span>
-<a href="space.php?do=pm&filter=privatepm"<?=$actives['privatepm']?>>私人消息</a><span class="pipe">|</span>
-<a href="space.php?do=pm&filter=systempm"<?=$actives['systempm']?>>系统消息</a><span class="pipe">|</span>
-<a href="space.php?do=pm&filter=announcepm"<?=$actives['announcepm']?>>公共消息</a><span class="pipe">|</span>
-<a href="space.php?do=pm&subop=ignore"<?=$actives['ignore']?>>忽略列表</a>
-</div>
-
-<div class="c_form">
-
-<?php if($_GET['subop'] == 'view') { ?>
-
-<?php if($list) { ?>
-<ul class="pm_list" id="pm_ul">
-<?php if(is_array($list)) { foreach($list as $key => $value) { ?>
-<li class="s_clear">
-<div class="avatar48">
-<?php if($value['msgfromid']) { ?>
-<a href="space.php?uid=<?=$value['msgfromid']?>"><?php echo avatar($value[msgfromid],small); ?></a>
-<?php } else { ?>
-<img src="image/systempm.gif" width="48" height="48" />
-<?php } ?>
-</div>
-<div class="pm_body"><div class="pm_h"><div class="pm_f">
-<p><?php if($value['msgfromid']) { ?><a href="space.php?uid=<?=$value['msgfromid']?>"><?=$_SN[$value['msgfromid']]?></a> <?php } ?><span class="gray"><?php echo sgmdate('Y-m-d H:i',$value[dateline],1); ?></span></p>		
-<div class="pm_c">
-<?=$value['message']?>
-</div>
-</div></div></div>
-</li>
-<?php } } ?>
-</ul>
-<?php } else { ?>
-<div class="c_form">
-当前没有相应的短消息。
-</div>
-<?php } ?>
-
-<?php if($touid && $list) { ?>
-<ul class="pm_list" id="pm_ul_post">
-<li class="s_clear">
-<div class="avatar48">
-<a href="space.php?uid=<?=$space['uid']?>"><?php echo avatar($space[uid],small); ?></a>
-</div>
-<div class="pm_body"><div class="pm_h"><div class="pm_f">
-<p><a href="space.php?uid=<?=$space['uid']?>"><?=$_SN[$space['uid']]?></a></p>		
-<div class="pm_c">
-<form id="pmform" name="pmform" method="post" action="cp.php?ac=pm&op=send&touid=<?=$touid?>&pmid=<?=$pmid?>&daterange=<?=$daterange?>">
-<textarea id="pm_message" name="message" cols="40" rows="4" style="width: 95%;" onkeydown="ctrlEnter(event, 'pmsubmit');"></textarea><br>
-<p style="padding-top:5px;">
-<input type="submit" name="pmsubmit" id="pmsubmit" value="回复" class="submit" />
-</p>
+<?php if($_GET['op']=='edit') { ?>
+<div class="bdrcontent">
+<form method="post" action="admincp.php?ac=credit">
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
-</form>
+<div class="title">
+<h3>规则设置</h3>
 </div>
-</div></div></div>
-</li>
-</ul>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th style="width:10em;">规则名称</th>
+<td><?=$rule['rulename']?></td>
+</tr>
+<tr>
+<td>奖励方式</td>
+<td>
+<?=$_TPL['rewardtype'][$rule['rewardtype']]?>
+</td>
+</tr>
+<tbody id="otherrule" <?php if($rule['rewardtype'] == 0) { ?> style="display:none"<?php } ?>>
+<tr>
+<td style="width:10em;">奖励周期</td>
+<td>
+<?php if(is_array($_TPL['cycletype'])) { foreach($_TPL['cycletype'] as $key => $desc) { ?>
+<input type="radio" name="cycletype" value="<?=$key?>" onclick="showoption(<?=$key?>);" <?php if($key == $rule['cycletype']) { ?>checked<?php } ?>><?=$desc?> 
+<?php } } ?>
+</td>
+</tr>
+<tr id="cycletimetr" <?php if(in_array($rule['cycletype'], array(0, 1, 4))) { ?> style="display:none"<?php } ?>>
+<td>间隔时间</td>
+<td><input type="text" name="cycletime" value="<?=$rule['cycletime']?>"></td>
+</tr>
+<tr id="rewardnumtr"<?php if($rule['cycletype'] == 0) { ?> style="display:none"<?php } ?>>
+<td>奖励次数</td>
+<td>
+<input type="text" name="rewardnum" value="<?=$rule['rewardnum']?>">0为不限次数
+</td>
+</tr>
+</tbody>
+<tr>
+<td><?php if($rule['rewardtype']) { ?>奖励<?php } else { ?>扣除<?php } ?>积分值</td>
+<td><input type="text" name="credit" value="<?=$rule['credit']?>"></td>
+</tr>
+<tr>
+<td><?php if($rule['rewardtype']) { ?>奖励<?php } else { ?>扣除<?php } ?>经验值</td>
+<td><input type="text" name="experience" value="<?=$rule['experience']?>"></td>
+</tr>
+<?php if($rule['norepeat']) { ?>
+<tr>
+<td>去重奖励</td>
+<td>
+<?php if($rule['norepeat']==1) { ?>
+该条规则针对信息去重,防止所有奖励给一条信息的评论这类的
+<?php } elseif($rule['norepeat']==2) { ?>
+该条规则针对人去重，例如对同一个人在一个周期内只有一次奖励机会
+<?php } else { ?>
+该条规则针对应用去重，例如同一个周期内第一次使用应用给奖励机会
 <?php } ?>
-
-<?php } elseif($_GET['subop'] == 'ignore') { ?>
-
-<form id="ignoreform" name="ignoreform" method="post" action="cp.php?ac=pm&op=ignore">
-<table cellspacing="0" cellpadding="0" class="formtable" width="100%">
-<caption>
-<h2>忽略列表</h2>
-<p>添加到该列表中的用户给您发送短消息时将不予接收<br />
-添加多个忽略人员名单时用逗号 "," 隔开，如“张三,李四,王五”<br />
-如需禁止所有用户发来的短消息，请设置为 "&#123;ALL&#125;"</p>
-</caption>
-<tr>
-<td><textarea id="ignorelist" name="ignorelist" cols="40" rows="6" style="width: 98%;" onkeydown="ctrlEnter(event, 'ignoresubmit');"><?=$ignorelist?></textarea></td>
+</td>
 </tr>
-<tr>
-<td><input type="submit" name="ignoresubmit" id="ignoresubmit" value="保存" class="submit" /></td>
-</tr>
+<?php } ?>
 </table>
-<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<br/>
+<input type="submit" name="creditsubmit" value="提交" class="submit">
+<input type="hidden" name="rid" value="<?=$_GET['rid']?>" />
+<script type="text/javascript">
+function showoption(id) {
+switch(id) {
+case 0:
+$('cycletimetr').style.display = "none";
+$('rewardnumtr').style.display = "none";
+break;
+case 1:
+case 4:
+$('cycletimetr').style.display = "none";
+$('rewardnumtr').style.display = "";
+break;
+case 2:
+case 3:
+$('cycletimetr').style.display = "";
+$('rewardnumtr').style.display = "";
+break;
+}
+}
+</script>
 </form>
-
-<?php } else { ?>
-
-<?php if($count) { ?>
-<ol class="pm_list">
-<?php if(is_array($list)) { foreach($list as $key => $value) { ?>
-<li<?php if($key%2==1) { ?> class="alt"<?php } ?>>
-<div class="avatar48">
-<?php if($value['touid']) { ?>
-<a href="space.php?uid=<?=$value['touid']?>"><?php echo avatar($value[touid],small); ?></a>
-<?php } else { ?>
-<img src="image/systempm.gif" width="48" height="48" />
-<?php } ?>
 </div>
-<div class="pm_body"><div class="pm_h"><div class="pm_f">
-<p>
-<?php if($value['touid']) { ?>
-<a href="space.php?uid=<?=$value['touid']?>"><?=$_SN[$value['touid']]?></a> 
-<?php } ?>
-<span class="gray"><?php echo sgmdate('n-j H:i',$value[dateline],1); ?></span></p>		
-<div class="pm_c">
-<?=$value['message']?>
-<p>
-<?php if($value['touid']) { ?>
-<a href="space.php?do=pm&subop=view&pmid=<?=$value['pmid']?>&touid=<?=$value['touid']?>&daterange=<?=$value['daterange']?>">查看详情</a>
 <?php } else { ?>
-<a href="space.php?do=pm&subop=view&pmid=<?=$value['pmid']?>">查看详情</a>
+<div class="bdrcontent">
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th>动作名称</th>
+<?php if($_GET['rewardtype']!='0') { ?>
+<th width="80">奖励周期</th>
+<th width="80">奖励次数</th>
+<th width="80">奖励方式</th>
 <?php } ?>
-</p>
-</div>
-<a href="cp.php?ac=pm&op=delete&folder=inbox&pmid=<?=$value['pmid']?>" id="a_delete_<?=$value['pmid']?>" class="float_del" onclick="ajaxmenu(event, this.id)">删除</a>
-</div></div></div>
-</li>
+<th width="80"><?php if($_GET['rewardtype']=='0') { ?>扣除积分<?php } else { ?>获得积分<?php } ?></th>
+<th width="80"><?php if($_GET['rewardtype']=='0') { ?>扣除经验值<?php } else { ?>获得经验值<?php } ?></th>
+<th width="50">操作</th>
+</tr>
+<?php if($list) { ?>
+<?php if(is_array($list)) { foreach($list as $value) { ?>
+<tr>
+<td><?=$value['rulename']?></td>
+<?php if($_GET['rewardtype']!='0') { ?>
+<td><?=$_TPL['cycletype'][$value['cycletype']]?></td>
+<td><?php if($value['rewardnum']=='0') { ?>不限次数<?php } else { ?><?=$value['rewardnum']?><?php } ?></td>
+<td><?=$_TPL['rewardtype'][$value['rewardtype']]?></td>
+<?php } ?>
+<td><?=$value['credit']?></td>
+<td><?=$value['experience']?></td>
+<td><a href="admincp.php?ac=credit&op=edit&rid=<?=$value['rid']?>">编辑</a></td>
+</tr>
 <?php } } ?>
-</ol>
-
-<div class="page"><?=$multi?></div>
-
 <?php } else { ?>
-<div class="c_form">
-当前没有相应的短消息。
+<tr>
+<td colspan="6">暂无相关积分规则</td>
+</tr>
+<?php } ?>
+</table>
+</div>
+<?php } ?>
+</div>
+</div>
+
+<div class="side">
+<?php if($menus['0']) { ?>
+<div class="block style1">
+<h2>基本设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['0'])) { foreach($acs['0'] as $value) { ?>
+<?php if($menus['0'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+</ul>
 </div>
 <?php } ?>
 
+<div class="block style1">
+<h2>批量管理</h2>
+<ul class="folder">
+<?php if(is_array($acs['3'])) { foreach($acs['3'] as $value) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } } ?>
+<?php if(is_array($acs['1'])) { foreach($acs['1'] as $value) { ?>
+<?php if($menus['1'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
 <?php } ?>
+<?php } } ?>
+</ul>
+</div>
+
+<?php if($menus['2']) { ?>
+<div class="block style1">
+<h2>高级设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['2'])) { foreach($acs['2'] as $value) { ?>
+<?php if($menus['2'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+<?php if($menus['0']['config']) { ?><li><a href="<?=UC_API?>" target="_blank">UCenter</a></li><?php } ?>
+</ul>
+</div>
+<?php } ?>
+</div>
 
 </div>
 
@@ -393,5 +490,4 @@ showreward();
         <?php } ?>
 </body>
 </html>
-<?php } ?>
-<?php ob_out();?>
+<?php } ?><?php ob_out();?>

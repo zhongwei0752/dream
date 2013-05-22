@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/poll|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369056265', 'admin/tpl/poll');?><?php $_TPL['menunames'] = array(
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/censor|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188573', 'admin/tpl/censor');?><?php $_TPL['menunames'] = array(
 		'index' => '管理首页',
 		'config' => '站点设置',
 		'privacy' => '隐私设置',
@@ -13,6 +13,7 @@
 		'censor' => '词语屏蔽',
 		'ad' => '广告设置',
 		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
 		'app' => 'UCenter应用',
 		'network' => '随便看看',
 		'cache' => '缓存更新',
@@ -90,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -164,145 +166,36 @@
 <div class="mainarea">
 <div class="maininner">
 
-<form method="get" action="admincp.php">
-<div class="block style4">
-
-<table cellspacing="3" cellpadding="3">
-<?php if($allowmanage) { ?>
-<tr><th>作者UID</th><td><input type="text" name="uid" value="<?=$_GET['uid']?>"></td>
-<th>作者名</th><td><input type="text" name="username" value="<?=$_GET['username']?>"></td>
-</tr>
-<?php } ?>
-<tr><th>标题*</th><td><input type="text" name="subject" value="<?=$_GET['subject']?>"></td>
-<th>指定投票ID</th><td><input type="text" name="pid" value="<?=$_GET['pid']?>">*表示支持模糊查询</td>
-</tr>
-<tr>
-<th>评论限制</th><td>
-<select name="noreply">
-<option value="">不限</option>
-<option value="0"<?php if($_GET['noreply'] == '0') { ?> selected<?php } ?>>全站用户可见</option>
-<option value="1"<?php if($_GET['noreply'] == '1') { ?> selected<?php } ?>>仅好友可评论</option>
-</select>
-</td>
-<th>投票限制</th><td>
-<select name="sex">
-<option value="">不限</option>
-<option value="1"<?php if($_GET['sex'] == '1') { ?> selected<?php } ?>>男</option>
-<option value="2"<?php if($_GET['sex'] == '2') { ?> selected<?php } ?>>女</option>
-</select>
-</td>
-</tr>
-<tr>
-<th>过期投票</th>
-<td colspan="3">
-<select name="expiration">
-<option value="">不限</option>
-<option value="1"<?php if($_GET['expiration'] == '1') { ?> selected<?php } ?>>已过期</option>
-<option value="2"<?php if($_GET['expiration'] == '2') { ?> selected<?php } ?>>未过期</option>
-</select>
-</td>
-</tr>
-<tr><th>悬赏积分</th><td colspan="3">
-<input type="text" name="percredit1" value="<?=$_GET['percredit1']?>" size="10"> ~
-<input type="text" name="percredit2" value="<?=$_GET['percredit2']?>" size="10">
-</td></tr>
-<tr><th>参与人数</th><td colspan="3">
-<input type="text" name="voternum1" value="<?=$_GET['voternum1']?>" size="10"> ~
-<input type="text" name="voternum2" value="<?=$_GET['voternum2']?>" size="10">
-</td></tr>
-<tr><th>评论数</th><td colspan="3">
-<input type="text" name="replynum1" value="<?=$_GET['replynum1']?>" size="10"> ~
-<input type="text" name="replynum2" value="<?=$_GET['replynum2']?>" size="10">
-</td></tr>
-<tr><th>热度</th><td colspan="3">
-<input type="text" name="hot1" value="<?=$_GET['hot1']?>" size="10"> ~
-<input type="text" name="hot2" value="<?=$_GET['hot2']?>" size="10">
-</td></tr>
-<tr><th>发布时间</th><td colspan="3">
-<input type="text" name="dateline1" value="<?=$_GET['dateline1']?>" size="10"> ~
-<input type="text" name="dateline2" value="<?=$_GET['dateline2']?>" size="10"> (YYYY-MM-DD)
-</td></tr>
-
-<tr><th>结果排序</th>
-<td colspan="3">
-<select name="orderby">
-<option value="">默认排序</option>
-<option value="dateline"<?=$orderby['dateline']?>>发布时间</option>
-<option value="voternum"<?=$orderby['voternum']?>>参与人数</option>
-<option value="replynum"<?=$orderby['replynum']?>>评论数</option>
-<option value="percredit"<?=$orderby['percredit']?>>悬赏积分</option>
-<option value="hot"<?=$orderby['hot']?>>热度</option>
-</select>
-<select name="ordersc">
-<option value="desc"<?=$ordersc['desc']?>>递减</option>
-<option value="asc"<?=$ordersc['asc']?>>递增</option>
-</select>
-<select name="perpage">
-<option value="20"<?=$perpages['20']?>>每页显示20个</option>
-<option value="50"<?=$perpages['50']?>>每页显示50个</option>
-<option value="100"<?=$perpages['100']?>>每页显示100个</option>
-<option value="1000"<?=$perpages['1000']?>>一次处理1000个</option>
-</select>
-<input type="hidden" name="ac" value="poll">
-<input type="submit" name="searchsubmit" value="搜索" class="submit">
-</td>
-</tr>
-</table>
-
-</div>
-</form>
-
-<?php if($list) { ?>
-
-<form method="post" action="admincp.php?ac=poll">
+<form method="post" action="admincp.php?ac=censor">
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+
 <div class="bdrcontent">
 
-<?php if($perpage>100) { ?>
-<p>总共有满足条件的数据 <strong><?=$count?></strong> 个</p>
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<input type="hidden" name="ids[]" value="<?=$value['blogid']?>">
-<?php } } ?>
-
-<?php } else { ?>
 <table cellspacing="0" cellpadding="0" class="formtable">
-<tr><td width="25">&nbsp;</td><th>标题</th><?php if($allowmanage) { ?><th width="80">作者</th><?php } ?><th width="80">参与数/评论</th><th width="80">时间</th><th width="80">操作</th></tr>
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<tr>
-<td>
-<input type="<?php if($allowbatch) { ?>checkbox<?php } else { ?>radio<?php } ?>" name="ids[]" value="<?=$value['pid']?>">
-</td>
-<td>
-<a href="space.php?uid=<?=$value['uid']?>&do=poll&pid=<?=$value['pid']?>" target="_blank"><strong><?php if($value['credit']) { ?>[悬赏:<?=$value['credit']?>]<?php } ?><?php if($value['isexpired']) { ?>[已过期]<?php } ?></strong><?=$value['subject']?></a>
-<?php if($value['hot']) { ?><span style="color:red;">热度(<?=$value['hot']?>)</span><?php } ?>
-<?php if($value['friend']) { ?>[<a href="admincp.php?ac=blog&friend=<?=$value['friend']?>"><?=$value['friend']?></a>]<?php } ?>
-</td>
-<?php if($allowmanage) { ?><td><a href="admincp.php?ac=poll&uid=<?=$value['uid']?>"><?=$value['username']?></a></td><?php } ?>
-<td align="center"><?=$value['voternum']?>/<?=$value['replynum']?></td>
-<td><?php echo sgmdate('Y-m-d',$value[dateline]); ?></td>
-<td>
-<a href="admincp.php?ac=poll&op=delete&pid=<?=$value['pid']?>" onclick="return confirm('本操作不可恢复，确认删除？');" >删除</a>&nbsp;
-<a href="admincp.php?ac=comment&id=<?=$value['pid']?>&idtype=pid">评论</a>
-</td>
-</tr>
-<?php } } ?>
+<tr><td>
+<textarea name="censor" style="width:98%;" rows="12"><?=$censor?></textarea>
+</td></tr>
+<tr><td>
+添加格式：<br />
+每行一组过滤词语<br />
+不良词语和替换词语之间使用“=”进行分割<br />
+如需禁止发布包含某个词语的文字，而不是替换过滤，请将其对应的替换内容设置为 <?=$banflag?> 即可<br />
+替换前的内容可以使用限定符 <?=x?> 以限定相邻两字符间可忽略的文字，x 是忽略字符的个数<br />
+如 "a{1}s{2}s"(不含引号) 可以过滤 "ass" 也可过滤 "axsxs" 和 "axsxxs" 等等<br />
+例如：<br />
+toobad=** (作用:将toobad文字替换为**)<br />
+badword=good (作用:将badword文字替换为good)<br />
+sexword=<?=$banflag?> (作用:禁止发布包含sexword词语的文字)<br />
+</td></tr>
 </table>
-<?php } ?>
 </div>
 
 <div class="footactions">
-<?php if($allowbatch && $perpage<=100) { ?><input type="checkbox" id="chkall" name="chkall" onclick="checkAll(this.form, 'ids')">全选<?php } ?>
-<input type="hidden" name="mpurl" value="<?=$mpurl?>">
-<input type="submit" name="deletesubmit" value="批量删除" onclick="return confirm('本操作不可恢复，确认删除？');" class="submit">
+<input type="submit" name="censorsubmit" value="提交" class="submit">
+</div>
 
-<div class="pages"><?=$multi?></div>
-</div>
 </form>
-<?php } else { ?>
-<div class="bdrcontent">
-<p>指定条件下还没有数据</p>
-</div>
-<?php } ?>
+
 </div>
 </div>
 
@@ -348,6 +241,7 @@
 </div>
 <?php } ?>
 </div>
+
 </div>
 
 <?php if(empty($_SGLOBAL['inajax'])) { ?>

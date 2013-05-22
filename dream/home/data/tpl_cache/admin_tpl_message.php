@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/message|admin/tpl/header|admin/tpl/footer|template/green/header|template/green/footer', '1368854847', 'admin/tpl/message');?><?php $_TPL['menunames'] = array(
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/message|admin/tpl/header|admin/tpl/footer|template/green/header|template/green/footer', '1369188546', 'admin/tpl/message');?><?php $_TPL['menunames'] = array(
 		'index' => '管理首页',
 		'config' => '站点设置',
 		'privacy' => '隐私设置',
@@ -13,6 +13,7 @@
 		'censor' => '词语屏蔽',
 		'ad' => '广告设置',
 		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
 		'app' => 'UCenter应用',
 		'network' => '随便看看',
 		'cache' => '缓存更新',
@@ -90,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 

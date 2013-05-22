@@ -1,4 +1,53 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_click|template/green/header|template/green/space_click|template/green/footer', '1368870570', 'template/green/cp_click');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/ad|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188505', 'admin/tpl/ad');?><?php $_TPL['pagetypes'] = array('header'=>'页头', 'rightside'=>'内容页面', 'footer'=>'页脚', 'couplet'=>'对联', 'contenttop'=>'页面主区域上方', 'contentbottom'=>'页面主区域下方', 'feedbox'=>'动态置顶位');
+	$_TPL['availables'] = array('0'=>'-', '1'=>'有效'); ?>
+<?php $_TPL['menunames'] = array(
+		'index' => '管理首页',
+		'config' => '站点设置',
+		'privacy' => '隐私设置',
+		'usergroup' => '用户组',
+		'credit' => '积分规则',
+		'profilefield' => '用户栏目',
+		'profield' => '群组栏目',
+		'eventclass' => '活动分类',
+		'magic' => '道具设置',
+		'task' => '有奖任务',
+		'spam' => '防灌水设置',
+		'censor' => '词语屏蔽',
+		'ad' => '广告设置',
+		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
+		'app' => 'UCenter应用',
+		'network' => '随便看看',
+		'cache' => '缓存更新',
+		'log' => '系统log记录',
+		'space' => '用户管理',
+		'feed' => '动态(feed)',
+		'share' => '分享',
+		'blog' => '日志',
+		'album' => '相册',
+		'pic' => '图片',
+		'comment' => '评论/留言',
+		'thread' => '话题',
+		'post' => '回帖',
+		'doing' => '记录',
+		'tag' => '标签',
+		'mtag' => '群组',
+		'poll' => '投票',
+		'event' => '活动',
+		'magiclog' => '道具记录',
+		'report' => '举报',
+		'block' => '数据调用',
+		'template' => '模板编辑',
+		'backup' => '数据备份',
+		'stat' => '统计更新',
+		'cron' => '系统计划任务',
+		'click' => '表态动作',
+		'ip' => '访问IP设置',
+		'hotuser' => '推荐成员设置',
+		'defaultuser' => '默认好友设置',
+	); ?>
+<?php $_TPL['nosidebar'] = 1; ?>
+<?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -44,6 +93,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -108,54 +158,276 @@
 <?php } ?>
 
 
-<?php if($_GET['op'] == 'show') { ?>
+<style type="text/css">
+@import url(admin/tpl/style.css);
+</style>
 
-<div class="digc">
-<table>
+<div id="cp_content">
+
+
+<div class="mainarea">
+<div class="maininner">
+
+<div class="tabs_header">
+<ul class="tabs">
+<li<?=$actives['view']?>><a href="admincp.php?ac=ad"><span>浏览广告</span></a></li>
+<li class="null"><a href="admincp.php?ac=ad&op=add">添加新广告</a></li>
+</ul>
+</div>
+
+
+<?php if(empty($_GET['op'])) { ?>
+
+<form method="post" action="admincp.php?ac=ad">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<div class="bdrcontent">
+
+<div class="title">
+<h3>系统内置广告</h3>
+<p>广告位置已经内置，根据需要自己填写要显示的广告内容就可以了</p>
+</div>
+
+<table cellspacing="0" cellpadding="0" class="formtable">
 <tr>
-<?php $clicknum = 0; ?>
-<?php if(is_array($clicks)) { foreach($clicks as $value) { ?>
-<?php $clicknum = $clicknum + $value['clicknum']; ?>
-<?php $value['height'] = $maxclicknum?intval($value['clicknum']*50/$maxclicknum):0; ?>
-<td valign="bottom"><a href="cp.php?ac=click&op=add&clickid=<?=$value['clickid']?>&idtype=<?=$idtype?>&id=<?=$id?>&hash=<?=$hash?>" id="click_<?=$idtype?>_<?=$id?>_<?=$value['clickid']?>" onclick="ajaxmenu(event, this.id, 0, 2000, 'show_click')"><?php if($value['clicknum']) { ?><div class="digcolumn"><div class="digchart dc<?=$value['classid']?>" style="height:<?=$value['height']?>px;"><em><?=$value['clicknum']?></em></div></div><?php } ?><div class="digface"><img src="image/click/<?=$value['icon']?>" alt="" /><br /><?=$value['name']?></div></a></td>
-<?php } } ?>
+<th>标题</th>
+<th width="24%">页面位置</th>
+<th width="8%">有效</th>
+<th width="8%">编辑</th>
 </tr>
+<?php if(is_array($listvalue['1'])) { foreach($listvalue['1'] as $key => $value) { ?>
+<tr>
+<td><input type="checkbox" name="adids[]" value="<?=$value['adid']?>"> <?=$value['title']?></td>
+<td><a href="admincp.php?ac=ad&pagetype=<?=$value['pagetype']?>"><?=$_TPL['pagetypes'][$value['pagetype']]?></a></td>
+<td><?=$_TPL['availables'][$value['available']]?></td>
+<td><a href="admincp.php?ac=ad&op=edit&adid=<?=$value['adid']?>">编辑</a></td>
+</tr>
+<?php } } ?>
+</table>
+
+<br />
+<div class="title">
+<h3>自定义广告列表</h3>
+<p>可以自由决定广告的显示位置，只需要获取广告代码(模板内嵌代码，或者Javascript代码均可)，然后将广告代码插入到模板任意位置即可显示</p>
+</div>
+
+
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th>标题</th>
+<th width="32%">调用广告</th>
+<th width="8%">操作</th>
+</tr>
+<?php if(is_array($listvalue['0'])) { foreach($listvalue['0'] as $key => $value) { ?>
+<tr>
+<td><input type="checkbox" name="adids[]" value="<?=$value['adid']?>"> <?=$value['title']?></td>
+<td><a href="admincp.php?ac=ad&op=tpl&adid=<?=$value['adid']?>">模板内嵌代码</a> | 
+<a href="admincp.php?ac=ad&op=js&adid=<?=$value['adid']?>">Javascript代码</a></td>
+<td><a href="admincp.php?ac=ad&op=edit&adid=<?=$value['adid']?>">编辑</a></td>
+</tr>
+<?php } } ?>
 </table>
 </div>
 
-<?php if($clickuserlist) { ?>
-<div class="trace" style="padding-bottom: 10px;">
-
-<div>
-<h2>
-刚表态过的朋友 (<a href="javascript:;" onclick="show_click('click_<?=$idtype?>_<?=$id?>_<?=$value['clickid']?>')"><?=$clicknum?> 人</a>)
-<?php if($_SGLOBAL['magic']['anonymous']) { ?>
-<img src="image/magic/anonymous.small.gif" class="magicicon" />
-<a id="a_magic_anonymous" href="magic.php?mid=anonymous&idtype=<?=$idtype?>&id=<?=$id?>" onclick="ajaxmenu(event,this.id, 1)" class="gray"><?=$_SGLOBAL['magic']['anonymous']?></a>
-<?php } ?>					
-</h2>
+<div class="footactions">
+<input type="checkbox" name="chkall" onclick="checkAll(this.form, 'adid')">全选
+<input type="submit" name="delsubmit" value="批量删除" class="submit">
 </div>
-<div id="trace_div">
-<ul class="avatar_list" id="trace_ul">
-<?php if(is_array($clickuserlist)) { foreach($clickuserlist as $value) { ?>
-<li>
-<?php if($value['username']) { ?>
-<div class="avatar48"><a href="space.php?uid=<?=$value['uid']?>" target="_blank" title="<?=$value['clickname']?>"><?php echo avatar($value[uid], 'small'); ?></a></div>
-<p><a href="space.php?uid=<?=$value['uid']?>"  title="<?=$_SN[$value['uid']]?>" target="_blank"><?=$_SN[$value['uid']]?></a></p>
-<?php } else { ?>
-<div class="avatar48"><img src="image/magic/hidden.gif" alt="<?=$value['clickname']?>" class="avatar" /></div>
-<p>匿名</p>
+
+</form>
+
+<?php } elseif($_GET['op'] == 'add' || $_GET['op'] == 'edit') { ?>
+<script type="text/JavaScript">
+function style_show(theobj) {
+var styles,key;
+styles = new Array('html','flash','image','text');
+for(key in styles){
+var obj=$('style_'+styles[key]);
+obj.style.display = styles[key]==theobj.options[theobj.selectedIndex].value?'':'none';
+}
+}
+</script>
+
+<form method="post" action="admincp.php?ac=ad">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+
+<div class="bdrcontent">
+
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr><th style="width:12em;">广告类型</th>
+<td><input type="radio" name="system" value="1" <?=$systems['1']?> onclick="$('style_system').style.display='';">系统内置广告 
+<input type="radio" name="system" value="0" <?=$systems['0']?> onclick="$('style_system').style.display='none';">用户自定义广告
+</td></tr>
+<tr><th>广告标题</th>
+<td><input name="title" value="<?=$advalue['title']?>" class="t_input"></td>
+</tr>
+
+<tbody id="style_system" style="display:<?php if($advalue['system']==0) { ?>none<?php } ?>">
+<tr>
+<th>页面位置</th>
+<td>
+<select name="pagetype">
+<option value="header"<?=$pagetypes['header']?>>页面顶部 (宽970px)</option>
+<option value="footer"<?=$pagetypes['footer']?>>页脚 (宽970px)</option>
+<option value="contenttop"<?=$pagetypes['contenttop']?>>页面主区域上方 (宽800px)</option>
+<option value="contentbottom"<?=$pagetypes['contentbottom']?>>页面主区域下方 (宽800px)</option>
+<option value="rightside"<?=$pagetypes['rightside']?>>日志(话题)内容区域 (宽300px)</option>
+<option value="couplet"<?=$pagetypes['couplet']?>>对联广告 (宽90px)</option>
+<option value="feedbox"<?=$pagetypes['feedbox']?>>动态顶部 (宽500px)</option>
+</select>
+</td>
+</tr>
+<tr>
+<th>有效性</th>
+<td>
+<input type="radio" name="available" value="1" <?=$availables['1']?>>有效
+<input type="radio" name="available" value="0" <?=$availables['0']?>>无效
+</td></tr>
+</tbody>
+
+<tr><th>广告方式</th><td>
+<select name="adcode[type]" onchange="style_show(this)">
+<option value="html" <?=$adcodes['html']?>>代码</option>
+<option value="flash" <?=$adcodes['flash']?>>Flash</option>
+<option value="image" <?=$adcodes['image']?>>Image</option>
+<option value="text" <?=$adcodes['text']?>>文本</option>
+</select>
+</td></tr>
+<tbody id="style_html" style="display:<?php if($advalue['adcode']['type']!='html') { ?>none<?php } ?>">
+<tr>
+<th>广告代码(必填)</th>
+<td><textarea rows="10" style="width:98%;" name="adcode[html]"><?=$advalue['adcode']['html']?></textarea></td>
+</tr>
+</tbody>
+
+<tbody id="style_flash" style="display:<?php if($advalue['adcode']['type']!='flash') { ?>none<?php } ?>">
+<tr>
+<th>Flash宽度(必填)</th>
+<td><input name="adcode[flashwidth]" value="<?=$advalue['adcode']['flashwidth']?>" size="5"></td>
+</tr>
+<tr>
+<th>Flash高度(必填)</th>
+<td><input name="adcode[flashheight]" value="<?=$advalue['adcode']['flashheight']?>" size="5"></td>
+</tr>
+<tr>
+<th>Flash URL(必填)</th>
+<td><input name="adcode[flashurl]" value="<?=$advalue['adcode']['flashurl']?>" size="50"></td>
+</tr>
+</tbody>
+
+<tbody id="style_image" style="display:<?php if($advalue['adcode']['type']!='image') { ?>none<?php } ?>">
+<tr>
+<th>图片地址(必填)</th>
+<td><input name="adcode[imagesrc]" value="<?=$advalue['adcode']['imagesrc']?>" size="50"></td>
+</tr>
+<tr>
+<th>图片链接(必填)</th>
+<td><input name="adcode[imageurl]" value="<?=$advalue['adcode']['imageurl']?>" size="50"></td>
+</tr>
+<tr>
+<th>图片宽度(选填)</th>
+<td><input name="adcode[imagewidth]" value="<?=$advalue['adcode']['imagewidth']?>" size="5"></td>
+</tr>
+<tr>
+<th>图片高度(选填)</th>
+<td><input name="adcode[imageheight]" value="<?=$advalue['adcode']['imageheight']?>" size="5"></td>
+</tr>
+<tr>
+<th>图片替换文字(选填)</th>
+<td><input name="adcode[imagealt]" value="<?=$advalue['adcode']['imagealt']?>"></td>
+</tr>
+</tbody>
+
+<tbody id="style_text" style="display:<?php if($advalue['adcode']['type']!='text') { ?>none<?php } ?>">
+<tr>
+<th>文字内容(必填)</th>
+<td><input name="adcode[textcontent]" value="<?=$advalue['adcode']['textcontent']?>" size="50"></td>
+</tr>
+<tr>
+<th>文字链接(必填)</th>
+<td><input name="adcode[texturl]" value="<?=$advalue['adcode']['texturl']?>" size="50"></td>
+</tr>
+<tr>
+<th>文字大小(选填)</th>
+<td><input name="adcode[textsize]" value="<?=$advalue['adcode']['textsize']?>" size="5"> px</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="footactions">
+<input type="hidden" name="adid" value="<?=$advalue['adid']?>">
+<input type="submit" name="adsubmit" value="提交" class="submit">
+</div>
+
+</form>
+
+<?php } elseif($_GET['op'] == 'tpl') { ?>
+<div class="bdrcontent">
+<div class="title"><h3>模版调用代码</h3></div>
+
+<table class="formtable">
+<tr><td>请将以下代码复制，放到站点模板的任意页面的指定位置即可。</td></tr>
+<tr><td><input type="text" name="blockadcode" value="<?=$adcode?>" size="80"></td></tr>
+</table>
+</div>
+
+<?php } elseif($_GET['op'] == 'js') { ?>
+
+<div class="bdrcontent">
+<div class="title"><h3>Javascript调用代码</h3></div>
+
+<table class="formtable">
+<tr><td><textarea name="blockadcode" style="width:98%;" rows="5"><?=$adcode?></textarea></td></tr>
+</table>
+</div>
 <?php } ?>
-</li>
+</div>
+</div>
+
+<div class="side">
+<?php if($menus['0']) { ?>
+<div class="block style1">
+<h2>基本设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['0'])) { foreach($acs['0'] as $value) { ?>
+<?php if($menus['0'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
 <?php } } ?>
 </ul>
 </div>
+<?php } ?>
+
+<div class="block style1">
+<h2>批量管理</h2>
+<ul class="folder">
+<?php if(is_array($acs['3'])) { foreach($acs['3'] as $value) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } } ?>
+<?php if(is_array($acs['1'])) { foreach($acs['1'] as $value) { ?>
+<?php if($menus['1'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+</ul>
+</div>
+
+<?php if($menus['2']) { ?>
+<div class="block style1">
+<h2>高级设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['2'])) { foreach($acs['2'] as $value) { ?>
+<?php if($menus['2'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+<?php if($menus['0']['config']) { ?><li><a href="<?=UC_API?>" target="_blank">UCenter</a></li><?php } ?>
+</ul>
 </div>
 <?php } ?>
+</div>
 
-<?php if($click_multi) { ?><div class="page"><?=$click_multi?></div><?php } ?>
-
-<?php } ?>
+</div>
 
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>

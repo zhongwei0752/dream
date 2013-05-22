@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/blog|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188515', 'admin/tpl/blog');?><?php $_TPL['menunames'] = array(
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/spam|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188490', 'admin/tpl/spam');?><?php $_TPL['menunames'] = array(
 		'index' => '管理首页',
 		'config' => '站点设置',
 		'privacy' => '隐私设置',
@@ -166,134 +166,114 @@
 <div class="mainarea">
 <div class="maininner">
 
-<form method="get" action="admincp.php">
-<div class="block style4">
-
-<table cellspacing="3" cellpadding="3">
-<?php if($allowmanage) { ?>
-<tr><th>作者UID</th><td><input type="text" name="uid" value="<?=$_GET['uid']?>"></td>
-<th>作者名</th><td><input type="text" name="username" value="<?=$_GET['username']?>"></td>
-</tr>
-<?php } ?>
-<tr><th>标题*</th><td><input type="text" name="subject" value="<?=$_GET['subject']?>"></td>
-<th>内容*</th><td><input type="text" name="message" value="<?=$_GET['message']?>">*表示支持模糊查询</td>
-</tr>
-<tr>
-<th>公开性质</th><td>
-<select name="friend">
-<option value="">不限</option>
-<option value="0"<?php if($_GET['friend'] == '0') { ?> selected<?php } ?>>全站用户可见</option>
-<option value="1"<?php if($_GET['friend'] == '1') { ?> selected<?php } ?>>全好友可见</option>
-<option value="2"<?php if($_GET['friend'] == '2') { ?> selected<?php } ?>>仅指定的好友可见</option>
-<option value="3"<?php if($_GET['friend'] == '3') { ?> selected<?php } ?>>仅自己可见</option>
-<option value="4"<?php if($_GET['friend'] == '4') { ?> selected<?php } ?>>凭密码查看</option>
-</select>
-</td>
-<th>发布IP</th><td colspan="3"><input type="text" name="postip" value="<?=$_GET['postip']?>"></td>
-</tr>
-<tr>
-<th>指定日志ID</th>
-<td colspan="3">
-<input type="text" name="blogid" value="<?=$_GET['blogid']?>" />
-</td>
-</tr>
-<tr><th>查看数</th><td colspan="3">
-<input type="text" name="viewnum1" value="<?=$_GET['viewnum1']?>" size="10"> ~
-<input type="text" name="viewnum2" value="<?=$_GET['viewnum2']?>" size="10">
-</td></tr>
-<tr><th>回复数</th><td colspan="3">
-<input type="text" name="replynum1" value="<?=$_GET['replynum1']?>" size="10"> ~
-<input type="text" name="replynum2" value="<?=$_GET['replynum2']?>" size="10">
-</td></tr>
-<tr><th>热度</th><td colspan="3">
-<input type="text" name="hot1" value="<?=$_GET['hot1']?>" size="10"> ~
-<input type="text" name="hot2" value="<?=$_GET['hot2']?>" size="10">
-</td></tr>
-<tr><th>发布时间</th><td colspan="3">
-<input type="text" name="dateline1" value="<?=$_GET['dateline1']?>" size="10"> ~
-<input type="text" name="dateline2" value="<?=$_GET['dateline2']?>" size="10"> (YYYY-MM-DD)
-</td></tr>
-
-<tr><th>结果排序</th>
-<td colspan="3">
-<select name="orderby">
-<option value="">默认排序</option>
-<option value="dateline"<?=$orderby['dateline']?>>发布时间</option>
-<option value="viewnum"<?=$orderby['viewnum']?>>查看数</option>
-<option value="replynum"<?=$orderby['replynum']?>>回复数</option>
-<option value="hot"<?=$orderby['hot']?>>热度</option>
-</select>
-<select name="ordersc">
-<option value="desc"<?=$ordersc['desc']?>>递减</option>
-<option value="asc"<?=$ordersc['asc']?>>递增</option>
-</select>
-<select name="perpage">
-<option value="20"<?=$perpages['20']?>>每页显示20个</option>
-<option value="50"<?=$perpages['50']?>>每页显示50个</option>
-<option value="100"<?=$perpages['100']?>>每页显示100个</option>
-<option value="1000"<?=$perpages['1000']?>>一次处理1000个</option>
-</select>
-<input type="hidden" name="ac" value="blog">
-<input type="submit" name="searchsubmit" value="搜索" class="submit">
-</td>
-</tr>
-</table>
-
-</div>
-</form>
-
-<?php if($list) { ?>
-
-<form method="post" id="batchform" action="admincp.php?ac=blog">
+<form method="post" action="admincp.php?ac=spam">
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+
 <div class="bdrcontent">
+<div class="title">
+<h3>防灌水设置</h3>
+<p>您可以选择一些措施，来增加对灌水机的干扰，避免大量垃圾广告信息的产生，但这也会影响到新用户的使用体验。</p>
+</div>
 
-<?php if($perpage>100) { ?>
-<p>总共有满足条件的数据 <strong><?=$count?></strong> 个</p>
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<input type="hidden" name="ids[]" value="<?=$value['blogid']?>">
-<?php } } ?>
-
-<?php } else { ?>
-<table cellspacing="0" cellpadding="0" class="formtable">
-<tr><td width="25">&nbsp;</td><th>标题</th><th width="80">操作</th></tr>
-<?php if(is_array($list)) { foreach($list as $value) { ?>
+<table class="formtable">
 <tr>
+<th style="width:15em;">自定义登录识别名</th>
 <td>
-<input type="<?php if($allowbatch) { ?>checkbox<?php } else { ?>radio<?php } ?>" name="ids[]" value="<?=$value['blogid']?>">
-</td>
-<td>
-<a href="space.php?uid=<?=$value['uid']?>&do=blog&id=<?=$value['blogid']?>" target="_blank"><?=$value['subject']?></a>
-<?php if($value['friend']) { ?>[<a href="admincp.php?ac=blog&friend=<?=$value['friend']?>"><?=$value['friend']?></a>]<?php } ?>
-<p class="gray">
-<a href="admincp.php?ac=blog&uid=<?=$value['uid']?>"><?=$value['username']?></a><?php if($value['postip']) { ?>(<a href="admincp.php?ac=blog&postip=<?=$value['postip']?>"><?=$value['postip']?></a>)<?php } ?>
-&nbsp; <?php echo sgmdate('Y-m-d H:i',$value[dateline]); ?>
-<br>热度(<?=$value['hot']?>) / 回复(<?=$value['replynum']?>) / 查看(<?=$value['viewnum']?>)
-</p>
-</td>
-<td>
-<a href="cp.php?ac=blog&op=edit&blogid=<?=$value['blogid']?>" target="_blank">编辑</a>&nbsp;
-<a href="admincp.php?ac=comment&id=<?=$value['blogid']?>&idtype=blogid">评论</a>
+<input type="text" name="config[login_action]" value="<?=$configs['login_action']?>" size="10"> (必须为英文字母)<br>
+给登录页面设置个性名，可加大灌水机自动登录的难度，如果有必要，可以不定期更改一下。
 </td>
 </tr>
+<tr>
+<th>自定义注册识别名</th>
+<td>
+<input type="text" name="config[register_action]" value="<?=$configs['register_action']?>" size="10"> (必须为英文字母)<br>
+给注册页面设置个性名。注意，不能与登录识别名相同。
+</td>
+</tr>
+<tr>
+<th>页面开启验证码功能</th>
+<td>
+<input type="checkbox" name="config[seccode_login]" value="1"<?php if($configs['seccode_login']) { ?> checked<?php } ?>>登录页面
+<input type="checkbox" name="config[seccode_register]" value="1"<?php if($configs['seccode_register']) { ?> checked<?php } ?>>注册页面
+<br>说明：<br>对发布日志等发布操作是否开启验证码功能，您需要在<a href="admincp.php?ac=usergroup">用户组管理</a>中，对用户组进行不同的开启设置。
+</td>
+</tr>
+<tr>
+<th>验证码采用个性提问模式</th>
+<td>
+<input type="radio" name="config[questionmode]" value="1"<?php if($configs['questionmode'] == 1) { ?> checked<?php } ?>>是，使用我自定义的问答（推荐，效果好）
+<input type="radio" name="config[questionmode]" value="0"<?php if($configs['questionmode'] != '1') { ?> checked<?php } ?>>否，使用系统验证码图片
+</td>
+</tr>
+<tr>
+<th>设置个性问题和答案</th>
+<td id="q_td">
+<?php if(is_array($datas['question'])) { foreach($datas['question'] as $key => $value) { ?>
+<div style="margin-bottom:0.5em;">
+问题：<input type="text" name="data[question][]" value="<?=$datas['question'][$key]?>" size="20">&nbsp;
+答案：<input type="text" name="data[answer][]" value="<?=$datas['answer'][$key]?>" size="20">
+</div>
 <?php } } ?>
+<a href="javascript:;" onclick="new_q();">添加新的问答</a> (填写的答案不能为0或者空值)
+<div id="new_div" style="margin-bottom:0.5em;margin-top:0.5em;">
+问题：<input type="text" name="data[question][]" value="" size="20">&nbsp;
+答案：<input type="text" name="data[answer][]" value="" size="20">
+</div>
+</td>
+</tr>
+<tr>
+<th>强制新用户验证激活邮箱</th>
+<td>
+<input type="radio" name="config[need_email]" value="1"<?php if($configs['need_email'] == 1) { ?> checked<?php } ?>>是
+<input type="radio" name="config[need_email]" value="0"<?php if($configs['need_email'] != '1') { ?> checked<?php } ?>>否
+<br>选择是的话，用户必须验证激活自己的邮箱后，才可以进行发布操作。
+</td>
+</tr>
+<tr>
+<th>验证激活邮箱唯一性</th>
+<td>
+<input type="radio" name="config[uniqueemail]" value="1"<?php if($configs['uniqueemail'] == 1) { ?> checked<?php } ?>>是
+<input type="radio" name="config[uniqueemail]" value="0"<?php if($configs['uniqueemail'] != '1') { ?> checked<?php } ?>>否
+<br>选择是的话，验证激活的邮箱将唯一性，不允许重复。
+</td>
+</tr>	
+<tr>
+<th>新用户见习时间</th>
+<td>
+<input type="text" name="config[newusertime]" value="<?=$configs['newusertime']?>" size="10"> 小时
+<br>设置新注册用户必须等待多少小时后才可以发布操作。
+</td>
+</tr>
+<tr>
+<th>强制新用户上传头像</th>
+<td>
+<input type="radio" name="config[need_avatar]" value="1"<?php if($configs['need_avatar'] == 1) { ?> checked<?php } ?>>是
+<input type="radio" name="config[need_avatar]" value="0"<?php if($configs['need_avatar'] != '1') { ?> checked<?php } ?>>否
+<br>选择是的话，用户必须设置自己的头像后才能进行发布操作。
+</td>
+</tr>
+<tr>
+<th>强制新用户好友个数</th>
+<td>
+<input type="text" name="config[need_friendnum]" value="<?=$configs['need_friendnum']?>" size="10">
+<br>设置用户必须拥有多少个好友后，才可以进行发布操作。
+</td>
+</tr>
+<tr>
+<th>其他一些防灌水措施设置</th>
+<td>
+1. 您可以在<a href="admincp.php?ac=config">站点设置</a>中，关闭站点注册功能，仅允许好友邀请注册功能。<br>
+2. 您可以在<a href="admincp.php?ac=privacy">隐私设置</a>中，关闭游客开放浏览功能。<br>
+</td>
+</tr>
 </table>
-<?php } ?>
 </div>
 
 <div class="footactions">
-<?php if($allowbatch && $perpage<=100) { ?><input type="checkbox" id="chkall" name="chkall" onclick="checkAll(this.form, 'ids')">全选<?php } ?>
-<input type="hidden" name="mpurl" value="<?=$mpurl?>">
-<input type="submit" name="batchsubmit" value="批量删除" onclick="return confirm('本操作不可恢复，确认删除？');" class="submit">
+<input type="submit" name="spamsubmit" value="提交" class="submit">
+</div>
 
-<div class="pages"><?=$multi?></div>
-</div>
 </form>
-<?php } else { ?>
-<div class="bdrcontent">
-<p>指定条件下还没有数据</p>
-</div>
-<?php } ?>
 </div>
 </div>
 
@@ -339,6 +319,12 @@
 </div>
 <?php } ?>
 </div>
+
+<script>
+function new_q() {
+$('q_td').innerHTML += '<div style="margin-bottom:0.5em;">'+$('new_div').innerHTML+'</div>';
+}
+</script>
 
 </div>
 

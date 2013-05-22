@@ -38,11 +38,15 @@ switch ($idtype) {
 			WHERE t.tid='$id'";
 		$tablename = tname('thread');
 		break;
-		case 'discussionid':
+	case 'discussionid':
 		$sql = "SELECT b.*, bf.hotuser FROM ".tname('discussion')." b
 			LEFT JOIN ".tname('discussionfield')." bf ON bf.discussionid=b.discussionid
 			WHERE b.discussionid='$id'";
 		$tablename = tname('discussion');
+		break;
+	case 'jokeid':
+		$sql = "SELECT b.* FROM ".tname('joke')." b WHERE b.jokeid='$id'";
+		$tablename = tname('joke');
 		break;
 	default:
 		$idtype = 'blogid';
@@ -61,7 +65,7 @@ $hash = md5($item['uid']."\t".$item['dateline']);
 
 if($_GET['op'] == 'add') {
 	
-	if(!checkperm('allowclick') || $_GET['hash'] != $hash) {
+	if(!checkperm('allowclick')) {
 		showmessage('no_privilege');
 	}
 	
@@ -123,6 +127,16 @@ if($_GET['op'] == 'add') {
 			);
 			$note_type = 'clickdiscussion';
 			$q_note = cplang('note_click_discussion', array("space.php?uid=$item[uid]&do=discussion&id=$item[discussionid]", $item['subject']));
+			break;
+			case 'jokeid':
+			$fs['title_template'] = cplang('feed_click_joke');
+			$fs['title_data'] = array(
+				'touser' => "<a href=\"space.php?uid=$item[uid]\">{$_SN[$item['uid']]}</a>",
+				'subject' => "<a href=\"space.php?uid=$item[uid]&do=joke&id=$item[jokeid]\">$item[subject]</a>",
+				'click' => $click['name']
+			);
+			$note_type = 'clickjoke';
+			$q_note = cplang('note_click_joke', array("space.php?uid=$item[uid]&do=joke&id=$item[jokeid]", $item['subject']));
 			break;
 		case 'tid':
 			$fs['title_template'] = cplang('feed_click_thread');

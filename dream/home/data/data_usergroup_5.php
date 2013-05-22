@@ -94,6 +94,9 @@ $_SGLOBAL['usergroup']=Array
 		'managelog' => '0',
 		'magicaward' => '',
 		'allowdiscussion' => 1,
+		'managediscussion' => '0',
+		'allowjoke' => 1,
+		'managejoke' => '0',
 		'exphigher' => 99
 		)
 	)

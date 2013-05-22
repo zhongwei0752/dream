@@ -1,4 +1,50 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_notice|template/green/header|template/green/footer', '1369056221', 'template/green/space_notice');?><?php $_TPL['titles'] = array('通知'); ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/hotuser|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188492', 'admin/tpl/hotuser');?><?php $_TPL['menunames'] = array(
+		'index' => '管理首页',
+		'config' => '站点设置',
+		'privacy' => '隐私设置',
+		'usergroup' => '用户组',
+		'credit' => '积分规则',
+		'profilefield' => '用户栏目',
+		'profield' => '群组栏目',
+		'eventclass' => '活动分类',
+		'magic' => '道具设置',
+		'task' => '有奖任务',
+		'spam' => '防灌水设置',
+		'censor' => '词语屏蔽',
+		'ad' => '广告设置',
+		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
+		'app' => 'UCenter应用',
+		'network' => '随便看看',
+		'cache' => '缓存更新',
+		'log' => '系统log记录',
+		'space' => '用户管理',
+		'feed' => '动态(feed)',
+		'share' => '分享',
+		'blog' => '日志',
+		'album' => '相册',
+		'pic' => '图片',
+		'comment' => '评论/留言',
+		'thread' => '话题',
+		'post' => '回帖',
+		'doing' => '记录',
+		'tag' => '标签',
+		'mtag' => '群组',
+		'poll' => '投票',
+		'event' => '活动',
+		'magiclog' => '道具记录',
+		'report' => '举报',
+		'block' => '数据调用',
+		'template' => '模板编辑',
+		'backup' => '数据备份',
+		'stat' => '统计更新',
+		'cron' => '系统计划任务',
+		'click' => '表态动作',
+		'ip' => '访问IP设置',
+		'hotuser' => '推荐成员设置',
+		'defaultuser' => '默认好友设置',
+	); ?>
+<?php $_TPL['nosidebar'] = 1; ?>
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -45,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -109,183 +156,109 @@
 <?php } ?>
 
 
-<h2 class="title"><img src="image/icon/pm.gif">通知</h2>
-
-<div class="tabs_header">
-<ul class="tabs">
-<li><a href="space.php?do=pm"><span>短消息</span></a></li>
-<li<?=$actives['notice']?>><a href="space.php?do=notice"><span>通知</span></a></li>
-<?php if($_SCONFIG['my_status']) { ?>
-<li<?=$actives['userapp']?>><a href="space.php?do=notice&view=userapp"><span>应用消息</span></a></li>
-<?php } ?>
-</ul>
-</div>
-
-<?php if($view=='userapp') { ?>
-
-
-<script type="text/javascript">
-function manyou_add_userapp(hash, url) {
-if(isUndefined(url)) {
-$(hash).innerHTML = "<tr><td colspan=\"2\">成功忽略了该条应用消息</td></tr>";
-} else {
-$(hash).innerHTML = "<tr><td colspan=\"2\">正在引导您进入...</td></tr>";
-}
-var x = new Ajax();
-x.get('do.php?ac=ajax&op=deluserapp&hash='+hash, function(s){
-if(!isUndefined(url)) {
-location.href = url;
-}
-});
-}
-</script>
-
-<div id="content">
-
-<style>
-.topicList table{width:100%;margin:10px 0 5px 0;}
-.topicList td{color:#333;}
+<style type="text/css">
+@import url(admin/tpl/style.css);
 </style>
-<?php if($list) { ?>
-<div class="m_box">
-<?php if(is_array($list)) { foreach($list as $key => $invite) { ?>
-<h3 class="feed_header">
-<a href="space.php?do=notice&view=userapp&op=del&appid=<?=$invite['0']['appid']?>" class="r_option">忽略该应用的所有邀请</a>
-<a href="userapp.php?id=<?=$invite['0']['appid']?>&uid=<?=$space['uid']?>" title="<?=$apparr[$invite['0']['appid']]?>"><img src="http://appicon.manyou.com/icons/<?=$invite['0']['appid']?>" alt="<?=$apparr[$invite['0']['appid']]?>" align="absmiddle" /></a> 
-您有 <?php echo count($invite); ?> 个 <?=$invite['0']['typename']?> <?php if($invite['0']['type']) { ?>请求<?php } else { ?>邀请<?php } ?>
-</h3>
-<table cellpadding="0" cellspacing="0" width="100%" class="topic_list">
-<?php if(is_array($invite)) { foreach($invite as $value) { ?>
-<tbody>
+
+<div id="cp_content">
+
+
+<div class="mainarea">
+<div class="maininner">
+
+<form method="post" action="admincp.php?ac=<?=$ac?>">
+<div class="bdrcontent">
+<table cellspacing="0" cellpadding="0" class="formtable">
 <tr>
-<td width="60" valign="top">
-<div class="avatar48">
-<a href="space.php?uid=<?=$value['fromuid']?>" class="avatarlink"><?php echo avatar($value[fromuid],small); ?></a>
-</div>
-</td>
-<td id="<?=$value['hash']?>">
-<?=$value['myml']?>
+<td colspan="2">
+<?php if($ac == 'defaultuser') { ?>
+<textarea name="config[defaultfusername]" style="width:98%;" rows="12"><?=$configs['defaultfusername']?></textarea>
+<?php } else { ?>
+<textarea name="config[spacebarusername]" style="width:98%;" rows="12"><?=$configs['spacebarusername']?></textarea>
+<?php } ?>
 </td>
 </tr>
-</tbody>
-<?php } } ?>
-</table>
-<?php } } ?>
-</div>
-<div class="page"><?=$multi?></div>
+<tr>
+<td colspan="2">
+添加格式：<br />
+请输入用户名，每个用户名一行。
+<br>例如：
+<br>admin
+<br>webmaster
+<?php if($ac == 'defaultuser') { ?>
+<br>这些用户会自动将新注册用户添加为好友，并向其打个招呼。
+注意，指定的这几位用户浏览自己的首页时，可能会因其好友数众多而增加服务器负载。
 <?php } else { ?>
-<div class="c_form">
-没有新的应用请求或邀请
-</div>
+<br>这些用户将随机显示在随便看看页面的“站长推荐”栏目中。
+<?php } ?>
+</td>
+</tr>
+
+</table>
+<?php if($ac == 'defaultuser') { ?>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th style="width:10em;">默认打招呼内容</th>
+<td><input type="text" class="t_input" name="config[defaultpoke]" value="<?=$configs['defaultpoke']?>" size="50"> (不要超过25个汉字)
+<br>设置自动好友向新人打招呼的内容。
+</td>
+</tr>
+</table>
 <?php } ?>
 </div>
+<div class="footactions">
+<input type="submit" name="thevaluesubmit" value="提交" class="submit">
+</div>
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+</form>
+</div>
+</div>
 
-<div id="sidebar">
-<div class="sidebox">
-<h2 class="title">应用分类</h2>
-<ul class="line_list">
-<li><a href="space.php?do=notice&view=userapp">查看全部应用消息</a></li>
-<?php if(is_array($apparr)) { foreach($apparr as $type => $val) { ?>
-<li><a href="userapp.php?id=<?=$val['0']['appid']?>&uid=<?=$space['uid']?>" title="<?=$val['0']['typename']?>"><img src="http://appicon.manyou.com/icons/<?=$val['0']['appid']?>" alt="<?=$val['0']['typename']?>" /></a><a href="space.php?do=notice&view=userapp&type=<?=$val['0']['appid']?>"> <?php echo count($val); ?> 个 <?=$val['0']['typename']?> <?php if($val['0']['type']) { ?>请求<?php } else { ?>邀请<?php } ?></a></li>
+<div class="side">
+<?php if($menus['0']) { ?>
+<div class="block style1">
+<h2>基本设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['0'])) { foreach($acs['0'] as $value) { ?>
+<?php if($menus['0'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
 <?php } } ?>
 </ul>
 </div>
-</div>
-
-<?php } else { ?>
-
-<div id="content">
-
-<div class="h_status">
-提示：当你感觉有些通知对你造成骚扰，请点击通知右侧的屏蔽小图标，屏蔽此类通知。
-</div>
-
-<?php if($newnum) { ?>
-<div class="mgs_list">
-<?php if($space['notenum']) { ?><div><img src="image/icon/notice.gif"><a href="space.php?do=notice"><strong><?=$space['notenum']?></strong> 条新通知</a></div><?php } ?>
-<?php if($space['addfriendnum']) { ?><div><img src="image/icon/friend.gif" alt="" /><a href="cp.php?ac=friend&op=request"><strong><?=$space['addfriendnum']?></strong> 个好友请求</a></div><?php } ?>
-<?php if($space['mtaginvitenum']) { ?><div><img src="image/icon/mtag.gif" alt="" /><a href="cp.php?ac=mtag&op=mtaginvite"><strong><?=$space['mtaginvitenum']?></strong> 个群组邀请</a></div><?php } ?>
-<?php if($space['eventinvitenum']) { ?><div><img src="image/icon/event.gif" alt="" /><a href="cp.php?ac=event&op=eventinvite"><strong><?=$space['eventinvitenum']?></strong> 个活动邀请</a></div><?php } ?>
-<?php if($space['myinvitenum']) { ?><div><img src="image/icon/userapp.gif" alt="" /><a href="space.php?do=notice&view=userapp"><strong><?=$space['myinvitenum']?></strong> 个应用消息</a></div><?php } ?>
-<?php if($space['pokenum']) { ?><div><img src="image/icon/poke.gif" alt="" /><a href="cp.php?ac=poke"><strong> <?=$space['pokenum']?></strong> 个新招呼</a></div><?php } ?>
-</div>
 <?php } ?>
 
-
-<?php if($list) { ?>
-<table cellpadding="0" cellspacing="0" width="100%" class="topic_list">
-<?php if(is_array($list)) { foreach($list as $key => $value) { ?>
-<tbody>
-<tr>
-<td width="60" valign="top">
-<?php if($value['authorid']) { ?>
-<div class="avatar48">
-<a href="space.php?uid=<?=$value['authorid']?>" class="avatarlink"><?php echo avatar($value[authorid],small); ?></a>
-</div>
-<?php } else { ?>
-<div class="avatar48"><img src="image/systempm.gif" width="48" height="48" /></div>
-<?php } ?>
-</td>
-<td>
-
-<a href="cp.php?ac=common&op=ignore&authorid=<?=$value['authorid']?>&type=<?=$value['type']?>" id="a_note_<?=$value['id']?>" onclick="ajaxmenu(event, this.id)" class="float_cancel">屏蔽</a>
-
-<div style="padding:10px 0 5px 0;<?=$value['style']?>">
-<?php if($value['authorid']) { ?>
-<a href="space.php?uid=<?=$value['authorid']?>"><?=$_SN[$value['authorid']]?></a>
-<?php } ?>
-<?=$value['note']?>
-<p class="time">&nbsp;<?php echo sgmdate('m-d H:i',$value[dateline],1); ?></p>
-</div>
-
-<?php if($value['authorid'] && !$value['isfriend']) { ?>
-<p>
-<a href="cp.php?ac=friend&op=add&uid=<?=$value['authorid']?>" id="add_note_friend_<?=$value['authorid']?>" onclick="ajaxmenu(event, this.id, 1)">加为好友</a>
-<span class="pipe">|</span>
-<a href="cp.php?ac=poke&op=send&uid=<?=$value['authorid']?>" id="a_poke_<?=$value['authorid']?>" onclick="ajaxmenu(event, this.id, 1)">打个招呼</a>
-</p>
-<?php } ?>
-
-</td>
-</tr>
-</tbody>
+<div class="block style1">
+<h2>批量管理</h2>
+<ul class="folder">
+<?php if(is_array($acs['3'])) { foreach($acs['3'] as $value) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
 <?php } } ?>
-
-<?php if($view!='userapp' && $space['notenum']) { ?>
-<tbody>
-<tr>
-<td width="60">
-</td>
-<td align="center"><a href="space.php?do=notice&ignore=all">&raquo; 将后续页面所有未读新通知视为已读</a></td>
-</tr>
-</tbody>
+<?php if(is_array($acs['1'])) { foreach($acs['1'] as $value) { ?>
+<?php if($menus['1'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
 <?php } ?>
-
-</table>
-
-
-<div class="page"><?=$multi?></div>
-<?php } else { ?>
-<div class="c_form">
-没有新的通知。
-</div>
-<?php } ?>
-</div>
-
-<div id="sidebar">		
-<div class="sidebox">
-<h2 class="title">通知分类</h2>
-<ul class="line_list">
-<li><a href="space.php?do=notice">查看全部通知</a></li>
-<?php if(is_array($noticetypes)) { foreach($noticetypes as $type => $name) { ?>
-<li><a href="space.php?do=notice&type=<?=$type?>"><?=$name?></a></li>
 <?php } } ?>
 </ul>
 </div>
 
+<?php if($menus['2']) { ?>
+<div class="block style1">
+<h2>高级设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['2'])) { foreach($acs['2'] as $value) { ?>
+<?php if($menus['2'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+<?php if($menus['0']['config']) { ?><li><a href="<?=UC_API?>" target="_blank">UCenter</a></li><?php } ?>
+</ul>
+</div>
+<?php } ?>
 </div>
 
-<?php } ?>
+</div>
+
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>
 <?php if($_SGLOBAL['ad']['contentbottom']) { ?><br style="line-height:0;clear:both;"/><div id="ad_contentbottom"><?php adshow('contentbottom'); ?></div><?php } ?>
@@ -420,5 +393,4 @@ showreward();
         <?php } ?>
 </body>
 </html>
-<?php } ?>
-<?php ob_out();?>
+<?php } ?><?php ob_out();?>

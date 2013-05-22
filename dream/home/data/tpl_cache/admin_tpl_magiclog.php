@@ -1,4 +1,50 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_thread_list|template/green/header|template/green/space_menu|template/green/footer', '1368858887', 'template/green/space_thread_list');?><?php $_TPL['titles'] = array('群组话题'); ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/magiclog|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188500', 'admin/tpl/magiclog');?><?php $_TPL['menunames'] = array(
+		'index' => '管理首页',
+		'config' => '站点设置',
+		'privacy' => '隐私设置',
+		'usergroup' => '用户组',
+		'credit' => '积分规则',
+		'profilefield' => '用户栏目',
+		'profield' => '群组栏目',
+		'eventclass' => '活动分类',
+		'magic' => '道具设置',
+		'task' => '有奖任务',
+		'spam' => '防灌水设置',
+		'censor' => '词语屏蔽',
+		'ad' => '广告设置',
+		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
+		'app' => 'UCenter应用',
+		'network' => '随便看看',
+		'cache' => '缓存更新',
+		'log' => '系统log记录',
+		'space' => '用户管理',
+		'feed' => '动态(feed)',
+		'share' => '分享',
+		'blog' => '日志',
+		'album' => '相册',
+		'pic' => '图片',
+		'comment' => '评论/留言',
+		'thread' => '话题',
+		'post' => '回帖',
+		'doing' => '记录',
+		'tag' => '标签',
+		'mtag' => '群组',
+		'poll' => '投票',
+		'event' => '活动',
+		'magiclog' => '道具记录',
+		'report' => '举报',
+		'block' => '数据调用',
+		'template' => '模板编辑',
+		'backup' => '数据备份',
+		'stat' => '统计更新',
+		'cron' => '系统计划任务',
+		'click' => '表态动作',
+		'ip' => '访问IP设置',
+		'hotuser' => '推荐成员设置',
+		'defaultuser' => '默认好友设置',
+	); ?>
+<?php $_TPL['nosidebar'] = 1; ?>
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -45,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -109,140 +156,362 @@
 <?php } ?>
 
 
-<?php if(!empty($_SGLOBAL['inajax'])) { ?>
-<div id="space_photo">
-<h3 class="feed_header">
-<a href="cp.php?ac=thread" class="r_option" target="_blank">发表话题</a>
-群组话题(共 <?=$count?> 个)</h3>
-<?php if($list) { ?>
-<ul class="line_list">
-<?php if(is_array($list)) { foreach($list as $key => $value) { ?>
-<li><a href="space.php?uid=<?=$value['uid']?>&do=thread&id=<?=$value['tid']?>" target="_blank"><?=$value['subject']?></a>
-<span class="gray">&nbsp;<a href="space.php?do=mtag&tagid=<?=$value['tagid']?>" target="_blank"><?=$value['tagname']?></a></span></li>
-<?php } } ?>
-</ul>
-<div class="page"><?=$multi?></div>
-<?php } else { ?>
-<div class="c_form">还没有话题列表。</div>
-<?php } ?>
-</div><br>
-<?php } else { ?>
+<style type="text/css">
+@import url(admin/tpl/style.css);
+</style>
 
-<?php if($space['self']) { ?>
-<div class="searchbar floatright">
-<form method="get" action="space.php">
-<input name="searchkey" value="" size="15" class="t_input" type="text">
-<input name="searchsubmit" value="搜索话题" class="submit" type="submit">
-<input type="hidden" name="searchmode" value="1" />
-<input type="hidden" name="do" value="thread" />
-<input type="hidden" name="view" value="all" />
-</form>
-</div>
-<h2 class="title"><img src="image/app/mtag.gif">群组 - 话题</h2>
+<div id="cp_content">
+
+
+<div class="mainarea">
+<div class="maininner">
+
 <div class="tabs_header">
 <ul class="tabs">
-<li class="active"><a href="space.php?uid=<?=$space['uid']?>&do=thread"><span>群组话题</span></a></li>
-<li><a href="space.php?do=mtag&view=me"><span>我参与的群组</span></a></li>
-<li><a href="space.php?do=mtag&view=manage"><span>我管理的群组</span></a></li>
-<li><a href="space.php?do=mtag&view=hot"><span>热门群组</span></a></li>
-<li><a href="space.php?do=mtag&view=recommend"><span>推荐群组</span></a></li>
-<li class="null"><a href="cp.php?ac=thread">发起新话题</a></li>
-<li class="null"><a href="cp.php?ac=mtag">创建群组</a></li>
+<li<?=$actives['holdlog']?>><a href="admincp.php?ac=magiclog&view=holdlog"><span>道具持有记录</span></a></li>
+<li<?=$actives['inlog']?>><a href="admincp.php?ac=magiclog&view=inlog"><span>道具获取记录</span></a></li>
+<li<?=$actives['uselog']?>><a href="admincp.php?ac=magiclog&view=uselog"><span>道具使用记录</span></a></li>
+<?php if($allowmanage) { ?>
+<li<?=$actives['storelog']?>><a href="admincp.php?ac=magiclog&view=storelog"><span>道具出售统计</span></a></li>
+<?php } ?>
 </ul>
 </div>
-<div class="h_status">
-<a href="space.php?uid=<?=$space['uid']?>&do=thread&view=hot"<?=$actives['hot']?>>热门话题</a><span class="pipe">|</span>
-<a href="space.php?uid=<?=$space['uid']?>&do=thread&view=new"<?=$actives['new']?>>最新话题</a><span class="pipe">|</span>
-<a href="space.php?uid=<?=$space['uid']?>&do=thread&view=me"<?=$actives['me']?>>我的话题</a>
-</div>
+
+<?php if($_GET['view'] == 'inlog') { ?>
+<form method="get" action="admincp.php">
+<div class="block style4">
+<table cellspacing="3" cellpadding="3">
+<tr>
+<?php if($allowmanage) { ?>
+<th>用户名</th><td><input type="text" name="username" value="<?=$_GET['username']?>"></td>
 <?php } else { ?>
-<?php $_TPL['spacetitle'] = "话题";
-	$_TPL['spacemenus'][] = "<a href=\"space.php?uid=$space[uid]&do=thread&view=me\">TA的所有话题</a>"; ?>
-<div class="c_header a_header">
-<div class="avatar48"><a href="space.php?uid=<?=$space['uid']?>"><?php echo avatar($space[uid],small); ?></a></div>
-<?php if($_SGLOBAL['refer']) { ?>
-<a class="r_option" href="<?=$_SGLOBAL['refer']?>">&laquo; 返回上一页</a>
+<th>用户名</th><td><input type="text" name="username" value="<?=$_SGLOBAL['supe_username']?>" disabled></td>
 <?php } ?>
-<p style="font-size:14px"><?=$_SN[$space['uid']]?>的<?=$_TPL['spacetitle']?></p>
-<a href="space.php?uid=<?=$space['uid']?>" class="spacelink"><?=$_SN[$space['uid']]?>的主页</a>
-<?php if($_TPL['spacemenus']) { ?>
-<?php if(is_array($_TPL['spacemenus'])) { foreach($_TPL['spacemenus'] as $value) { ?> <span class="pipe">&raquo;</span> <?=$value?><?php } } ?>
-<?php } ?>
+<th>道具</th>
+<td>
+<select name="mid">
+<option value="">不限</option>
+<?php if(is_array($_SGLOBAL['magic'])) { foreach($_SGLOBAL['magic'] as $key => $value) { ?>
+<option value="<?=$key?>"<?php if($_GET['mid']==$key) { ?> selected<?php } ?>><?=$value?></option>
+<?php } } ?>
+</select>
+</td>
+</tr>
+<tr>
+<th>交易量</th>
+<td>
+<select name="count">
+<option value="">不限</option>
+<option value="1-4"<?php if($_GET['count']=='1-4') { ?> selected<?php } ?>>1 - 4</option>
+<option value="5-9"<?php if($_GET['count']=='5-9') { ?> selected<?php } ?>>5 - 9</option>
+<option value="10-49"<?php if($_GET['count']=='10-49') { ?> selected<?php } ?>>10 - 49</option>
+<option value="50-99"<?php if($_GET['count']=='50-99') { ?> selected<?php } ?>>50 - 99</option>
+<option value="100-99999"<?php if($_GET['count']=='100-99999') { ?> selected<?php } ?>>100以上</option>
+</select>
+</td>
+<th>获得途径</th>
+<td>
+<select name="type">
+<option value="">不限</option>
+<option value="1"<?php if($_GET['type']==1) { ?> selected<?php } ?>>购买</option>
+<option value="2"<?php if($_GET['type']==2) { ?> selected<?php } ?>>赠送</option>
+<option value="3"<?php if($_GET['type']==3) { ?> selected<?php } ?>>升级</option>
+</select>
+</td>
+</tr>
+<tr>
+<th>记录时间</th>
+<td colspan="3">
+<script type="text/javascript" src="source/script_calendar.js" charset="<?=$_SC['charset']?>"></script>
+<input type="text" name="starttime" value="<?=$_GET['starttime']?>" onclick="showcalendar(event,this,1)"/> ~
+<input type="text" name="endtime" value="<?=$_GET['endtime']?>"  onclick="showcalendar(event,this,1)" />
+<input type="hidden" name="view" value="<?=$_GET['view']?>">
+<input type="hidden" name="ac" value="magiclog">
+<input type="submit" name="searchsubmit" value="搜索" class="submit">
+</td>
+</tr>
+</table>
 </div>
-
-<div class="h_status">按照发布时间排序</div>
-<?php } ?>
-
-<?php if($searchkey) { ?>
-<div class="h_status">以下是搜索话题 <span style="color:red;font-weight:bold;"><?=$searchkey?></span> 结果列表</div>
-<?php } ?>
+</form>
 
 <?php if($list) { ?>
-<div class="topic_list">
-<table cellspacing="0" cellpadding="0">
-<thead>
-<tr>
-<td class="subject">主题</td>
-<td class="mtag">群组</td>
-<td class="author"><?php if($_GET['view']!='me') { ?>作者 <?php } ?>(回应/阅读)</td>
-<td class="lastpost">最后更新</td>
-</tr>
-</thead>
-<tbody>
-<?php if(is_array($list)) { foreach($list as $key => $value) { ?>
-<?php $magicegg = "" ?>							
-<?php if($value[magicegg]) for($i=0; $i<$value[magicegg]; $i++) $magicegg .= '<img src="image/magic/egg/'.mt_rand(1,6).'.gif" />'; ?>
-<tr<?php if($key%2==1) { ?> class="alt"<?php } ?>>
-<td class="subject">
-<?=$magicegg?> <a href="space.php?uid=<?=$value['uid']?>&do=thread&id=<?=$value['tid']?>" <?php if($value['magiccolor']) { ?> class="magiccolor<?=$value['magiccolor']?>"<?php } ?>><?=$value['subject']?></a>
-<?php if($value['hot']) { ?>
-<br><span class="gray"><?=$value['hot']?> 人推荐</span>
-<?php } ?>
-</td>
-<td><a href="space.php?do=mtag&tagid=<?=$value['tagid']?>"><?=$value['tagname']?></a></td>
-<td class="author"><a href="space.php?uid=<?=$value['uid']?>" title="<?=$_SN[$value['uid']]?>"><?=$_SN[$value['uid']]?></a><br><em><?=$value['replynum']?>/<?=$value['viewnum']?></em></td>
-<td class="lastpost"><a href="space.php?uid=<?=$value['lastauthorid']?>" title="<?=$_SN[$value['lastauthorid']]?>"><?=$_SN[$value['lastauthorid']]?></a><br><?php echo sgmdate('m-d H:i',$value[lastpost],1); ?></td>
-</tr>
-<?php } } ?>
-</tbody>
-</table>
-<div class="page"><?=$multi?></div>
-</div>
-<?php } else { ?>
-<div class="c_form">还没有话题列表。</div>
-<?php } ?>
-
-
-<?php if($rlist) { ?>
-<div style="padding-bottom:10px;">
-<h3 class="l_status">
-<div class="r_option"><a href="space.php?do=mtag&view=hot">查看更多</a></div>
-热门群组
-</h3>
-<ul class="thread_list">
-<?php if(is_array($rlist)) { foreach($rlist as $value) { ?>
-<li>
+<div class="bdrcontent">
 <table width="100%">
 <tr>
-<td width="80">
-<div class="threadimg60"><a href="space.php?do=mtag&tagid=<?=$value['tagid']?>"><img src="<?=$value['pic']?>" style="width:60px;"></a></div>
+<th>用户</th>
+<th>方式</th>
+<th>道具</th>
+<th>数量</th>
+<th>时间</th>
+</tr>
+<?php if(is_array($list)) { foreach($list as $value) { ?>
+<tr>
+<td>
+<a href="admincp.php?ac=magiclog&view=inlog&username=<?=$value['username']?>"><?=$value['username']?></a>
 </td>
 <td>
-<a href="space.php?do=mtag&tagid=<?=$value['tagid']?>" style="font-weight:bold;"><?=$value['tagname']?></a>
-<div class="gray"><?=$value['title']?></div>
-已有 <span class="num"><?=$value['membernum']?></span> 人加入
-<div class="gray">
-话题: <?=$value['threadnum']?>, 回帖: <?=$value['postnum']?>
-</div>
+<?php if($value['type']==2) { ?>
+获赠
+<?php } elseif($value['type'] == 3) { ?>
+升级用户组
+<?php } else { ?>
+购买
+<?php } ?>
 </td>
-</tr></table>
-</li>
+<td>
+<a href="admincp.php?ac=magiclog&view=inlog&mid=<?=$value['mid']?>"><?=$_SGLOBAL['magic'][$value['mid']]?></a>
+</td>
+<td>
+<?=$value['count']?>
+</td>
+<td>
+<?php echo sgmdate('Y-m-d H:i', $value[dateline]) ?>
+</td>
+</tr>
+<?php } } ?>	
+</table>
+</div>
+<div class="footactions">
+<div class="pages"><?=$multi?></div>
+</div>
+<?php } else { ?>
+<div class="bdrcontent">
+没有指定数据
+</div>	
+<?php } ?>
+
+<?php } elseif($_GET['view'] == 'uselog') { ?>
+<form method="get" action="admincp.php">
+<div class="block style4">
+<table cellspacing="3" cellpadding="3">
+<tr>
+<?php if($allowmanage) { ?>
+<th>用户名</th><td><input type="text" name="username" value="<?=$_GET['username']?>"></td>
+<?php } else { ?>
+<th>用户名</th><td><input type="text" name="username" value="<?=$_SGLOBAL['supe_username']?>" disabled></td>
+<?php } ?>
+<th>道具</th>
+<td>
+<select name="mid">
+<option value="">不限</option>
+<?php if(is_array($_SGLOBAL['magic'])) { foreach($_SGLOBAL['magic'] as $key => $value) { ?>
+<option value="<?=$key?>"<?php if($_GET['mid']==$key) { ?> selected<?php } ?>><?=$value?></option>
+<?php } } ?>
+</select>
+</select>			
+</td>
+</tr>
+<tr>
+<th>作用对象类型</th>
+<td>
+<select name="idtype">
+<option value="">不限</option>
+<option value="blogid"<?php if($_GET['idtype']=='blogid') { ?> selected<?php } ?>>日志</option>
+<option value="tid"<?php if($_GET['idtype']=='tid') { ?> selected<?php } ?>>话题</option>
+<option value="cid"<?php if($_GET['idtype']=='cid') { ?> selected<?php } ?>>评论/留言</option>
+<option value="uid"<?php if($_GET['idtype']=='uid') { ?> selected<?php } ?>>空间</option>
+<option value="picid"<?php if($_GET['idtype']=='picid') { ?> selected<?php } ?>>图片</option>
+<option value="pollid"<?php if($_GET['idtype']=='pollid') { ?> selected<?php } ?>>投票</option>
+<option value="eventid"<?php if($_GET['idtype']=='eventid') { ?> selected<?php } ?>>活动</option>
+</select>
+</td>
+<th>作用对象ID</th>
+<td>
+<input type="text" name="id" value="<?=$_GET['id']?>" />
+</td>
+</tr>
+<tr>
+<th>记录时间</th>
+<td colspan="3">
+<script type="text/javascript" src="source/script_calendar.js"></script>
+<input type="text" name="starttime" value="<?=$_GET['starttime']?>" onclick="showcalendar(event,this,1)"/> ~
+<input type="text" name="endtime" value="<?=$_GET['endtime']?>"  onclick="showcalendar(event,this,1)" />
+<input type="hidden" name="view" value="<?=$_GET['view']?>">
+<input type="hidden" name="ac" value="magiclog">
+<input type="submit" name="searchsubmit" value="搜索" class="submit">
+</td>
+</tr>
+</table>
+</div>
+</form>
+
+<?php if($list) { ?>	
+<div class="bdrcontent">	
+<table width="100%">
+<tr>
+<th>用户</th>
+<th>道具</th>
+<th>时间</th>
+</tr>
+<?php if(is_array($list)) { foreach($list as $value) { ?>
+<tr>
+<td>
+<a href="admincp.php?ac=magiclog&view=uselog&username=<?=$value['username']?>"><?=$value['username']?></a>
+</td>
+<td>
+<a href="admincp.php?ac=magiclog&view=uselog&mid=<?=$value['mid']?>"><?=$_SGLOBAL['magic'][$value['mid']]?></a>
+</td>
+<td>
+<?php echo sgmdate('Y-m-d H:i', $value[dateline]) ?>
+</td>
+</tr>
+<?php } } ?>	
+</table>
+</div>
+<div class="footactions">
+<div class="pages"><?=$multi?></div>
+</div>
+<?php } else { ?>
+<div class="bdrcontent">
+没有指定数据
+</div>	
+<?php } ?>
+<?php } elseif($_GET['view'] == 'storelog') { ?>
+<?php if($list) { ?>	
+<div class="bdrcontent">
+<h3>
+共售出道具 <?=$totalcount?> 件，回收 <?=$totalcredit?> 积分
+</h3>
+<br />
+<table width="100%">
+<tr>
+<th>道具</th>
+<th>售出数</th>
+<th>回收积分</th>
+</tr>
+<?php if(is_array($list)) { foreach($list as $value) { ?>
+<tr>
+<td><a href="admincp.php?ac=magiclog&view=holdlog&mid=<?=$value['mid']?>"><?=$_SGLOBAL['magic'][$value['mid']]?></a></td>
+<td><?=$value['sellcount']?></td>
+<td><?=$value['sellcredit']?></td>
+</td>
+</tr>
+<?php } } ?>	
+</table>
+</div>
+<div class="footactions">
+<div class="pages"><?=$multi?></div>
+</div>
+<?php } else { ?>
+<div class="bdrcontent">
+没有指定数据
+</div>	
+<?php } ?>
+<?php } else { ?>
+<form method="get" action="admincp.php">
+<div class="block style4">
+<table cellspacing="3" cellpadding="3">
+<tr>
+<?php if($allowmanage) { ?>
+<th>用户UID</th><td><input type="text" name="uid" value="<?=$_GET['uid']?>"></td>
+<th>用户名</th><td><input type="text" name="username" value="<?=$_GET['username']?>"></td>
+<?php } else { ?>
+<th>用户UID</th><td><input type="text" name="uid" value="<?=$_SGLOBAL['supe_uid']?>" disabled></td>
+<th>用户名</th><td><input type="text" name="username" value="<?=$_GET['username']?>" disabled></td>
+<?php } ?>
+</tr>
+<tr>
+<th>道具</th>
+<td colspan="3">
+<select name="mid">
+<option value="">不限</option>
+<?php if(is_array($_SGLOBAL['magic'])) { foreach($_SGLOBAL['magic'] as $key => $value) { ?>
+<option value="<?=$key?>"<?php if($_GET['mid']==$key) { ?> selected<?php } ?>><?=$value?></option>
+<?php } } ?>
+</select>
+</select>	
+<input type="hidden" name="view" value="<?=$_GET['view']?>">
+<input type="hidden" name="ac" value="magiclog">
+<input type="submit" name="searchsubmit" value="搜索" class="submit">		
+</td>
+</tr>
+</table>
+</div>
+</form>
+
+<?php if($list) { ?>	
+<div class="bdrcontent">	
+<table width="100%">
+<tr>
+<th>用户</th>
+<th>道具</th>
+<th>数量</th>
+</tr>
+<?php if(is_array($list)) { foreach($list as $value) { ?>
+<tr>
+<td>
+<a href="admincp.php?ac=magiclog&view=holdlog&uid=<?=$value['uid']?>">
+<?=$value['username']?>
+</a>
+</td>
+<td>
+<a href="admincp.php?ac=magiclog&view=holdlog&mid=<?=$value['mid']?>"><?=$_SGLOBAL['magic'][$value['mid']]?></a>
+</td>
+<td>
+<?=$value['count']?>
+</td>
+</tr>
+<?php } } ?>	
+</table>
+</div>
+<div class="footactions">
+<div class="pages"><?=$multi?></div>
+</div>
+<?php } else { ?>
+<div class="bdrcontent">
+没有指定数据
+</div>	
+<?php } ?>
+
+<?php } ?>
+
+</div>
+</div>
+
+<div class="side">
+<?php if($menus['0']) { ?>
+<div class="block style1">
+<h2>基本设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['0'])) { foreach($acs['0'] as $value) { ?>
+<?php if($menus['0'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
 <?php } } ?>
 </ul>
 </div>
 <?php } ?>
 
+<div class="block style1">
+<h2>批量管理</h2>
+<ul class="folder">
+<?php if(is_array($acs['3'])) { foreach($acs['3'] as $value) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } } ?>
+<?php if(is_array($acs['1'])) { foreach($acs['1'] as $value) { ?>
+<?php if($menus['1'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
 <?php } ?>
+<?php } } ?>
+</ul>
+</div>
+
+<?php if($menus['2']) { ?>
+<div class="block style1">
+<h2>高级设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['2'])) { foreach($acs['2'] as $value) { ?>
+<?php if($menus['2'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+<?php if($menus['0']['config']) { ?><li><a href="<?=UC_API?>" target="_blank">UCenter</a></li><?php } ?>
+</ul>
+</div>
+<?php } ?>
+</div>
+
+</div>
 
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>
@@ -378,5 +647,4 @@ showreward();
         <?php } ?>
 </body>
 </html>
-<?php } ?>
-<?php ob_out();?>
+<?php } ?><?php ob_out();?>

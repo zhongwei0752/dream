@@ -1,0 +1,12 @@
+
+		<!--{eval $clicknum = 0;}-->
+		<!--{loop $clicks $value2}-->
+		<!--{eval $clicknum = $clicknum + $value2['clicknum'];}-->
+			
+		<!--{/loop}-->
+		<a href="cp.php?ac=click&op=add&clickid=18&idtype=$idtype&id=$value[jokeid]&hash=$hash" id="click_{$idtype}_{$id}_{$value2[clickid]}" onclick="ajaxmenu(event, this.id, 0, 2000, 'show_click')">$value[click_18]顶</a> | <a href="cp.php?ac=click&op=add&clickid=19&idtype=$idtype&id=$value[jokeid]&hash=$hash" id="click_{$idtype}_{$id}_{$value2[clickid]}" onclick="ajaxmenu(event, this.id, 0, 2000, 'show_click')">$value[click_19]倒</a>
+
+
+
+
+<!--{if $click_multi}--><div class="page">$click_multi</div><!--{/if}-->

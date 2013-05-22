@@ -1,4 +1,51 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/do_register|template/green/header|template/green/footer', '1368870512', 'template/green/do_register');?><?php $_TPL['nosidebar']=1; ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/profield|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188501', 'admin/tpl/profield');?><?php $_TPL['formtypes'] = array('text'=>'文本输入', 'select'=>'单选列表', 'multi'=>'多选列表'); ?>
+<?php $_TPL['menunames'] = array(
+		'index' => '管理首页',
+		'config' => '站点设置',
+		'privacy' => '隐私设置',
+		'usergroup' => '用户组',
+		'credit' => '积分规则',
+		'profilefield' => '用户栏目',
+		'profield' => '群组栏目',
+		'eventclass' => '活动分类',
+		'magic' => '道具设置',
+		'task' => '有奖任务',
+		'spam' => '防灌水设置',
+		'censor' => '词语屏蔽',
+		'ad' => '广告设置',
+		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
+		'app' => 'UCenter应用',
+		'network' => '随便看看',
+		'cache' => '缓存更新',
+		'log' => '系统log记录',
+		'space' => '用户管理',
+		'feed' => '动态(feed)',
+		'share' => '分享',
+		'blog' => '日志',
+		'album' => '相册',
+		'pic' => '图片',
+		'comment' => '评论/留言',
+		'thread' => '话题',
+		'post' => '回帖',
+		'doing' => '记录',
+		'tag' => '标签',
+		'mtag' => '群组',
+		'poll' => '投票',
+		'event' => '活动',
+		'magiclog' => '道具记录',
+		'report' => '举报',
+		'block' => '数据调用',
+		'template' => '模板编辑',
+		'backup' => '数据备份',
+		'stat' => '统计更新',
+		'cron' => '系统计划任务',
+		'click' => '表态动作',
+		'ip' => '访问IP设置',
+		'hotuser' => '推荐成员设置',
+		'defaultuser' => '默认好友设置',
+	); ?>
+<?php $_TPL['nosidebar'] = 1; ?>
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -45,6 +92,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -109,277 +157,193 @@
 <?php } ?>
 
 
-<script>
-function register(id, result) {
-if(result) {
-$('registersubmit').disabled = true;
-window.location.href = "<?=$jumpurl?>";
-} else {
-updateseccode();
-}
-}
-</script>
-
-<form id="registerform" name="registerform" action="do.php?ac=<?=$_SCONFIG['register_action']?>&<?=$url_plus?>&ref" method="post" class="c_form">
-<table cellpadding="0" cellspacing="0" class="formtable">
-<caption>
-<h2>注册本站帐号</h2>
-<p>请完整填写以下信息进行注册。<br>注册完成后，该帐号将作为您在本站的通行帐号，您可以享受本站提供的各种服务。</p>
-</caption>
-<?php if($invitearr) { ?>
-<tr>
-<th width="100">好友邀请</th>
-<td>
-<a href="space.php?<?=$url_plus?>" target="_blank"><?php echo avatar($invitearr[uid],small); ?></a>
-<a href="space.php?<?=$url_plus?>" target="_blank"><?=$_SN[$invitearr['uid']]?></a>
-</td>
-</tr>
-<?php } ?>
-
-<?php if($_SCONFIG['seccode_register']) { ?>
-<?php if($_SCONFIG['questionmode']) { ?>
-<tr>
-<th style="vertical-align: top;">请先回答问题</th>
-<td>
-<p><?php question(); ?></p>
-<input type="text" id="seccode" name="seccode" value="" class="t_input" onBlur="checkSeccode()" tabindex="1" autocomplete="off" />&nbsp;<span id="checkseccode">&nbsp;</span>
-</td>
-</tr>
-<?php } else { ?>
-<tr>
-<th style="vertical-align: top;">验证码</th>
-<td>
-<script>seccode();</script>
-<p>请输入上面的4位字母或数字，看不清可<a href="javascript:updateseccode()">更换一张</a></p>
-<input type="text" id="seccode" name="seccode" value="" class="t_input" onBlur="checkSeccode()" tabindex="1" autocomplete="off" />&nbsp;<span id="checkseccode">&nbsp;</span>
-</td>
-</tr>
-<?php } ?>
-<?php } ?>
-
-<tr><th width="100">用户名</th><td><input type="text" id="username" name="username" value="" class="t_input" onBlur="checkUserName()" tabindex="2" />&nbsp;<span id="checkusername">&nbsp;</span></td></tr>
-<tr>
-<th>注册密码</th>
-<td>
-<input type="password" name="password" id="password" value="" class="t_input" onBlur="checkPassword()" onkeyup="checkPwd(this.value);" tabindex="3" />&nbsp;<span id="checkpassword">&nbsp;</span><br/>
-<style>
-.psdiv0,.psdiv1,.psdiv2,.psdiv3,.psdiv4{position:relative;height:30px;color:#666}/*密码强度容器*/
-.strongdepict{position:absolute; width:300px;left:0px;top:3px}/*密码强度固定文字*/
-.strongbg{position:absolute;left:0px;top:22px;width:235px!important;width:234px;height:10px;background-color:#E0E0E0; font-size:0px;line-height:0px}/*灰色强度背景*/
-.strong{float:left;font-size:0px;line-height:0px;height:10px}/*色块背景*/
-
-.psdiv0 span{display:none}
-.psdiv1 span{display:inline;color:#F00}
-.psdiv2 span{display:inline;color:#C48002}
-.psdiv3 span{display:inline;color:#2CA4DE}
-.psdiv4 span{display:inline;color:#063}
-
-.psdiv0 .strong{ width:0px}
-.psdiv1 .strong{ width:25%;background-color:#F00}
-.psdiv2 .strong{ width:50%;background-color:#F90}
-.psdiv3 .strong{ width:75%;background-color:#2CA4DE}
-.psdiv4 .strong{ width:100%;background-color:#063}
+<style type="text/css">
+@import url(admin/tpl/style.css);
 </style>
-<div class="psdiv0" id="chkpswd">
-<div class="strongdepict">密码安全程度：<span id="chkpswdcnt">太短</span></div>
-<div class="strongbg">
-<div class="strong"></div>			
-</div>		
+
+<div id="cp_content">
+
+
+<div class="mainarea">
+<div class="maininner">
+
+<div class="tabs_header">
+<ul class="tabs">
+<li<?=$actives['view']?>><a href="admincp.php?ac=profield"><span>浏览栏目</span></a></li>
+<li class="null"><a href="admincp.php?ac=profield&op=add">添加新群组栏目</a></li>
+</ul>
 </div>
+
+<?php if($_GET['op'] == 'delete') { ?>
+<form method="post" action="admincp.php?ac=profield&op=delete&fieldid=<?=$_GET['fieldid']?>">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<div class="bdrcontent">
+<div class="topactions">
+该栏目删除后，请选择该栏目下面已有的群组会归类到那个新栏目。
+</div>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th width="150">栏目下的群组新归类</th>
+<td>
+<select name="newfieldid">
+<?php if(is_array($newfield)) { foreach($newfield as $value) { ?>
+<option value="<?=$value['fieldid']?>"><?=$value['title']?></option>
+<?php } } ?>
+</select>
 </td>
 </tr>
-<tr><th>再次输入密码</th><td><input type="password" id="password2" name="password2" value="" class="t_input"  onBlur="checkPassword2()" tabindex="4" />&nbsp;<span id="checkpassword2">&nbsp;</span></td></tr>
-<tr><th>邮箱</th><td><input type="text" id="email" name="email" value="@" class="t_input" tabindex="5" />
-<br>请准确填入您的邮箱，在忘记密码，或者您使用邮件通知功能时，会发送邮件到该邮箱。</td></tr>
+</table>
+</div>
 
-<?php if($register_rule) { ?>
-<tr><th>服务条款</th>
-<td><div name="rule" style="border:1px solid #C3C3C3;width:500px;height:100px;overflow:auto;padding:5px;"><?=$register_rule?></div>
-<input type="checkbox" name="accede" id="accede" value="1">我已阅读，并同意以上服务条款
-<script type="text/javascript">
-function checkClause() {
-if($('accede').checked) {
-return true;
+<div class="footactions">
+<input type="submit" name="deletesubmit" value="确定删除" class="submit">
+</div>
+
+<?php } else { ?>
+
+<form method="post" action="admincp.php?ac=profield&fieldid=<?=$thevalue['fieldid']?>">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<div class="bdrcontent">
+
+<?php if(empty($thevalue)) { ?>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th>栏目</th>
+<th>填写类型</th>
+<th>显示顺序</th>
+<th width="80">操作</th>
+</tr>
+<?php if(is_array($list)) { foreach($list as $value) { ?>
+<tr>
+<th><?=$value['title']?></th>
+<td><?=$_TPL['formtypes'][$value['formtype']]?></td>
+<td><input type="text" name="displayorder[<?=$value['fieldid']?>]" value="<?=$value['displayorder']?>" size="5"></td>
+<td width="80">
+<a href="admincp.php?ac=profield&op=edit&fieldid=<?=$value['fieldid']?>">编辑</a> | 
+<a href="admincp.php?ac=profield&op=delete&fieldid=<?=$value['fieldid']?>">删除</a></td>
+</tr>
+<?php } } ?>
+</table>
+</div>
+
+<div class="footactions">
+<input type="submit" name="ordersubmit" value="更新排序" class="submit">
+</div>
+
+</form>
+
+<?php } else { ?>
+
+<script language="javascript">
+function formtypeShow(value) {
+if(value != 'select') {
+$('tb_inputnum').style.display = '';
+$('tb_choice').style.display = (value=='text'?'none':'');
 } else {
-alert("您必须同意服务条款后才能注册");
-return false;
+$('tb_inputnum').style.display = 'none';
+$('tb_choice').style.display = '';
 }
 }
 </script>
-</td>
+
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr><th style="width:15em;">栏目名称</th><td><input type="text" name="title" value="<?=$thevalue['title']?>"></td></tr>
+<tr><th>简单介绍</th><td><input type="text" name="note" value="<?=$thevalue['note']?>" size="60"></td></tr>
+<tr><th>群组添加表单类型</th><td>
+<select name="formtype" onchange="formtypeShow(this.value)">
+<option value="text"<?=$formtypearr['text']?>>文本输入框</option>
+<option value="select"<?=$formtypearr['select']?>>单选列表框</option>
+<option value="multi"<?=$formtypearr['multi']?>>多选列表框</option>
+</select>
+</td></tr>
+
+<tbody id="tb_inputnum"<?php if($thevalue['formtype']=='select') { ?> style="display:none;"<?php } ?>>
+<tr><th>用户可加入群组最多个数</th><td><input type="text" name="inputnum" value="<?=$thevalue['inputnum']?>" size="5"></td></tr>
+</tbody>
+
+<tbody id="tb_choice"<?php if($thevalue['formtype']=='text') { ?> style="display:none;"<?php } ?>>
+<tr><th>可选值</th><td><textarea name="choice" rows="5" cols="20"><?=$thevalue['choice']?></textarea>
+<br />每行一个值，例如输入:<br />北京<br />上海</td></tr>
+</tbody>
+
+<tr>
+<th>群组讨论区人数下限</th>
+<td><input type="text" name="mtagminnum" value="<?=$thevalue['mtagminnum']?>" size="5"> 当群组的成员数达到该数目时，才允许成员在群组内发话题和回帖。</td>
 </tr>
+<tr>
+<th>群组群主手工指定</th>
+<td>
+<input type="radio" name="manualmoderator" value="1"<?php if($thevalue['manualmoderator'] == 1) { ?> checked<?php } ?>>手工
+<input type="radio" name="manualmoderator" value="0"<?php if($thevalue['manualmoderator'] != '1') { ?> checked<?php } ?>>自动
+<br>如果选择不手工指定，则系统会自动将第一次使用某个群组的用户作为群主。</td>
+</tr>
+<tr>
+<th>群组成员可由群主控制</th>
+<td>
+<input type="radio" name="manualmember" value="1"<?php if($thevalue['manualmember'] == 1) { ?> checked<?php } ?>>群主可控制
+<input type="radio" name="manualmember" value="0"<?php if($thevalue['manualmember'] != '1') { ?> checked<?php } ?>>会员可自由加入
+<br>群主可控制，则允许群主有权设置群组的会员加入方式，来控制加入群组的会员。</td>
+</tr>
+<tr><th>显示顺序</th><td><input type="text" name="displayorder" value="<?=$thevalue['displayorder']?>" size="5"></td></tr>
+</table>
+</div>
+
+<div class="footactions">
+<input type="submit" name="fieldsubmit" value="提交" class="submit">
+</div>
+
+</form>
 <?php } ?>
 
-<tr><th>&nbsp;</th>
-<td>
-<input type="hidden" name="refer" value="space.php?do=home" />
-<input type="submit" id="registersubmit" name="registersubmit" value="注册新用户" class="submit" onclick="<?php if($register_rule) { ?>if(!checkClause()){return false;}<?php } ?>ajaxpost('registerform', 'register');" tabindex="6" />
-</td>
-</tr>
-<tr><th>&nbsp;</th><td id="__registerform" style="color:red; font-weight:bold;"></td></tr>
-</table>
-<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" /></form>
+<?php } ?>
 
-<script type="text/javascript">
-<!--
-$('username').focus();
-var lastUserName = lastPassword = lastEmail = lastSecCode = '';
-function checkUserName() {
-var userName = $('username').value;
-if(userName == lastUserName) {
-return;
-} else {
-lastUserName = userName;
-}
-var cu = $('checkusername');
-var unLen = userName.replace(/[^\x00-\xff]/g, "**").length;
+</div>
+</div>
 
-if(unLen < 3 || unLen > 15) {
-warning(cu, unLen < 3 ? '用户名小于3个字符' : '用户名超过 15 个字符');
-return;
-}
-ajaxresponse('checkusername', 'op=checkusername&username=' + (is_ie && document.charset == 'utf-8' ? encodeURIComponent(userName) : userName));
-}
-function checkPassword(confirm) {
-var password = $('password').value;
-if(!confirm && password == lastPassword) {
-return;
-} else {
-lastPassword = password;
-}
-var cp = $('checkpassword');
-if(password == '' || /[\'\"\\]/.test(password)) {
-warning(cp, '密码空或包含非法字符');
-return false;
-} else {
-cp.style.display = '';
-cp.innerHTML = '<img src="image/check_right.gif" width="13" height="13">';
-if(!confirm) {
-checkPassword2(true);
-}
-return true;
-}
-}
-function checkPassword2(confirm) {
-var password = $('password').value;
-var password2 = $('password2').value;
-var cp2 = $('checkpassword2');
-if(password2 != '') {
-checkPassword(true);
-}
-if(password == '' || (confirm && password2 == '')) {
-cp2.style.display = 'none';
-return;
-}
-if(password != password2) {
-warning(cp2, '两次输入的密码不一致');
-} else {
-cp2.style.display = '';
-cp2.innerHTML = '<img src="image/check_right.gif" width="13" height="13">';
-}
-}
-function checkSeccode() {
-var seccodeVerify = $('seccode').value;
-if(seccodeVerify == lastSecCode) {
-return;
-} else {
-lastSecCode = seccodeVerify;
-}
-ajaxresponse('checkseccode', 'op=checkseccode&seccode=' + (is_ie && document.charset == 'utf-8' ? encodeURIComponent(seccodeVerify) : seccodeVerify));
-}
-function ajaxresponse(objname, data) {
-var x = new Ajax('XML', objname);
-x.get('do.php?ac=<?=$_SCONFIG['register_action']?>&' + data, function(s){
-var obj = $(objname);
-s = trim(s);
-if(s.indexOf('succeed') > -1) {
-obj.style.display = '';
-obj.innerHTML = '<img src="image/check_right.gif" width="13" height="13">';
-obj.className = "warning";
-} else {
-warning(obj, s);
-}
-});
-}
-function warning(obj, msg) {
-if((ton = obj.id.substr(5, obj.id.length)) != 'password2') {
-$(ton).select();
-}
-obj.style.display = '';
-obj.innerHTML = '<img src="image/check_error.gif" width="13" height="13"> &nbsp; ' + msg;
-obj.className = "warning";
-}
+<div class="side">
+<?php if($menus['0']) { ?>
+<div class="block style1">
+<h2>基本设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['0'])) { foreach($acs['0'] as $value) { ?>
+<?php if($menus['0'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+</ul>
+</div>
+<?php } ?>
 
-function checkPwd(pwd){
+<div class="block style1">
+<h2>批量管理</h2>
+<ul class="folder">
+<?php if(is_array($acs['3'])) { foreach($acs['3'] as $value) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } } ?>
+<?php if(is_array($acs['1'])) { foreach($acs['1'] as $value) { ?>
+<?php if($menus['1'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+</ul>
+</div>
 
-if (pwd == "") {
-$("chkpswd").className = "psdiv0";
-$("chkpswdcnt").innerHTML = "";
-} else if (pwd.length < 3) {
-$("chkpswd").className = "psdiv1";
-$("chkpswdcnt").innerHTML = "太短";
-} else if(!isPassword(pwd) || !/^[^%&]*$/.test(pwd)) {
-$("chkpswd").className = "psdiv0";
-$("chkpswdcnt").innerHTML = "";
-} else {
-var csint = checkStrong(pwd);
-switch(csint) {
-case 1:
-$("chkpswdcnt").innerHTML = "很弱";
-$( "chkpswd" ).className = "psdiv"+(csint + 1);
-break;
-case 2:
-$("chkpswdcnt").innerHTML = "一般";
-$( "chkpswd" ).className = "psdiv"+(csint + 1);
-break;
-case 3:		
-$("chkpswdcnt").innerHTML = "很强";
-$("chkpswd").className = "psdiv"+(csint + 1);
-break;
-}
-}
-}
-function isPassword(str){
-if (str.length < 3) return false;
-var len;
-var i;
-len = 0;
-for (i=0;i<str.length;i++){
-if (str.charCodeAt(i)>255) return false;
-}
-return true;
-}
-function charMode(iN){ 
-if (iN>=48 && iN <=57) //数字 
-return 1; 
-if (iN>=65 && iN <=90) //大写字母 
-return 2; 
-if (iN>=97 && iN <=122) //小写 
-return 4; 
-else 
-return 8; //特殊字符 
-} 
-//计算出当前密码当中一共有多少种模式 
-function bitTotal(num){ 
-modes=0; 
-for (i=0;i<4;i++){ 
-if (num & 1) modes++; 
-num>>>=1; 
-} 
-return modes; 
-} 
+<?php if($menus['2']) { ?>
+<div class="block style1">
+<h2>高级设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['2'])) { foreach($acs['2'] as $value) { ?>
+<?php if($menus['2'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+<?php if($menus['0']['config']) { ?><li><a href="<?=UC_API?>" target="_blank">UCenter</a></li><?php } ?>
+</ul>
+</div>
+<?php } ?>
+</div>
 
-//返回密码的强度级别 
-function checkStrong(pwd){ 
-modes=0; 
-for (i=0;i<pwd.length;i++){ 
-//测试每一个字符的类别并统计一共有多少种模式. 
-modes|=charMode(pwd.charCodeAt(i)); 
-} 
-return bitTotal(modes);
-}
-//-->
-</script>
+</div>
 
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>

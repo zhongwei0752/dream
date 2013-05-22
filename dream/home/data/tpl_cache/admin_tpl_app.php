@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/thread|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369056260', 'admin/tpl/thread');?><?php $_TPL['menunames'] = array(
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/app|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188598', 'admin/tpl/app');?><?php $_TPL['menunames'] = array(
 		'index' => '管理首页',
 		'config' => '站点设置',
 		'privacy' => '隐私设置',
@@ -13,6 +13,7 @@
 		'censor' => '词语屏蔽',
 		'ad' => '广告设置',
 		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
 		'app' => 'UCenter应用',
 		'network' => '随便看看',
 		'cache' => '缓存更新',
@@ -90,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -163,153 +165,74 @@
 
 <div class="mainarea">
 <div class="maininner">
-
-<form method="get" action="admincp.php">
-<div class="block style4">
-
-<table cellspacing="3" cellpadding="3">
-<tr><th>群组ID</th><td><input type="text" name="tagid" value="<?=$_GET['tagid']?>"></td>
-<th>标题*</th><td><input type="text" name="subject" value="<?=$_GET['subject']?>"></td>
-</tr>
-<?php if($allowmanage) { ?>
-<tr><th>作者UID</th><td><input type="text" name="uid" value="<?=$_GET['uid']?>"></td>
-<th>作者名</th><td><input type="text" name="username" value="<?=$_GET['username']?>"></td>
-</tr>
-<?php } ?>
-<tr>
-<th>指定话题ID</th>
-<td colspan="3">
-<input type="text" name="tid" value="<?=$_GET['tid']?>" />
-</td>
-</tr>
-<tr><th>发布时间</th><td colspan="3">
-<input type="text" name="dateline1" value="<?=$_GET['dateline1']?>" size="10"> ~
-<input type="text" name="dateline2" value="<?=$_GET['dateline2']?>" size="10"> (YYYY-MM-DD)
-</td></tr>
-<tr><th>查看数</th><td colspan="3">
-<input type="text" name="viewnum1" value="<?=$_GET['viewnum1']?>" size="10"> ~
-<input type="text" name="viewnum2" value="<?=$_GET['viewnum2']?>" size="10">
-</td></tr>
-<tr><th>回复数</th><td colspan="3">
-<input type="text" name="replynum1" value="<?=$_GET['replynum1']?>" size="10"> ~
-<input type="text" name="replynum2" value="<?=$_GET['replynum2']?>" size="10">
-</td></tr>
-<tr><th>热度</th><td colspan="3">
-<input type="text" name="hot1" value="<?=$_GET['hot1']?>" size="10"> ~
-<input type="text" name="hot2" value="<?=$_GET['hot2']?>" size="10">
-</td></tr>
-<tr><th>是否精华</th><td colspan="3">
-<select name="digest">
-<option value="">不限制</option>
-<option value="1"<?php if($_GET['digest']==1) { ?> selected<?php } ?>>精华帖</option>
-</select>
-</td></tr>
-
-<tr><th>结果排序</th>
-<td colspan="3">
-<select name="orderby">
-<option value="">默认排序</option>
-<option value="dateline"<?=$orderby['dateline']?>>发布时间</option>
-<option value="lastpost"<?=$orderby['lastpost']?>>回复时间</option>
-<option value="viewnum"<?=$orderby['viewnum']?>>查看数</option>
-<option value="replynum"<?=$orderby['replynum']?>>回复数</option>
-<option value="hot"<?=$orderby['hot']?>>热度</option>
-</select>
-<select name="ordersc">
-<option value="desc"<?=$ordersc['desc']?>>递减</option>
-<option value="asc"<?=$ordersc['asc']?>>递增</option>
-</select>
-<select name="perpage">
-<option value="20"<?=$perpages['20']?>>每页显示20个</option>
-<option value="50"<?=$perpages['50']?>>每页显示50个</option>
-<option value="100"<?=$perpages['100']?>>每页显示100个</option>
-<option value="1000"<?=$perpages['1000']?>>一次处理1000个</option>
-</select>
-<input type="hidden" name="ac" value="thread">
-<input type="submit" name="searchsubmit" value="搜索" class="submit">
-</td>
-</tr>
-</table>
-</div>
-</form>
-
-<?php if($list) { ?>
-
-<form method="post" action="admincp.php?ac=thread&tagid=<?=$tagid?>">
+<form method="post" action="admincp.php?ac=app">
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
 <div class="bdrcontent">
+<p>以下列出的是UCenter中已经安装的所有产品应用。</p>
+<p>当您安装了新的基于UCenter的应用后，需要在本页面进行配置修改，并提交更新后，新安装的应用才能在UCenter Home中显示。</p>
+<p>如果您发现某个应用的信息有误，请到UCenter的管理平台进行应用参数的修正。</p>
+</div>
+<br>
 
-<?php if($perpage>100) { ?>
-<p>总共有满足条件的数据 <strong><?=$count?></strong> 个</p>
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<input type="hidden" name="ids[]" value="<?=$value['tid']?>">
-<?php } } ?>
-
-<?php } else { ?>
-
+<?php if(is_array($applist)) { foreach($applist as $data) { ?>
+<?php $template = stripslashes(htmlspecialchars($relatedtag['data'][$data[appid]]['template'] != '' ? $relatedtag['data'][$data[appid]]['template'] : $data['tagtemplates']['template'])); ?>
+<?php $name = stripslashes(htmlspecialchars($relatedtag['data'][$data[appid]]['name'] != '' ? $relatedtag['data'][$data[appid]]['name'] : $data['name'])); ?>
+<?php $openarr = !isset($relatedtag['data'][$data[appid]][open]) || intval($relatedtag['data'][$data[appid]][open]) > 0 ? array('', 'checked') : array('checked', ''); ?>
+<div class="bdrcontent">
+<div class="title">
+<h3><?=$data['name']?></h3>
+</div>
 <table cellspacing="0" cellpadding="0" class="formtable">
 <tr>
-<th width="25">&nbsp;</th>
-<th>标题</td>
-<th width="50">查看</th>
-<th width="50">回复</th>
-<?php if($allowmanage) { ?><th width="80">作者</th><?php } ?>
-<th width="80">时间</th>
+<th style="width: 200px;">显示名称:</th>
+<td><input type="text" name="relatedtag[data][<?=$data['appid']?>][name]" value="<?=$name?>"></td>
 </tr>
-<?php if(is_array($list)) { foreach($list as $value) { ?>
 <tr>
-<td><input type="<?php if($allowbatch) { ?>checkbox<?php } else { ?>radio<?php } ?>" name="ids[]" value="<?=$value['tid']?>"></td>
-<td>[<a href="<?=$mpurl?>&tagid=<?=$value['tagid']?>"><?=$tags[$value['tagid']]?></a>] <a href="space.php?do=thread&id=<?=$value['tid']?>" target="_blank"><?=$value['subject']?></a>
-<?php if($value['digest']) { ?>[<a href="<?=$mpurl?>&digest=<?=$value['digest']?>">精</a>]<?php } ?>
-<?php if($value['displayorder']) { ?>[<a href="<?=$mpurl?>&displayorder=<?=$value['displayorder']?>">顶</a>]<?php } ?>
-<?php if($value['hot']) { ?><span style="color:red;">热度(<?=$value['hot']?>)</span><?php } ?>
-</td>
-<td><?=$value['viewnum']?></td>
-<td><a href="admincp.php?ac=post&tid=<?=$value['tid']?>"><?=$value['replynum']?></a></td>
-<?php if($allowmanage) { ?><td><a href="<?=$mpurl?>&uid=<?=$value['uid']?>"><?=$value['username']?></a></td><?php } ?>
-<td><?php echo sgmdate('Y-m-d',$value[dateline]); ?></td>
+<th>访问地址:</th>
+<td>
+<a href="<?=$data['url']?>" target="_blank"><?=$data['url']?></a>
+<input type="hidden" name="relatedtag[data][<?=$data['appid']?>][url]" value="<?=$data['url']?>" size="50"></td>
 </tr>
-<?php } } ?>
-</table>
-
-<?php } ?>
-</div>
-
-<div class="footactions">
-<?php if($perpage>100) { ?>
-<input type="hidden" name="optype" value="delete">
-<input type="submit" name="opsubmit" value="批量删除" onclick="return confirm('本操作不可恢复，确认删除？');" class="submit">
+<tr>
+<th>导航中是否显示:</th>
+<td>
+<?php if($data['appid'] == UC_APPID) { ?>
+<input type="hidden" name="relatedtag[data][<?=$data['appid']?>][open]" value="0">当前产品，不需要选择
 <?php } else { ?>
-<?php if($allowbatch) { ?>
-<input type="checkbox" id="chkall" name="chkall" onclick="checkAll(this.form, 'ids')">全选
+<input type="radio" name="relatedtag[data][<?=$data['appid']?>][open]" value="1" <?=$openarr['1']?>>是
+<input type="radio" name="relatedtag[data][<?=$data['appid']?>][open]" value="0" <?=$openarr['0']?>>否
 <?php } ?>
-<input type="radio" name="optype" value="delete" checked> 删除
-<?php if($_GET['tagid']) { ?>
-<input type="radio" name="optype" value="digest"> 批量精华
-<select name="digestv">
-<option value="1">设为精华</option>
-<option value="0">取消精华</option>
-</select>
-<input type="radio" name="optype" value="top"> 批量置顶
-<select name="topv">
-<option value="1">设为置顶</option>
-<option value="0">取消置顶</option>
-</select>
+</td>
+</tr>
+<tr>
+<th>标签相关显示条数:</th>
+<td><input type="text" size="4" name="relatedtag[limit][<?=$data['appid']?>]" value="<?php echo intval($relatedtag['limit'][$data[appid]]); ?>" />
+设置为 0，则不显示本产品的标签相关。</td>
+</tr>
+<tr>
+<th>标签相关单条模板:<br>
+<?php if(is_array($data['tagtemplates']['fields'])) { ?>
+<?php if(is_array($data['tagtemplates']['fields'])) { foreach($data['tagtemplates']['fields'] as $field => $memo) { ?>
+<a onclick="insertunit('{<?=$field?>}', 'jstemplate_<?=$data['appid']?>')" href="javascript:;">{<?=$field?>}</a> 代表 <?=$memo?><br />
+<?php } } ?>
 <?php } ?>
-<input type="submit" name="opsubmit" value="执行操作" onclick="return confirm('本操作不可恢复，确认继续？');" class="submit">
-<?php } ?>
-
-<input type="hidden" name="mpurl" value="<?=$mpurl?>">
-<div class="pages"><?=$multi?></div>
+</th>
+<td><img src="image/zoomin.gif" onmouseover="this.style.cursor='pointer'" onclick="zoomTextarea('jstemplate_<?=$data['appid']?>', 1)">
+<img src="image/zoomout.gif" onmouseover="this.style.cursor='pointer'" onclick="zoomTextarea('jstemplate_<?=$data['appid']?>', 0)"><br />
+<textarea cols="100" rows="5" id="jstemplate_<?=$data['appid']?>" name="relatedtag[data][<?=$data['appid']?>][template]" style="width: 95%;"><?=$template?></textarea>
+<input type="hidden" name="relatedtag[data][<?=$data['appid']?>][type]" value="<?=$data['type']?>">
+</td>
+</tr>
+</table>
 </div>
+<div class="footactions">
+<input type="submit" name="appsubmit" value="提交更新" class="submit">
+</div>
+
+<br>
+<?php } } ?>
 
 </form>
-
-<?php } else { ?>
-<div class="bdrcontent">
-<p>指定条件下还没有数据</p>
-</div>
-<?php } ?>
 </div>
 </div>
 
@@ -356,6 +279,24 @@
 <?php } ?>
 </div>
 
+<script type="text/javascript">
+function insertunit(text, obj) {
+if(!obj) {
+obj = 'jstemplate';
+}
+$(obj).focus();
+if(!isUndefined($(obj).selectionStart)) {
+var opn = $(obj).selectionStart + 0;
+$(obj).value = $(obj).value.substr(0, $(obj).selectionStart) + text + $(obj).value.substr($(obj).selectionEnd);
+} else if(document.selection && document.selection.createRange) {
+var sel = document.selection.createRange();
+sel.text = text.replace(/\r?\n/g, '\r\n');
+sel.moveStart('character', -strlen(text));
+} else {
+$(obj).value += text;
+}
+}
+</script>
 </div>
 
 <?php if(empty($_SGLOBAL['inajax'])) { ?>

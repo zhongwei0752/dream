@@ -45,21 +45,40 @@ $_SGLOBAL['click']=Array
 			'displayorder' => '0'
 			)
 		),
-	'discussionid' => Array
+	'jokeid' => Array
 		(
-		16 => Array
+		18 => Array
 			(
-			'clickid' => 16,
-			'name' => '同意',
+			'clickid' => 18,
+			'name' => '顶',
 			'icon' => 'xianhua.gif',
-			'idtype' => 'discussionid',
+			'idtype' => 'jokeid',
 			'displayorder' => '0'
 			),
+		19 => Array
+			(
+			'clickid' => 19,
+			'name' => '倒',
+			'icon' => 'jidan.gif',
+			'idtype' => 'jokeid',
+			'displayorder' => '0'
+			)
+		),
+	'discussionid' => Array
+		(
 		17 => Array
 			(
 			'clickid' => 17,
 			'name' => '反对',
 			'icon' => 'jidan.gif',
+			'idtype' => 'discussionid',
+			'displayorder' => '0'
+			),
+		16 => Array
+			(
+			'clickid' => 16,
+			'name' => '同意',
+			'icon' => 'xianhua.gif',
 			'idtype' => 'discussionid',
 			'displayorder' => '0'
 			)

@@ -1,4 +1,51 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_medicine|template/green/header|template/green/footer', '1368858597', 'template/green/cp_medicine');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/eventclass|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188550', 'admin/tpl/eventclass');?><?php $_TPL['menunames'] = array(
+		'index' => '管理首页',
+		'config' => '站点设置',
+		'privacy' => '隐私设置',
+		'usergroup' => '用户组',
+		'credit' => '积分规则',
+		'profilefield' => '用户栏目',
+		'profield' => '群组栏目',
+		'eventclass' => '活动分类',
+		'magic' => '道具设置',
+		'task' => '有奖任务',
+		'spam' => '防灌水设置',
+		'censor' => '词语屏蔽',
+		'ad' => '广告设置',
+		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
+		'app' => 'UCenter应用',
+		'network' => '随便看看',
+		'cache' => '缓存更新',
+		'log' => '系统log记录',
+		'space' => '用户管理',
+		'feed' => '动态(feed)',
+		'share' => '分享',
+		'blog' => '日志',
+		'album' => '相册',
+		'pic' => '图片',
+		'comment' => '评论/留言',
+		'thread' => '话题',
+		'post' => '回帖',
+		'doing' => '记录',
+		'tag' => '标签',
+		'mtag' => '群组',
+		'poll' => '投票',
+		'event' => '活动',
+		'magiclog' => '道具记录',
+		'report' => '举报',
+		'block' => '数据调用',
+		'template' => '模板编辑',
+		'backup' => '数据备份',
+		'stat' => '统计更新',
+		'cron' => '系统计划任务',
+		'click' => '表态动作',
+		'ip' => '访问IP设置',
+		'hotuser' => '推荐成员设置',
+		'defaultuser' => '默认好友设置',
+	); ?>
+<?php $_TPL['nosidebar'] = 1; ?>
+<?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -44,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -107,30 +155,182 @@
 
 <?php } ?>
 
-<h2 class="title"><img src="image/icon/friend.gif" />好友</h2>
+
+<style type="text/css">
+@import url(admin/tpl/style.css);
+</style>
+
+<div id="cp_content">
+
+<style type="text/css">
+.poster{
+max-width: 240px; max-height: 180px;}
+</style>
+
+<div class="mainarea">
+<div class="maininner">
+
 <div class="tabs_header">
 <ul class="tabs">
-<li<?=$actives['medicine']?>><a href="#"><span>搜索结果</span></a></li>
-<li><a href="space.php?do=medicine"><span>返回用药助手</span></a></li>
+<li<?=$actives['view']?>><a href="admincp.php?ac=eventclass"><span>浏览全部分类</span></a></li>
+<li class="null"><a href="admincp.php?ac=eventclass&op=add">添加新活动分类</a></li>
 </ul>
 </div>
-<?php if($list) { ?>
 
-<?php if(is_array($list)) { foreach($list as $value) { ?>
+<form method="post" action="admincp.php?ac=eventclass" enctype="multipart/form-data">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
 
-<?=$value['mingcheng']?><br/><br/><br/><br/>
-<?php } } ?>
-<?php } else { ?>
-<style>
-body{color:#000;background:#fff;padding:6px 0 0;margin:0;position:relative}body,th,td,.p1,.p2{font-family:arial}p,form,ol,ul,li,dl,dt,dd,h3{margin:0;padding:0;list-style:none}input{padding-top:0;padding-bottom:0;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}table,img{border:0}td{font-size:9pt;line-height:18px}em{font-style:normal;color:#cc0000}a em{text-decoration:underline}#wrapper{min-width:1080px;_zoom:1}#container{padding-left:20px}#content_right{border-left:1px solid #e1e1e1;float:right}.t{font-weight:normal;font-size:medium}.favurl{background-repeat:no-repeat;background-position:0 1px;padding-left:20px} #content_left .result-op,#content_left .result{margin-bottom:28px;margin-top:28px;}
-</style>
-亲，未找到你要的数据，我们的数据库还在完善中，你的一点支持，我们的无限动力，哈！我只能使用最后一招了！
-点击下面按钮，瞬间百度，泪奔！小的无能，居然要求助万能的度娘~！<br/>
-百度在此↓↓↓↓↓↓↓↓↓↓<br/>
-<div id="container"class="container_s">
-<div id="content_left">
-<?=$regs['1']?>
+<div class="bdrcontent">
+
+<?php if("add" == $_GET['op'] || "edit" == $_GET['op']) { ?>
+
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th style="width:15em;">分类名称</th>
+<td><input type="text" name="classname" value="<?=$thevalue['classname']?>"></td>
+</tr>
+<tr>
+<th>默认海报</th>
+<td>
+活动发起者发起此类型的活动时如果没有上传海报则默认使用此海报 <br />
+<img id="posterview" class="poster" src="<?=$thevalue['poster']?>?v=<?=$_SGLOBAL['timestamp']?>" alt="默认海报" onerror="this.src='image/event/default.jpg'" />
+<a href="#" onclick="$('posterview').src='image/event/default.jpg'; $('delposter').value='1'; return false;">删除</a>
+<br />
+<input type="hidden" id="delposter" name="delposter" value="0" />
+<input type="file" name="poster" value="">
+</td>
+</tr>
+<tr>
+<th>默认模板</th>
+<td>
+建议活动发起者发起此类型的活动时按此内容模板填写活动介绍 <br />
+<textarea name="template" rows="8" cols="80"><?=$thevalue['template']?></textarea>
+</td>
+</tr>
+<tr>
+<th>显示顺序</th>
+<td>
+<input type="text" name="displayorder" value="<?=$thevalue['displayorder']?>" />
+</td>
+</tr>
+</table>
+</div>
+
+<div class="footactions">
+<input type="hidden" name="classid" value="<?=$thevalue['classid']?>" />
+<input type="submit" name="eventclasssubmit" value="提交" class="submit">
+</div>
+
+</form>
+
+<?php } elseif("delete" == $_GET['op']) { ?>
+
+<div class="topactions">
+该活动分类删除后，请选择该活动分类下面已有的活动会归类到那个新活动分类。
+</div>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th width="150">活动分类下的新归类</th>
+<td>
+<select name="newclassid">
+<?php if(is_array($list)) { foreach($list as $key => $value) { ?>
+<?php if($value) { ?>
+<option value="<?=$value['classid']?>"><?=$value['classname']?></option>
 <?php } ?>
+<?php } } ?>
+</select>
+</td>
+</tr>
+</table>
+</div>
+
+<div class="footactions">
+<input type="hidden" name="classid" value="<?=$thevalue['classid']?>" />
+<input type="submit" name="deletesubmit" value="确认" class="submit">
+</div>
+
+</form>
+
+<?php } else { ?>
+
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th>名称</th>
+<th>设置海报</th>
+<th>设置模板</th>
+<th>显示顺序</th>
+<th width="80">操作</th>
+</tr>
+<?php if(is_array($list)) { foreach($list as $key=>$value) { ?>
+<tr>
+<th><?=$value['classname']?></th>
+<td><?php if($value['poster']=='image/event/default.jpg') { ?>否<?php } else { ?>是<?php } ?></td>
+<td><?php if(empty($value['template'])) { ?>否<?php } else { ?>是<?php } ?></td>
+<td><input type="text" name="displayorder[<?=$key?>]" value="<?=$value['displayorder']?>" size="5"></td>
+<td width="80">
+<a href="admincp.php?ac=eventclass&op=edit&classid=<?=$key?>">编辑</a> |
+<a onclick="return confirm('确认删除？');" href="admincp.php?ac=eventclass&op=delete&classid=<?=$key?>">删除</a></td>
+</tr>
+<?php } } ?>
+</table>
+</div>
+
+<div class="footactions">
+<input type="submit" name="ordersubmit" value="更新排序" class="submit">
+</div>
+
+</form>
+
+<?php } ?>
+
+</div>
+</div>
+
+<div class="side">
+<?php if($menus['0']) { ?>
+<div class="block style1">
+<h2>基本设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['0'])) { foreach($acs['0'] as $value) { ?>
+<?php if($menus['0'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+</ul>
+</div>
+<?php } ?>
+
+<div class="block style1">
+<h2>批量管理</h2>
+<ul class="folder">
+<?php if(is_array($acs['3'])) { foreach($acs['3'] as $value) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } } ?>
+<?php if(is_array($acs['1'])) { foreach($acs['1'] as $value) { ?>
+<?php if($menus['1'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+</ul>
+</div>
+
+<?php if($menus['2']) { ?>
+<div class="block style1">
+<h2>高级设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['2'])) { foreach($acs['2'] as $value) { ?>
+<?php if($menus['2'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+<?php if($menus['0']['config']) { ?><li><a href="<?=UC_API?>" target="_blank">UCenter</a></li><?php } ?>
+</ul>
+</div>
+<?php } ?>
+</div>
+
+</div>
+
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>
 <?php if($_SGLOBAL['ad']['contentbottom']) { ?><br style="line-height:0;clear:both;"/><div id="ad_contentbottom"><?php adshow('contentbottom'); ?></div><?php } ?>

@@ -1,4 +1,51 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_discussion|template/green/header|template/green/cp_topic_menu|template/green/footer|template/green/space_topic_inc', '1369052433', 'template/green/cp_discussion');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/task|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188564', 'admin/tpl/task');?><?php $_TPL['menunames'] = array(
+		'index' => '管理首页',
+		'config' => '站点设置',
+		'privacy' => '隐私设置',
+		'usergroup' => '用户组',
+		'credit' => '积分规则',
+		'profilefield' => '用户栏目',
+		'profield' => '群组栏目',
+		'eventclass' => '活动分类',
+		'magic' => '道具设置',
+		'task' => '有奖任务',
+		'spam' => '防灌水设置',
+		'censor' => '词语屏蔽',
+		'ad' => '广告设置',
+		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
+		'app' => 'UCenter应用',
+		'network' => '随便看看',
+		'cache' => '缓存更新',
+		'log' => '系统log记录',
+		'space' => '用户管理',
+		'feed' => '动态(feed)',
+		'share' => '分享',
+		'blog' => '日志',
+		'album' => '相册',
+		'pic' => '图片',
+		'comment' => '评论/留言',
+		'thread' => '话题',
+		'post' => '回帖',
+		'doing' => '记录',
+		'tag' => '标签',
+		'mtag' => '群组',
+		'poll' => '投票',
+		'event' => '活动',
+		'magiclog' => '道具记录',
+		'report' => '举报',
+		'block' => '数据调用',
+		'template' => '模板编辑',
+		'backup' => '数据备份',
+		'stat' => '统计更新',
+		'cron' => '系统计划任务',
+		'click' => '表态动作',
+		'ip' => '访问IP设置',
+		'hotuser' => '推荐成员设置',
+		'defaultuser' => '默认好友设置',
+	); ?>
+<?php $_TPL['nosidebar'] = 1; ?>
+<?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -44,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -108,319 +156,198 @@
 <?php } ?>
 
 
-<?php if($_GET['op'] == 'delete') { ?>
-
-<h1>删除案例讨论</h1>
-<a href="javascript:hideMenu();" class="float_del" title="关闭">关闭</a>
-<div class="popupmenu_inner">
-<form method="post" action="cp.php?ac=discussion&op=delete&discussionid=<?=$discussionid?>">
-<p>确定删除指定的案例讨论吗？</p>
-<p class="btn_line">
-<input type="hidden" name="refer" value="<?=$_SGLOBAL['refer']?>" />
-<input type="hidden" name="deletesubmit" value="true" />
-<input type="submit" name="btnsubmit" value="确定" class="submit" />
-</p>
-<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
-</form>
-</div>
-
-<?php } elseif($_GET['op'] == 'edithot') { ?>
-
-<h1>调整热度</h1>
-<a href="javascript:hideMenu();" class="float_del" title="关闭">关闭</a>
-<div class="popupmenu_inner">
-<form method="post" action="cp.php?ac=discussion&op=edithot&discussionid=<?=$discussionid?>">
-<p class="btn_line">
-新的热度：<input type="text" name="hot" value="<?=$discussion['hot']?>" size="5"> 
-<input type="hidden" name="refer" value="<?=$_SGLOBAL['refer']?>" />
-<input type="hidden" name="hotsubmit" value="true" />
-<input type="submit" name="btnsubmit" value="确定" class="submit" />
-</p>
-<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
-</form>
-</div>
-
-<?php } else { ?>
-
-<script language="javascript" src="image/editor/editor_function.js"></script>
-<script language="javascript" src="source/script_discussion.js"></script>
-
-<?php if($topic) { ?>
-<h2 class="title">
-<img src="image/app/topic.gif" />热闹 - <a href="space.php?do=topic&topicid=<?=$topicid?>"><?=$topic['subject']?></a>
-</h2>
-<div class="tabs_header">
-<ul class="tabs">
-<li class="active"><a href="javascript:;"><span>凑个热闹</span></a></li>
-<li><a href="space.php?do=topic&topicid=<?=$topicid?>"><span>查看热闹</span></a></li>
-</ul>
-<?php if(checkperm('managetopic') || $topic['uid']==$_SGLOBAL['supe_uid']) { ?>
-<div class="r_option">
-<a href="cp.php?ac=topic&op=edit&topicid=<?=$topic['topicid']?>">编辑</a> | 
-<a href="cp.php?ac=topic&op=delete&topicid=<?=$topic['topicid']?>" id="a_delete_<?=$topic['topicid']?>" onclick="ajaxmenu(event,this.id);">删除</a>
-</p>
-</div>
-<?php } ?>
-</div>
-
-
-<div class="affiche">
-<table width="100%">
-<tr>
-<?php if($topic['pic']) { ?>
-<td width="160" id="event_icon" valign="top">
-<img src="<?=$topic['pic']?>" width="150">
-</td>
-<?php } ?>
-<td valign="top">
-<h2>
-<a href="space.php?do=topic&topicid=<?=$topic['topicid']?>"><?=$topic['subject']?></a>
-</h2>
-
-<div style="padding:5px 0;"><?=$topic['message']?></div>
-<ul>
-<li class="gray">发起作者: <a href="space.php?uid=<?=$topic['uid']?>"><?=$_SN[$topic['uid']]?></a></li>
-<li class="gray">发起时间: <?=$topic['dateline']?></li>
-<?php if($topic['endtime']) { ?><li class="gray">参与截止: <?=$topic['endtime']?></li><?php } ?>
-<?php if($topic['joinnum']) { ?>
-<li class="gray">参与人次: <?=$topic['joinnum']?></li>
-<?php } ?>
-<li class="gray">最后参与: <?=$topic['lastpost']?></li>
-</ul>
-
-<?php if($topic['allowjoin']) { ?>
-<a href="<?=$topic['joinurl']?>" class="feed_po" id="hot_add" onmouseover="showMenu(this.id)">凑个热闹</a>
-<ul id="hot_add_menu" class="dropmenu_drop" style="display:none;">
-<?php if(in_array('blog', $topic['jointype'])) { ?>
-<li><a href="cp.php?ac=blog&topicid=<?=$topicid?>">发表日志</a></li>
-<?php } ?>
-<?php if(in_array('pic', $topic['jointype'])) { ?>
-<li><a href="cp.php?ac=upload&topicid=<?=$topicid?>">上传图片</a></li>
-<?php } ?>
-<?php if(in_array('thread', $topic['jointype'])) { ?>
-<li><a href="cp.php?ac=thread&topicid=<?=$topicid?>">发起话题</a></li>
-<?php } ?>
-<?php if(in_array('poll', $topic['jointype'])) { ?>
-<li><a href="cp.php?ac=poll&topicid=<?=$topicid?>">发起投票</a></li>
-<?php } ?>
-<?php if(in_array('event', $topic['jointype'])) { ?>
-<li><a href="cp.php?ac=event&topicid=<?=$topicid?>">发起活动</a></li>
-<?php } ?>
-<?php if(in_array('share', $topic['jointype'])) { ?>
-<li><a href="cp.php?ac=share&topicid=<?=$topicid?>">添加分享</a></li>
-<?php } ?>
-</ul>
-<?php } else { ?>
-<p class="r_option">该热闹已经截止</p>
-<?php } ?>
-</td>
-</tr></table>
-</div>
-
-<?php } else { ?>
-<h2 class="title"><img src="image/app/discussion.gif" />案例讨论</h2>
-<div class="tabs_header">
-<ul class="tabs">
-<?php if($discussion['discussionid']) { ?>
-<li class="active"><a href="cp.php?ac=discussion&discussionid=<?=$discussion['discussionid']?>"><span>编辑案例讨论</span></a></li>
-<?php } ?>
-<li<?php if(empty($discussion['discussionid'])) { ?> class="active"<?php } ?>><a href="cp.php?ac=discussion"><span>发表新案例讨论</span></a></li>
-<li><a href="space.php?uid=<?=$space['uid']?>&do=discussion&view=me"><span>返回我的案例讨论</span></a></li>
-</ul>
-</div>
-<?php } ?>
-
-<div class="c_form">
-
 <style type="text/css">
-.userData {behavior:url(#default#userdata);}
+@import url(admin/tpl/style.css);
 </style>
 
-
-<form method="post" action="cp.php?ac=discussion&discussionid=<?=$discussion['discussionid']?>" enctype="multipart/form-data">
-<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
-<tr>
-<td>
-案例名称:<input type="text" class="t_input" id="subject" name="subject" value="<?=$discussion['subject']?>" size="60" onblur="relatekw();" />
-</td>
-</tr>
-<tr>
-<td>
-案例基本情况描述:<a id="doodleBox" href="magic.php?mid=doodle&showid=discussion_doodle&target=uchome-ttHtmlEditor&from=editor" style="display:none"></a>
-<textarea class="userData" name="message" id="uchome-ttHtmlEditor" style="height:100%;width:100%;display:none;border:0px"><?=$discussion['message']?></textarea>
-<iframe src="editor.php?charset=<?=$_SC['charset']?>&allowhtml=<?=$allowhtml?>&doodle=<?php if(isset($_SGLOBAL['magic']['doodle'])) { ?>1<?php } ?>" name="uchome-ifrHtmlEditor" id="uchome-ifrHtmlEditor" scrolling="no" border="0" frameborder="0" style="width:100%;border: 1px solid #C5C5C5;" height="200"></iframe>
-</td>
-</tr>
-<tr>
-<td>
-案例采取的治疗方法:
-<textarea class="think" name="think" id="uchome-ttHtmlEditor" style="height:200px;width:100%;"><?=$discussion['think']?></textarea>
-</td>
-</tr>
-</table>
-<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
-<tr>
-<th width="100">标签</th>
-<td><input type="text" class="t_input" size="40" id="tag" name="tag" value="<?=$discussion['tag']?>"> <input type="button" name="clickbutton[]" value="自动获取" class="button" onclick="relatekw();"></td>
-</tr>
-
-<?php if($discussion['uid'] && $discussion['uid']!=$_SGLOBAL['supe_uid']) { ?>
-<?php $selectgroupstyle='display:none'; ?>
-<tbody style="display:none;">
-<?php } ?>
-<tr>
-<th>隐私设置</th>
-<td>
-<select name="friend" onchange="passwordShow(this.value);">
-<option value="0"<?=$friendarr['0']?>>全站用户可见</option>
-<option value="1"<?=$friendarr['1']?>>全好友可见</option>
-<option value="2"<?=$friendarr['2']?>>仅指定的好友可见</option>
-<option value="3"<?=$friendarr['3']?>>仅自己可见</option>
-<option value="4"<?=$friendarr['4']?>>凭密码查看</option>
-</select>
-<span id="span_password" style="<?=$passwordstyle?>">密码:<input type="text" name="password" value="<?=$discussion['password']?>" size="10" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"></span>
-<input type="checkbox" name="noreply" value="1"<?php if($discussion['noreply']) { ?> checked<?php } ?>> 不允许评论
-</td>
-</tr>
-<?php if($discussion['uid'] && $discussion['uid']!=$_SGLOBAL['supe_uid']) { ?></tbody><?php } ?>
-<tbody id="tb_selectgroup" style="<?=$selectgroupstyle?>">
-<tr>
-<th>指定好友</th>
-<td><select name="selectgroup" onchange="getgroup(this.value);">
-<option value="">从好友组选择好友</option>
-<?php if(is_array($groups)) { foreach($groups as $key => $value) { ?>
-<option value="<?=$key?>"><?=$value?></option>
-<?php } } ?>
-</select> 多次选择会累加到下面的好友名单</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td>
-<textarea name="target_names" id="target_names" style="width:85%;" rows="3"><?=$discussion['target_names']?></textarea>
-<br>(可以填写多个好友名，请用空格进行分割)</td>
-</tr>
-</tbody>
+<div id="cp_content">
 
 
-<?php if(checkperm('managediscussion')) { ?>
-<tr>
-<th width="100">热度</th>
-<td>
-<input type="text" class="t_input" name="hot" id="hot" value="<?=$discussion['hot']?>" size="5">
-</td>
-</tr>
-<?php } ?>
+<div class="mainarea">
+<div class="maininner">
 
-<?php if(checkperm('seccode')) { ?>
-<?php if($_SCONFIG['questionmode']) { ?>
-<tr>
-<th style="vertical-align: top;">请回答验证问题</th>
-<td>
-<p><?php question(); ?></p>
-<input type="text" id="seccode" name="seccode" value="" size="15" class="t_input" />
-</td>
-</tr>
-<?php } else { ?>
-<tr>
-<th style="vertical-align: top;">请填写验证码</th>
-<td>
-<script>seccode();</script>
-<p>请输入上面的4位字母或数字，看不清可<a href="javascript:updateseccode()">更换一张</a></p>
-<input type="text" id="seccode" name="seccode" value="" size="15" class="t_input" />
-</td>
-</tr>
-<?php } ?>
-<?php } ?>
-
-<tr>
-<th width="100">动态选项</th>
-<td>
-<input type="checkbox" name="makefeed" id="makefeed" value="1"<?php if(ckprivacy('discussion', 1)) { ?> checked<?php } ?>> 产生动态 (<a href="cp.php?ac=privacy#feed" target="_blank">更改默认设置</a>)
-</td>
-</tr>			
-</table>
-<input type="hidden" name="discussionsubmit" value="true" />
-<input type="button" id="discussionbutton" name="discussionbutton" value="提交发布" onclick="validate(this);" style="display: none;" />
-<input type="hidden" name="topicid" value="<?=$_GET['topicid']?>" />
-<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
-</form>
-
-<?php if(!$_SGLOBAL['inajax'] && (!$discussion['uid'] || $discussion['uid']==$_SGLOBAL['supe_uid'])) { ?>
-<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
-<tr><th width="100">图片</th><td>
-<input type="button" name="clickbutton[]" value="上传图片" class="button" onclick="edit_album_show('pic')">
-<input type="button" name="clickbutton[]" value="插入图片" class="button" onclick="edit_album_show('album')">
-(本上传图片会出现在案例基本情况描述内)
-</td></tr>
-</table>
-<?php } ?>
-
-<table cellspacing="4" cellpadding="4" width="100%" id="uchome-edit-pic" class="infotable" style="display:none;">
-<tr>
-<th width="100">&nbsp;</th>
-<td>
-<strong>选择图片</strong>: 
-<table summary="Upload" cellspacing="2" cellpadding="0">
-<tbody id="attachbodyhidden" style="display:none">
-<tr>
-<td>
-<form method="post" id="upload" action="cp.php?ac=upload" enctype="multipart/form-data" target="uploadframe" style="background: transparent;">
-<input type="file" name="attach" style="border: 1px solid #CCC;" />
-<span id="localfile"></span>
-<input type="hidden" name="uploadsubmit" id="uploadsubmit" value="true" />
-<input type="hidden" name="albumid" id="albumid" value="0" />
-<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
-</form>
-</td>
-</tr>
-</tbody>
-<tbody id="attachbody"></tbody>
-</table>
-<strong>存储相册</strong>: 
-<table cellspacing="2" cellpadding="0">
-<tr>
-<td>
-<select name="albumid" id="uploadalbum" onchange="addSort(this)">
-<option value="-1">请选择相册</option>
-<option value="-1">默认相册</option>
-<?php if(is_array($albums)) { foreach($albums as $value) { ?>
-<option value="<?=$value['albumid']?>"><?=$value['albumname']?></option>
-<?php } } ?>
-<option value="addoption" style="color:red;">+新建相册</option>
-</select>
-<script src="source/script_upload.js" type="text/javascript"></script>
-<iframe id="uploadframe" name="uploadframe" width="0" height="0" marginwidth="0" frameborder="0" src="about:blank"></iframe>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-<table cellspacing="4" cellpadding="4" width="100%" class="infotable" id="uchome-edit-album" style="display:none;">
-<tr>
-<th width="100">&nbsp;</th>
-<td>
-选择相册: <select name="view_albumid" onchange="picView(this.value)">
-<option value="none">选择一个相册</option>
-<option value="0">默认相册</option>
-<?php if(is_array($albums)) { foreach($albums as $value) { ?>
-<option value="<?=$value['albumid']?>"><?=$value['albumname']?></option>
-<?php } } ?>
-</select> (点击图片可以插入到内容中)
-<div id="albumpic_body"></div>
-</td>
-</tr>
-</table>
-<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
-<tr>
-<th width="100">&nbsp;</th>
-<td>
-<input type="button" id="issuance" onclick="document.getElementById('discussionbutton').click();" value="保存发布" class="submit" /></td>
-</tr>
-</table>
+<div class="tabs_header">
+<ul class="tabs">
+<li<?=$actives['view']?>><a href="admincp.php?ac=task"><span>浏览全部任务</span></a></li>
+<li class="null"><a href="admincp.php?ac=task&op=add">添加新任务</a></li>
+</ul>
 </div>
 
+<form method="post" action="admincp.php?ac=task&taskid=<?=$taskid?>">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<div class="bdrcontent">
+通过有奖任务，您可以实现引导站内的新人更好的完善自己的头像、资料和发表信息；还可以实现在节日期间给用户发送积分；用户定期领取积分红包等各种任务。有奖任务可以带动用户更容易的融入到站内的气氛中来。
+</div>
+<br>
+
+<div class="bdrcontent">
+
+<?php if($_GET['op']=='edit' || $_GET['op']=='add') { ?>
+
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th style="width:12em;">有奖任务名</th>
+<td><input size="25" name="name" value="<?=$thevalue['name']?>" type="text">
+</td>
+</tr>
+<tr>
+<th>有奖任务图片</th>
+<td><input size="100" name="image" value="<?=$thevalue['image']?>" type="text"><br>输入有奖任务图片的URL地址，不要太大，建议长60px，宽60px的小图片
+</td>
+</tr>
+<tr>
+<th>有奖任务说明</th>
+<td><textarea name="note" rows="8" style="width:90%;"><?=$thevalue['note']?></textarea>
+<br>支持html代码，文字换行请使用&lt;br&gt;标签。
+</td></tr>
+<tr>
+<th>有奖任务奖励积分</th>
+<td><input type="text" name="credit" value="<?=$thevalue['credit']?>" size="10">
+<br>设置用户完成该有奖任务后可以获得的积分奖励。为0，则不奖励积分。
+</td>
+</tr>
+<tr>
+<th>有奖任务完成数限制</th>
+<td><input type="text" name="maxnum" value="<?=$thevalue['maxnum']?>" size="10">
+<br>设置该有奖任务最多可完成多少人次。超过该人次后，该有奖任务将自动失效。为0，则不限制。
+<?php if($thevalue['num']) { ?><br><b>目前该有奖任务已经完成 <?=$thevalue['num']?> 人次</b>。<?php } ?>
+</td>
+</tr>
+<tr>
+<th>有奖任务处理PHP脚本</th>
+<td>./source/task/<input size="25" name="filename" value="<?=$thevalue['filename']?>" type="text">
+<br>不能包含路径，程序脚本必须存放于 ./source/task/ 目录中
+<br>本功能为高级应用，有奖任务脚本的编写，需要您懂一定PHP知识。
+<br>请参考系统自带的有奖任务脚本 ./source/task/sample.php 中的说明来编写。
+</td></tr>
+<tr>
+<th>有效性</th>
+<td><input type="radio" name="available" value="1"<?=$availables['1']?>>有效 <input type="radio" name="available" value="0"<?=$availables['0']?>>无效
+</td>
+</tr>
+<tr>
+<th>开始日期</th>
+<td><input type="text" name="starttime" value="<?=$thevalue['starttime']?>" size="25"> (格式：2008-08-08 00:00:00)
+<br>设置该有奖任务开始的日期。为空为立即开始。
+</td>
+</tr>
+<tr>
+<th>结束日期</th>
+<td><input type="text" name="endtime" value="<?=$thevalue['endtime']?>" size="25"> (格式：2008-08-08 23:59:59)
+<br>设置该有奖任务结束的日期。为空为永久有效。
+</td>
+</tr>
+<tr>
+<th>用户重复执行周期</th>
+<td>
+<select name="nexttype" onchange="show_nexttime(this.value);">
+<option value="">不重复</option>
+<option value="day"<?=$nexttypearr['day']?>>每天</option>
+<option value="hour"<?=$nexttypearr['hour']?>>整点</option>
+<option value="time"<?=$nexttypearr['time']?>>间隔指定时间</option>
+</select>
+<span id="nexttime" style="display:<?=$nextimestyle?>;">
+间隔 <input type="text" name="nexttime" value="<?=$thevalue['nexttime']?>" size="10"> 秒后可重复执行
+</span>
+
+<script>
+function show_nexttime(type) {
+if(type == 'time') {
+$('nexttime').style.display ='';
+} else {
+$('nexttime').style.display ='none';
+}
+}
+</script>
+</td>
+</tr>
+<tr>
+<th>优先顺序</th>
+<td><input type="text" name="displayorder" value="<?=$thevalue['displayorder']?>" size="10"><br>数字越小，排序越靠前，优先级越高
+</td>
+</tr>
+</table>
+
+</div>
+<div class="footactions">
+<input type="submit" name="tasksubmit" value="提交" class="submit">
+
+
+<?php } else { ?>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th width="80">图片</th>
+<th>有奖任务名/有奖任务脚本</th>
+<th>积分奖励</th>
+<th>有效期</th>
+<th>操作</th>
+</tr>
+<?php if(is_array($list)) { foreach($list as $task) { ?>
+<tr>
+<td><img src="<?=$task['image']?>" width="60" height="60"></td>
+<td><?=$task['name']?><br><?=$task['filename']?></td>
+<td><?=$task['credit']?></td>
+<td><?php if($task['available']) { ?><?=$task['starttime']?><br><?=$task['endtime']?><?php } else { ?>无效<?php } ?></td>
+<td><a href="admincp.php?ac=task&op=edit&taskid=<?=$task['taskid']?>">编辑</a>
+&nbsp;|&nbsp;<a href="admincp.php?ac=task&op=delete&taskid=<?=$task['taskid']?>">删除</a>
+</td>
+</tr>
+<?php } } ?>
+</table>
+
 <?php } ?>
+
+</div>
+</form>
+
+</div>
+</div>
+
+<div class="side">
+<?php if($menus['0']) { ?>
+<div class="block style1">
+<h2>基本设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['0'])) { foreach($acs['0'] as $value) { ?>
+<?php if($menus['0'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+</ul>
+</div>
+<?php } ?>
+
+<div class="block style1">
+<h2>批量管理</h2>
+<ul class="folder">
+<?php if(is_array($acs['3'])) { foreach($acs['3'] as $value) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } } ?>
+<?php if(is_array($acs['1'])) { foreach($acs['1'] as $value) { ?>
+<?php if($menus['1'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+</ul>
+</div>
+
+<?php if($menus['2']) { ?>
+<div class="block style1">
+<h2>高级设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['2'])) { foreach($acs['2'] as $value) { ?>
+<?php if($menus['2'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+<?php if($menus['0']['config']) { ?><li><a href="<?=UC_API?>" target="_blank">UCenter</a></li><?php } ?>
+</ul>
+</div>
+<?php } ?>
+</div>
+
+</div>
+
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>
 <?php if($_SGLOBAL['ad']['contentbottom']) { ?><br style="line-height:0;clear:both;"/><div id="ad_contentbottom"><?php adshow('contentbottom'); ?></div><?php } ?>

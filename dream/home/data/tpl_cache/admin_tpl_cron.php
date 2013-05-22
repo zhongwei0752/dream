@@ -1,4 +1,50 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_mtag|template/green/header|template/green/footer', '1369050360', 'template/green/space_mtag');?><?php $_TPL['titles'] = array('群组'); ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/cron|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188595', 'admin/tpl/cron');?><?php $_TPL['menunames'] = array(
+		'index' => '管理首页',
+		'config' => '站点设置',
+		'privacy' => '隐私设置',
+		'usergroup' => '用户组',
+		'credit' => '积分规则',
+		'profilefield' => '用户栏目',
+		'profield' => '群组栏目',
+		'eventclass' => '活动分类',
+		'magic' => '道具设置',
+		'task' => '有奖任务',
+		'spam' => '防灌水设置',
+		'censor' => '词语屏蔽',
+		'ad' => '广告设置',
+		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
+		'app' => 'UCenter应用',
+		'network' => '随便看看',
+		'cache' => '缓存更新',
+		'log' => '系统log记录',
+		'space' => '用户管理',
+		'feed' => '动态(feed)',
+		'share' => '分享',
+		'blog' => '日志',
+		'album' => '相册',
+		'pic' => '图片',
+		'comment' => '评论/留言',
+		'thread' => '话题',
+		'post' => '回帖',
+		'doing' => '记录',
+		'tag' => '标签',
+		'mtag' => '群组',
+		'poll' => '投票',
+		'event' => '活动',
+		'magiclog' => '道具记录',
+		'report' => '举报',
+		'block' => '数据调用',
+		'template' => '模板编辑',
+		'backup' => '数据备份',
+		'stat' => '统计更新',
+		'cron' => '系统计划任务',
+		'click' => '表态动作',
+		'ip' => '访问IP设置',
+		'hotuser' => '推荐成员设置',
+		'defaultuser' => '默认好友设置',
+	); ?>
+<?php $_TPL['nosidebar'] = 1; ?>
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -45,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -108,206 +155,155 @@
 
 <?php } ?>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<!--[if lt IE 9]>
-<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-<script src="http://www.inwebson.com/demo/blocksit-js/blocksit.min.js"></script>
-<link rel='stylesheet' href='template/default/mtag.css' media='screen' />
-<script>
-$(document).ready(function() {
-//vendor script
-//$('#header')
-//.css({ 'top':-50 })
-//.delay(1000)
-//.animate({'top': 0}, 800);
 
-//$('#footer')
-//.css({ 'bottom':-15 })
-//.delay(1000)
-//.animate({'bottom': 0}, 800);
+<style type="text/css">
+@import url(admin/tpl/style.css);
+</style>
 
-//blocksit define
-$(window).load( function() {
-$('#container').BlocksIt({
-numOfCol: 2,
-offsetX: 8,
-offsetY: 8
-});
-});
+<div id="cp_content">
 
-//window resize
-var currentWidth = 1100;
-$(window).resize(function() {
-var winWidth = $(window).width();
-var conWidth;
-//if(winWidth < 660) {
-//	conWidth = 440;
-//	col = 2
-//} else if(winWidth < 880) {
-//	conWidth = 660;
-//	col = 3
-//} else if(winWidth < 1100) {
-//	conWidth = 880;
-//	col = 4;
-//} else {
-//	conWidth = 1100;
-//	col = 5;
-//}
 
-if(conWidth != currentWidth) {
-currentWidth = conWidth;
-$('#container').width(conWidth);
-$('#container').BlocksIt({
-numOfCol: col,
-offsetX: 8,
-offsetY: 8
-});
-}
-});
+<div class="mainarea">
+<div class="maininner">
 
-//close ad
-$('.buttonclose a').on('click', function() {
-$(this).parent().parent().fadeOut(1000);
-$(this).off('click');
-return false;
-});
-});
-</script>
-<div class="searchbar floatright">
-<form method="get" action="space.php">
-<input name="searchkey" value="" size="15" class="t_input" type="text">
-<input name="searchsubmit" value="搜索群组" class="submit" type="submit">
-<input type="hidden" name="searchmode" value="1" />
-<input type="hidden" name="do" value="mtag" />
-<input type="hidden" name="view" value="hot" />
-</form>
-</div>
-<h2 class="title"><img src="image/app/mtag.gif">群组</h2>
 <div class="tabs_header">
 <ul class="tabs">
-<li><a href="space.php?uid=<?=$space['uid']?>&do=thread"><span>群组话题</span></a></li>
-<li<?=$actives['me']?>><a href="space.php?do=mtag&view=me"><span>我参与的群组</span></a></li>
-<li<?=$actives['manage']?>><a href="space.php?do=mtag&view=manage"><span>我管理的群组</span></a></li>
-<li<?=$actives['hot']?>><a href="space.php?do=mtag&view=hot"><span>热门群组</span></a></li>
-<li<?=$actives['recommend']?>><a href="space.php?do=mtag&view=recommend"><span>推荐群组</span></a></li>
-<li class="null"><a href="cp.php?ac=thread">发起新话题</a></li>
-<li class="null"><a href="cp.php?ac=mtag">创建群组</a></li>
+<li<?=$actives['view']?>><a href="admincp.php?ac=cron"><span>浏览全部</span></a></li>
+<li class="null"><a href="admincp.php?ac=cron&op=add">添加新计划任务</a></li>
 </ul>
 </div>
 
-<div class="h_status">
-排序方式：
-<a href="space.php?do=mtag&view=<?=$_GET['view']?>&fieldid=<?=$_GET['fieldid']?>&orderby=threadnum"<?=$orderbyarr['threadnum']?>>话题数排行</a><span class="pipe">|</span>
-<a href="space.php?do=mtag&view=<?=$_GET['view']?>&fieldid=<?=$_GET['fieldid']?>&orderby=postnum"<?=$orderbyarr['postnum']?>>回帖数排行</a><span class="pipe">|</span>
-<a href="space.php?do=mtag&view=<?=$_GET['view']?>&fieldid=<?=$_GET['fieldid']?>&orderby=membernum"<?=$orderbyarr['membernum']?>>成员数排行</a>
+<form method="post" action="admincp.php?ac=cron&cronid=<?=$cronid?>">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<div class="bdrcontent">
+
+
+<?php if($_GET['op']=='edit' || $_GET['op']=='add') { ?>
+
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th style="width:12em;">任务名</th>
+<td><input size="25" name="name" value="<?=$thevalue['name']?>" type="text">
+</td></tr>
+<tr>
+<th>任务脚本</th>
+<td><input size="25" name="filename" value="<?=$thevalue['filename']?>" type="text">
+<br>不能包含路径，程序脚本必须存放于 ./source/cron/ 目录中
+</td></tr>
+<tr>
+<th>有效性</th>
+<td><input type="radio" name="available" value="1"<?=$availables['1']?>>有效 <input type="radio" name="available" value="0"<?=$availables['0']?>>无效
+</td></tr>
+<tr>
+<th>星期</th>
+<td><select name="weekday">
+<option value="-1">*</option>
+<option value="0"<?=$weekdays['0']?>>星期日</option>
+<option value="1"<?=$weekdays['1']?>>星期一</option>
+<option value="2"<?=$weekdays['2']?>>星期二</option>
+<option value="3"<?=$weekdays['3']?>>星期三</option>
+<option value="4"<?=$weekdays['4']?>>星期四</option>
+<option value="5"<?=$weekdays['5']?>>星期五</option>
+<option value="6"<?=$weekdays['6']?>>星期六</option>
+</select>
+<br>本设置会覆盖下面的“日”设定</td></tr>
+<tr>
+<th>日</th>
+<td>
+<select name="day">
+<option value="-1">*</option>
+<?=$daystr?>
+</select></td></tr>
+<tr>
+<th>小时</th>
+<td>
+<select name="hour">
+<option value="-1">*</option>
+<?=$hourstr?>
+</select></td></tr>
+<tr>
+<th>分钟</th>
+<td>
+<?=$minuteselect?></td></tr>
+</table>
+
 </div>
+<div class="footactions">
+<input type="submit" name="cronsubmit" value="提交" class="submit">
 
-<?php if($searchkey) { ?>
-<div class="h_status">以下是搜索群组 <span style="color:red;font-weight:bold;"><?=$searchkey?></span> 结果列表</div>
-<?php } ?>
-
-<div id="content">
-
-<?php if($rlist) { ?>
-<div>
-<h3 class="l_status">
-<div class="r_option"><a href="space.php?do=mtag&view=recommend">更多推荐</a></div>
-群组推荐
-</h3>
-<table cellspacing="5" cellpadding="5"><tr>
-<section id="wrapper" >
-
-<div id="container" style="width:640px;">
-<?php if(is_array($rlist)) { foreach($rlist as $key => $value) { ?>
-
-<div class="grid">
-<div class="imgholder">
-<div class="threadimg60"  style="float:left;"><a href="space.php?do=mtag&tagid=<?=$value['tagid']?>"><img src="<?=$value['pic']?>"/></a></div>
-</div>
-<strong>&nbsp;<a href="space.php?do=mtag&tagid=<?=$value['tagid']?>" style="font-weight:bold;"><?=$value['tagname']?></a></strong>
-<p>&nbsp;<?=$value['title']?></p>
-&nbsp;已有 <span class="num"><?=$value['membernum']?></span> 人加入
-<div class="meta">&nbsp;话题: <?=$value['threadnum']?>, 回帖: <?=$value['postnum']?></div>
-</div>
-
-<?php } } ?>
-</div>
-</section>
-</tr></table>
-</div>
-<?php } ?>
-
-<?php if($list) { ?>
-
-<div>
-<?php if($rlist) { ?>
-<h3 class="l_status">
-我的群组
-</h3>
-<?php } ?>
-<table cellspacing="5" cellpadding="5"><tr>
-<section id="wrapper" >
-
-<div id="container" style="width:640px;">
-<?php if(is_array($list)) { foreach($list as $key => $value) { ?>
-
-<div class="grid">
-<div class="imgholder">
-<div class="threadimg60"  style="float:left;"><a href="space.php?do=mtag&tagid=<?=$value['tagid']?>"><img src="<?=$value['pic']?>"/></a></div>
-</div>
-<strong>&nbsp;<a href="space.php?do=mtag&tagid=<?=$value['tagid']?>" style="font-weight:bold;"><?=$value['tagname']?></a></strong>
-<p>&nbsp;<?=$value['title']?></p>
-&nbsp;已有 <span class="num"><?=$value['membernum']?></span> 人加入
-<div class="meta">&nbsp;话题: <?=$value['threadnum']?>, 回帖: <?=$value['postnum']?></div>
-</div>
-
-<?php } } ?>
-</div>
-</section>
-</tr></table>
-</div>
-
-<div class="page"><?=$multi?></div>
 
 <?php } else { ?>
-<div class="c_form">还没有群组。</div>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th>任务名</th>
+<th>上次执行/下次执行</th>
+<th>操作</th>
+</tr>
+<?php if(is_array($list)) { foreach($list as $cron) { ?>
+<tr>
+<td><b><?=$cron['name']?></b><br /><?=$cron['filename']?></td>
+<td><?=$cron['lastrun']?><br><?=$cron['nextrun']?></td>
+<td><a href="admincp.php?ac=cron&op=edit&cronid=<?=$cron['cronid']?>">编辑</a>
+<?php if($cron['available']) { ?>&nbsp;|&nbsp;<a href="admincp.php?ac=cron&op=run&cronid=<?=$cron['cronid']?>">执行</a><?php } ?>
+<?php if($cron['type']!='system') { ?>&nbsp;|&nbsp;<a href="admincp.php?ac=cron&op=delete&cronid=<?=$cron['cronid']?>">删除</a><?php } ?>
+</td>
+</tr>
+<?php } } ?>
+</table>
+
 <?php } ?>
 
 </div>
+</form>
 
-<div id="sidebar">
+</div>
+</div>
 
-<div class="sidebox">
-<h2 class="title">群组分类</h2>
-<ul class="post_list line_list">
-<li<?=$pro_actives['all']?>><a href="space.php?do=mtag&view=<?=$_GET['view']?>&orderby=<?=$_GET['orderby']?>">全部</a>
-<?php if(is_array($_SGLOBAL['profield'])) { foreach($_SGLOBAL['profield'] as $value) { ?>
-<li<?=$pro_actives[$value['fieldid']]?>><a href="space.php?do=mtag&view=<?=$_GET['view']?>&fieldid=<?=$value['fieldid']?>&orderby=<?=$_GET['orderby']?>"><?=$value['title']?></a></li>
+<div class="side">
+<?php if($menus['0']) { ?>
+<div class="block style1">
+<h2>基本设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['0'])) { foreach($acs['0'] as $value) { ?>
+<?php if($menus['0'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+</ul>
+</div>
+<?php } ?>
+
+<div class="block style1">
+<h2>批量管理</h2>
+<ul class="folder">
+<?php if(is_array($acs['3'])) { foreach($acs['3'] as $value) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } } ?>
+<?php if(is_array($acs['1'])) { foreach($acs['1'] as $value) { ?>
+<?php if($menus['1'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
 <?php } } ?>
 </ul>
 </div>
 
-
-<?php if($threadlist) { ?>
-<div class="sidebox">
-<h2 class="title">这些群组的话题更新</h2>
-<ul class="line_list">
-<?php if(is_array($threadlist)) { foreach($threadlist as $key => $value) { ?>
-<li>
-<a href="space.php?uid=<?=$value['uid']?>&do=thread&id=<?=$value['tid']?>" <?php if($value['magiccolor']) { ?> class="magiccolor<?=$value['magiccolor']?>"<?php } ?>><?=$value['subject']?></a>
-<?php if($value['hot']) { ?>
-<br><span class="gray"><?=$value['hot']?> 人推荐</span>
+<?php if($menus['2']) { ?>
+<div class="block style1">
+<h2>高级设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['2'])) { foreach($acs['2'] as $value) { ?>
+<?php if($menus['2'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
 <?php } ?>
-</li>
 <?php } } ?>
+<?php if($menus['0']['config']) { ?><li><a href="<?=UC_API?>" target="_blank">UCenter</a></li><?php } ?>
 </ul>
 </div>
 <?php } ?>
+</div>
 
 </div>
 
-<!--/sidebar-->
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>
 <?php if($_SGLOBAL['ad']['contentbottom']) { ?><br style="line-height:0;clear:both;"/><div id="ad_contentbottom"><?php adshow('contentbottom'); ?></div><?php } ?>
@@ -442,5 +438,4 @@ showreward();
         <?php } ?>
 </body>
 </html>
-<?php } ?>
-<?php ob_out();?>
+<?php } ?><?php ob_out();?>

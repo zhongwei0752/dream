@@ -1,4 +1,51 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_task|template/green/header|template/green/space_list|template/green/footer', '1368858923', 'template/green/cp_task');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/click|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188554', 'admin/tpl/click');?><?php $_TPL['menunames'] = array(
+		'index' => '管理首页',
+		'config' => '站点设置',
+		'privacy' => '隐私设置',
+		'usergroup' => '用户组',
+		'credit' => '积分规则',
+		'profilefield' => '用户栏目',
+		'profield' => '群组栏目',
+		'eventclass' => '活动分类',
+		'magic' => '道具设置',
+		'task' => '有奖任务',
+		'spam' => '防灌水设置',
+		'censor' => '词语屏蔽',
+		'ad' => '广告设置',
+		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
+		'app' => 'UCenter应用',
+		'network' => '随便看看',
+		'cache' => '缓存更新',
+		'log' => '系统log记录',
+		'space' => '用户管理',
+		'feed' => '动态(feed)',
+		'share' => '分享',
+		'blog' => '日志',
+		'album' => '相册',
+		'pic' => '图片',
+		'comment' => '评论/留言',
+		'thread' => '话题',
+		'post' => '回帖',
+		'doing' => '记录',
+		'tag' => '标签',
+		'mtag' => '群组',
+		'poll' => '投票',
+		'event' => '活动',
+		'magiclog' => '道具记录',
+		'report' => '举报',
+		'block' => '数据调用',
+		'template' => '模板编辑',
+		'backup' => '数据备份',
+		'stat' => '统计更新',
+		'cron' => '系统计划任务',
+		'click' => '表态动作',
+		'ip' => '访问IP设置',
+		'hotuser' => '推荐成员设置',
+		'defaultuser' => '默认好友设置',
+	); ?>
+<?php $_TPL['nosidebar'] = 1; ?>
+<?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -44,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -108,269 +156,145 @@
 <?php } ?>
 
 
-<h2 class="title"><img src="image/icon/task.gif">有奖任务</h2>
+<style type="text/css">
+@import url(admin/tpl/style.css);
+</style>
+
+<div id="cp_content">
+
+
+<div class="mainarea">
+<div class="maininner">
+
 <div class="tabs_header">
 <ul class="tabs">
-<li<?=$actives['task']?>><a href="cp.php?ac=task"><span>待参与任务</span></a></li>
-<li<?=$actives['done']?>><a href="cp.php?ac=task&view=done"><span>已参与任务</span></a></li>
-<?php if($task) { ?>
-<li<?=$actives['do']?>><a href="cp.php?ac=task&taskid=<?=$task['taskid']?>"><span>查看任务</span></a></li>
-<?php } ?>
+<li<?=$actives['view']?>><a href="admincp.php?ac=click"><span>浏览全部动作</span></a></li>
+<li<?=$actives['blogid']?>><a href="admincp.php?ac=click&idtype=blogid"><span>日志动作</span></a></li>
+<li<?=$actives['picid']?>><a href="admincp.php?ac=click&idtype=picid"><span>图片动作</span></a></li>
+<li<?=$actives['tid']?>><a href="admincp.php?ac=click&idtype=tid"><span>话题动作</span></a></li>
+<li class="null"><a href="admincp.php?ac=click&op=add">添加新动作</a></li>
 </ul>
 </div>
 
-<?php if($task) { ?>
+<?php if(empty($_GET['op'])) { ?>
 
-<?php if($_GET['view']=='member') { ?>
+<?php $idtypename=array('blogid'=>'日志','picid'=>'图片','tid'=>'话题') ?>
 
-<div class="h_status">
-完成该任务的用户列表
-</div>
-<div class="space_list">
-<?php if($list) { ?>
-<?php if(is_array($list)) { foreach($list as $key => $value) { ?>
-<table cellspacing="0" cellpadding="0" width="100%">
+<form method="post" action="admincp.php?ac=click">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<div class="bdrcontent">
+<table cellspacing="0" cellpadding="0" class="formtable">
 <tr>
-<td width="65"><div class="avatar48"><a href="space.php?uid=<?=$value['uid']?>"><?php echo avatar($value[uid],small); ?></a></div></td>
+<th>图标</th>
+<th>动作名称</th>
+<th>系统类型</th>
+<th>显示顺序</th>
+<th>&nbsp;</th>
+</tr>
+<?php if(is_array($list)) { foreach($list as $value) { ?>
+<tr>
+<td><img src="image/click/<?=$value['icon']?>"></td>
+<td><?=$value['name']?></td>
+<td><?=$idtypename[$value['idtype']]?></td>
+<td><input type="text" name="displayorder[<?=$value['clickid']?>]" value="<?=$value['displayorder']?>" size="5"></td>
 <td>
-<h2>
-<?php if($ols[$value['uid']]) { ?><img src="image/online_icon.gif" align="absmiddle"> <?php } ?>
-<a href="space.php?uid=<?=$value['uid']?>" title="<?=$_SN[$value['uid']]?>"<?php g_color($value[groupid]); ?>><?=$_SN[$value['uid']]?></a>
-<?php if($value['username'] && $_SN[$value['uid']]!=$value['username']) { ?><span class="gray">(<?=$value['username']?>)</span><?php } ?>
-<?php g_icon($value[groupid]); ?>
-<?php if($value['videostatus']) { ?>
-<img src="image/videophoto.gif" align="absmiddle">
-<?php } ?>
-</h2>
-<?php if($value['sex']==2) { ?><p>美女</p><?php } elseif($value['sex']==1) { ?><p>帅哥</p><?php } ?></p>
-<p>
-<?php if($_GET['view']=='show') { ?>竞价<?php } ?>积分：<?=$value['credit']?> / <?php if($value['experience']) { ?>经验：<?=$value['experience']?> / <?php } ?>人气：<?=$value['viewnum']?> / 好友：<?=$value['friendnum']?></p>
-<?php if($value['note']) { ?><?=$value['note']?><?php } ?>
-</td>
-<td width="100">
-<ul class="line_list">
-<li><a href="space.php?uid=<?=$value['uid']?>">去串个门</a></li>
-<li><a href="cp.php?ac=poke&op=send&uid=<?=$value['uid']?>" id="a_poke_<?=$key?>" onclick="ajaxmenu(event, this.id, 1)" title="打招呼">打个招呼</a></li>
-<?php if(isset($value['isfriend']) && !$value['isfriend']) { ?><li><a href="cp.php?ac=friend&op=add&uid=<?=$value['uid']?>" id="a_friend_<?=$key?>" onclick="ajaxmenu(event, this.id, 1)" title="加好友">加为好友</a></li><?php } ?>	
-</ul>
+<a href="admincp.php?ac=click&op=edit&clickid=<?=$value['clickid']?>">编辑</a> | 
+<a href="admincp.php?ac=click&op=delete&clickid=<?=$value['clickid']?>" onclick="return confirm('删除不可恢复\n并会同时清除相关统计数据\n确认删除？');">删除</a>
 </td>
 </tr>
-</table>
 <?php } } ?>
-<div class="page"><?=$multi?></div>
-<?php } else { ?>
-<div class="c_form">没有相关成员。</div>
-<?php } ?>
+</table>
+</div>
+<div class="footactions">
+<input type="submit" name="ordersubmit" value="提交" class="submit">
 </div>
 
+</form>
 
+<?php } elseif($_GET['op'] == 'add' || $_GET['op'] == 'edit') { ?>
 
-<?php } else { ?>
+<form method="post" action="admincp.php?ac=click">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
 
-<div id="content">
-<div class="ye_r_t"><div class="ye_l_t"><div class="ye_r_b"><div class="ye_l_b">
-<table cellspacing="0" cellpadding="0" width="100%" class="task_notice">
-<tr>
-<td width="70"><img src="<?=$task['image']?>" width="64" height="64" alt="Icon" /></td>
+<div class="bdrcontent">
+
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr><th style="width:12em;">动作名称</th>
+<td><input type="text" name="name" value="<?=$click['name']?>"></td></tr>
+<tr><th>动作图标</th>
+<td>./image/click/<input type="text" name="icon" value="<?=$click['icon']?>" size="15">
+<br>需要确保将该图片上传到程序的 ./image/click/ 目录下面。
+</td></tr>
+<?php if($_GET['op'] == 'add') { ?>
+<tr><th>系统类型</th>
 <td>
-<h3>有奖任务：<?=$task['name']?></h3>
-<?php if($task['starttime']) { ?><p>开始时间：<?php echo sgmdate('Y-m-d H:i',$task[starttime]); ?></p><?php } ?>
-<?php if($task['endtime']) { ?><p>结束时间：<?php echo sgmdate('Y-m-d H:i',$task[endtime]); ?></p><?php } ?>
-<p><?=$task['note']?></p>
-<?php if($task['credit']) { ?><p>奖励积分：<strong class="num"><?=$task['credit']?></strong></p><?php } ?>
-</td>
-</tr>
-</table>
-</div></div></div></div>
-
-<div style="padding-top:20px;">
-<?php if($task['done']) { ?>
-
-
-
-<?php if($task['ignore']) { ?>
-<table cellspacing="0" cellpadding="0" class="formtable">
-<caption>
-<h2>任务被放弃</h2>
-<p>您已经放弃参与该任务，没有获得任何奖励。</p>
-</caption>
-<tr>
-<td><a href="cp.php?ac=task&taskid=<?=$task['taskid']?>&op=redo" class="submit">重新参与</a></td>
-</tr>
-</table>
-<?php } elseif($_SGLOBAL['task_maxnum']) { ?>
-<table cellspacing="0" cellpadding="0" class="formtable">
-<caption>
-<h2>参与名额已满</h2>
-<p>该有奖任务目前已经达到名额上限了。</p>
-</caption>
-<tr>
-<td><a href="cp.php?ac=task" class="submit">看看其他任务</a></td>
-</tr>
-</table>
-<?php } elseif($_SGLOBAL['task_available']) { ?>
-<table cellspacing="0" cellpadding="0" class="formtable">
-<caption>
-<h2>任务失效</h2>
-<p>该有奖任务目前已经停止了。</p>
-</caption>
-<tr>
-<td><a href="cp.php?ac=task" class="submit">看看其他任务</a></td>
-</tr>
-</table>
-<?php } else { ?>
-<table cellspacing="0" cellpadding="0" class="formtable">
-<caption>
-<h2>成功完成任务</h2>
-<p>恭喜，您已经领取到任务奖励！</p>
-</caption>
-<tr>
-<td>
-<?php if($task['credit']) { ?><p style="color:red;font-size:14px;padding:0 0 5px 0;font-weight:bold;">奖励积分 <?=$task['credit']?> 个，您现在已经有 <?=$space['credit']?> 个积分啦！</p><?php } ?>
-<p>完成时间：<?php echo sgmdate('m-d H:i',$task[dateline],1); ?></p>
-<p>参与人次：<a href="cp.php?ac=task&taskid=<?=$task['taskid']?>&view=member"><?=$task['num']?> 人</a></p>
-</td>
-</tr>
-</table>
-<?php if($task['result']) { ?>
-<table cellspacing="0" cellpadding="0" class="formtable">
-<caption>
-<h2>任务额外奖励</h2>
-</caption>
-<tr>
-<td><?=$task['result']?></td>
-</tr>
-</table>
+<select name="idtype">
+<option value="blogid"<?=$idtypearr['blogid']?>>日志</option>
+<option value="picid"<?=$idtypearr['picid']?>>图片</option>
+<option value="tid"<?=$idtypearr['tid']?>>话题</option>
+</select>
+</td></tr>
 <?php } ?>
-<?php } ?>
-<?php } else { ?>
-
-<table cellspacing="0" cellpadding="0" class="formtable">
-<caption>
-<h2>参与任务的步骤说明</h2>
-<p>请您仔细阅读下面的参与本任务的步骤说明，按照指示来完成操作并领取任务奖励。</p>
-</caption>
-<tr>
-<td class="article l_status"><?=$task['guide']?></td>
-</tr>
-</table><br>
-
-<?php if($_GET['view']=='result') { ?>
-<div class="ye_r_t"><div class="ye_l_t"><div class="ye_r_b"><div class="ye_l_b">
-<div class="task_notice">提示：请先按照上面的步骤说明完成任务后再点击领取奖励链接。</div>
-</div></div></div></div>
-<?php } ?>
-
-<div style="text-align:center;padding:10px;">
-<a href="cp.php?ac=task&taskid=<?=$task['taskid']?>&view=result" class="submit">领取奖励</a>
-<a href="cp.php?ac=task&taskid=<?=$task['taskid']?>&op=ignore" class="button">暂时放弃</a>
+<tr><th>显示顺序</th>
+<td><input type="text" name="displayorder" value="<?=$click['displayorder']?>"></td></tr>
+</table>
 </div>
+
+<div class="footactions">
+<input type="hidden" name="clickid" value="<?=$click['clickid']?>">
+<input type="submit" name="clicksubmit" value="提交" class="submit">
+</div>
+
+</form>
 
 <?php } ?>
 </div>
-
 </div>
 
-<div id="sidebar">
-<div class="sidebox">
-<h2 class="title">
-<a href="cp.php?ac=task&taskid=<?=$taskid?>&view=member" class="r_option">查看全部</a>
-刚刚完成该任务的朋友
-</h2>
-<ul class="avatar_list">
-<?php if(is_array($taskspacelist)) { foreach($taskspacelist as $key => $value) { ?>
-<li>
-<div class="avatar48"><a href="space.php?uid=<?=$value['uid']?>"><?php echo avatar($value[uid],small); ?></a></div>
-<p><a href="space.php?uid=<?=$value['uid']?>" title="<?=$_SN[$value['uid']]?>"><?=$_SN[$value['uid']]?></a></p>
-<p class="gray"><?php echo sgmdate('n月j日',$value[dateline],1); ?></p>
-</li>
+<div class="side">
+<?php if($menus['0']) { ?>
+<div class="block style1">
+<h2>基本设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['0'])) { foreach($acs['0'] as $value) { ?>
+<?php if($menus['0'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
 <?php } } ?>
 </ul>
 </div>
-</div>
-
 <?php } ?>
 
-<?php } else { ?>
-
-<div id="content">
-
-<div class="h_status">
-按任务优先级排序，参与任务有大奖，开始吧。
-</div>
-
-
-<?php if($_GET['view'] != 'done') { ?>
-<div class="task_percent">
-<div class="percent" style="width: <?=$done_per?>%;">&nbsp;</div>
-<div class="label">我当前的任务完成度 <?=$done_per?>%</div>
-</div>
-<?php } ?>
-
-<?php if(empty($tasklist)) { ?>
-<div class="c_form">已经没有新的任务啦。</div>
-<?php } else { ?>
-<?php if(is_array($tasklist)) { foreach($tasklist as $value) { ?>
-<div class="ye_r_t"><div class="ye_l_t"><div class="ye_r_b"><div class="ye_l_b">
-<table cellspacing="0" cellpadding="0" width="100%" class="task_notice">
-<tr>
-<td width="70"><img src="<?=$value['image']?>" width="64" height="64" alt="Icon" class="icon" /></td>
-<td>
-<h3><a href="cp.php?ac=task&taskid=<?=$value['taskid']?>"><?=$value['name']?></a></h3>
-<?php if($value['num']) { ?>
-<p>
-<a href="cp.php?ac=task&taskid=<?=$value['taskid']?>&view=member">已参与人次： <?=$value['num']?></a>
-<?php if($value['maxnum']) { ?>
-/ 本任务还可参与 <?php echo $value[maxnum]-$value[num]; ?> 人次
-<?php } ?>
-</p>
-<?php } ?>
-<?php if($value['starttime']) { ?><p>开始时间：<?php echo sgmdate('Y-m-d H:i',$value[starttime]); ?></p><?php } ?>
-<?php if($value['endtime']) { ?><p>结束时间：<?php echo sgmdate('Y-m-d H:i',$value[endtime]); ?></p><?php } ?>
-<?=$value['note']?>
-</td>
-<td width="150" style="text-align:right;">
-<?php if($value['done']) { ?>
-<?php if($value['ignore']) { ?>
-已经放弃该任务<br>
-您可以选择<a href="cp.php?ac=task&taskid=<?=$value['taskid']?>&op=redo">重新完成该任务</a>
-<?php } else { ?>
-<?php if($value['credit']) { ?><p>获得积分：<strong class="num"><?=$value['credit']?></strong></p><?php } ?>
-<a href="cp.php?ac=task&taskid=<?=$value['taskid']?>">查看任务</a>
-<?php } ?>
-<?php } else { ?>
-<?php if($value['credit']) { ?><p>可获得积分：<strong class="num"><?=$value['credit']?></strong></p><?php } ?>
-<a href="cp.php?ac=task&op=do&taskid=<?=$value['taskid']?>"><img src="image/start_task.gif" alt="立即参与任务" /></a>
-<?php } ?>
-</td>
-</tr>
-</table>
-</div></div></div></div><br>
+<div class="block style1">
+<h2>批量管理</h2>
+<ul class="folder">
+<?php if(is_array($acs['3'])) { foreach($acs['3'] as $value) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
 <?php } } ?>
+<?php if(is_array($acs['1'])) { foreach($acs['1'] as $value) { ?>
+<?php if($menus['1'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
 <?php } ?>
-
-</div>
-
-<div id="sidebar">
-
-<div class="sidebox">
-<h2 class="title">
-刚刚完成任务的朋友
-</h2>
-<ul class="avatar_list">
-<?php if(is_array($taskspacelist)) { foreach($taskspacelist as $key => $value) { ?>
-<li>
-<div class="avatar48"><a href="space.php?uid=<?=$value['uid']?>"><?php echo avatar($value[uid],small); ?></a></div>
-<p><a href="space.php?uid=<?=$value['uid']?>" title="<?=$_SN[$value['uid']]?>"><?=$_SN[$value['uid']]?></a></p>
-<p class="gray"><?php echo sgmdate('n月j日',$value[dateline],1); ?></p>
-</li>
 <?php } } ?>
 </ul>
 </div>
 
+<?php if($menus['2']) { ?>
+<div class="block style1">
+<h2>高级设置</h2>
+<ul class="folder">
+<?php if(is_array($acs['2'])) { foreach($acs['2'] as $value) { ?>
+<?php if($menus['2'][$value]) { ?>
+<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
+<?php } ?>
+<?php } } ?>
+<?php if($menus['0']['config']) { ?><li><a href="<?=UC_API?>" target="_blank">UCenter</a></li><?php } ?>
+</ul>
+</div>
+<?php } ?>
 </div>
 
-<?php } ?>
+</div>
 
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>
@@ -506,5 +430,4 @@ showreward();
         <?php } ?>
 </body>
 </html>
-<?php } ?>
-<?php ob_out();?>
+<?php } ?><?php ob_out();?>

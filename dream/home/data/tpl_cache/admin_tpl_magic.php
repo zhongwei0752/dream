@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/share|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369056264', 'admin/tpl/share');?><?php $_TPL['menunames'] = array(
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/magic|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188497', 'admin/tpl/magic');?><?php $_TPL['menunames'] = array(
 		'index' => '管理首页',
 		'config' => '站点设置',
 		'privacy' => '隐私设置',
@@ -13,6 +13,7 @@
 		'censor' => '词语屏蔽',
 		'ad' => '广告设置',
 		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
 		'app' => 'UCenter应用',
 		'network' => '随便看看',
 		'cache' => '缓存更新',
@@ -90,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -164,100 +166,393 @@
 <div class="mainarea">
 <div class="maininner">
 
-<form method="get" action="admincp.php">
-
-<div class="block style4">
-<table cellspacing="3" cellpadding="3">
-
-<?php if($allowmanage) { ?>
-<tr><th>作者UID</th><td><input type="text" name="uid" value="<?=$_GET['uid']?>"></td>
-<th>作者名</th><td><input type="text" name="username" value="<?=$_GET['username']?>"></td>
-</tr>
-<?php } ?>
-<tr>
-<th>指定分享ID</th>
-<td colspan="3">
-<input type="text" name="sid" value="<?=$_GET['sid']?>" />
-</td>
-</tr>
-<tr><th>事件类型</th><td colspan="3"><input type="text" name="type" value="<?=$_GET['type']?>"></td>
-</tr>
-<tr><th>发布时间</th><td colspan="3">
-<input type="text" name="dateline1" value="<?=$_GET['dateline1']?>" size="10"> ~
-<input type="text" name="dateline2" value="<?=$_GET['dateline2']?>" size="10"> (YYYY-MM-DD)
-</td></tr>
-<tr><th>热度</th><td colspan="3">
-<input type="text" name="hot1" value="<?=$_GET['hot1']?>" size="10"> ~
-<input type="text" name="hot2" value="<?=$_GET['hot2']?>" size="10">
-</td></tr>
-
-<tr><th>结果排序</th>
-<td colspan="3">
-<select name="orderby">
-<option value="">默认排序</option>
-<option value="dateline"<?=$orderby['dateline']?>>发布时间</option>
-<option value="hot"<?=$orderby['hot']?>>热度</option>
-</select>
-<select name="ordersc">
-<option value="desc"<?=$ordersc['desc']?>>递减</option>
-<option value="asc"<?=$ordersc['asc']?>>递增</option>
-</select>
-<select name="perpage">
-<option value="20"<?=$perpages['20']?>>每页显示20个</option>
-<option value="50"<?=$perpages['50']?>>每页显示50个</option>
-<option value="100"<?=$perpages['100']?>>每页显示100个</option>
-<option value="1000"<?=$perpages['1000']?>>一次处理1000个</option>
-</select>
-<input type="hidden" name="ac" value="share">
-<input type="submit" name="searchsubmit" value="搜索" class="submit">
-</td>
-</tr>
-</table>
+<div class="tabs_header">
+<ul class="tabs">
+<li<?=$actives['enabled']?>><a href="admincp.php?ac=magic&view=enabled"><span>已启用道具</span></a></li>
+<li<?=$actives['disabled']?>><a href="admincp.php?ac=magic&view=disabled"><span>已禁用道具</span></a></li>
+</ul>
 </div>
-</form>
 
+<?php if("edit" == $_GET['op']) { ?>
 
-<?php if($list) { ?>
-<form method="post" action="admincp.php?ac=share">
+<form method="post" action="admincp.php?ac=magic&op=<?=$_GET['op']?>&mid=<?=$_GET['mid']?>&view=<?=$_GET['view']?>">
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+
 <div class="bdrcontent">
 
-<?php if($perpage>100) { ?>
-<p>总共有满足条件的数据 <strong><?=$count?></strong> 个</p>
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<input type="hidden" name="ids[]" value="<?=$value['sid']?>">
-<?php } } ?>
-
-<?php } else { ?>
-
 <table cellspacing="0" cellpadding="0" class="formtable">
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<tr><td width="25"><input type="<?php if($allowbatch) { ?>checkbox<?php } else { ?>radio<?php } ?>" name="ids[]" value="<?=$value['sid']?>"></td>
+<tr>
+<th style="width:15em;">名称</th>
+<td><?=$thevalue['name']?></td>
+</tr>
+<tr>
+<th style="width:15em;">道具说明</th>
 <td>
-<p><a href="admincp.php?ac=share&uid=<?=$value['uid']?>"><?=$value['username']?></a> <?=$value['title_template']?> &nbsp;<?php echo sgmdate('Y-m-d H:i', $value[dateline]); ?><?php if($value['hot']) { ?><span style="color:red;">热度(<?=$value['hot']?>)</span><?php } ?></p>
-<?=$value['body_template']?>
-<br>
-<a href="admincp.php?ac=comment&id=<?=$value['sid']?>&idtype=sid">管理评论</a>
-</td></tr>
+<textarea name="description" cols="80" rows="2"><?=$thevalue['description']?></textarea>					
+</td>
+</tr>
+<tr>
+<th style="width:15em;">道具单价</th>
+<td>
+<input type="text" name="charge" value="<?=$thevalue['charge']?>" />
+购买时单个需要花费的积分值，需小于65535
+</td>
+</tr>
+<tr>
+<th style="width:15em;">经验成长</th>
+<td>
+<input type="text" name="experience" value="<?=$thevalue['experience']?>" />
+购买单个可以增长的经验值，需小于65535
+</td>
+</tr>
+<tr>
+<th style="width:15em;">补给周期</th>
+<td>
+<select name="provideperoid">
+<option value="0"<?php if($thevalue['provideperoid']==0) { ?> selected<?php } ?>>总是可以</option>
+<option value="3600"<?php if($thevalue['provideperoid']==3600) { ?> selected<?php } ?>>间隔1小时</option>
+<option value="86400"<?php if($thevalue['provideperoid']==86400) { ?> selected<?php } ?>>间隔24小时</option>
+<option value="604800"<?php if($thevalue['provideperoid']==604800) { ?> selected<?php } ?>>间隔7天</option>
+</select>
+若道具商店中此道具已售光，在补给周期内自动补给一次
+</td>
+</tr>
+<tr>
+<th style="width:15em;">补给数目</th>
+<td>
+<input type="text" name="providecount" value="<?=$thevalue['providecount']?>" maxlength="6" />
+若道具商店中此道具已售光，自动补给一次的数目，需小于65535
+</td>
+</tr>
+<tr>
+<th style="width:15em;">使用周期</th>
+<td>
+<select name="useperoid">
+<option value="0"<?php if($thevalue['useperoid']==0) { ?> selected<?php } ?>>总是可以</option>
+<option value="3600"<?php if($thevalue['useperoid']==3600) { ?> selected<?php } ?>>间隔1小时</option>
+<option value="86400"<?php if($thevalue['useperoid']==86400) { ?> selected<?php } ?>>间隔24小时</option>
+<option value="604800"<?php if($thevalue['useperoid']==604800) { ?> selected<?php } ?>>间隔7天</option>
+</select>
+设定用户使用此道具的使用周期
+</td>
+</tr>
+<tr>
+<th style="width:15em;">使用数目</th>
+<td>
+<input type="text" name="usecount" value="<?=$thevalue['usecount']?>" maxlength="6" />
+设定用户在使用周期内最多能使用此道具的个数，需小于65535
+</td>
+</tr>
+<tr>
+<th style="width:15em;">禁购用户组</th>
+<td>
+选中的用户组不能在道具商店购买此道具（但可以接受赠与）<br />
+<?php if(is_array($usergroups)) { foreach($usergroups as $groups) { ?>
+<?php if(is_array($groups)) { foreach($groups as $gid => $value) { ?>
+<input id="ckgid_<?=$gid?>" type="checkbox" name="forbiddengid[]" value="<?=$gid?>"<?php if(in_array($gid, $thevalue['forbiddengid'])) { ?>checked<?php } ?> />
+<label for="ckgid_<?=$gid?>"><?=$value['grouptitle']?></label>
 <?php } } ?>
+<br />
+<?php } } ?>
+</td>
+</tr>
+<tr>
+<th style="width:15em;">库存数目</th>
+<td>
+<input type="text" name="storage" value="<?=$thevalue['storage']?>" size="5" maxlength="5" />
+</td>
+</tr>
+<tr>
+<th style="width:15em;">显示顺序</th>
+<td>
+<input type="text" name="displayorder" value="<?=$thevalue['displayorder']?>" size="5" maxlength="5" />
+</td>
+</tr>
+<tr>
+<th style="width:15em;">是否禁用</th>
+<td>
+<input type="checkbox" id="magicclose" name="close" value="1"<?php if($thevalue['close']) { ?> checked<?php } ?> />
+<label for="magicclose">禁用后页面上将不显示此道具</label>
+</td>
+</tr>
+<?php if($_GET['mid'] == 'invisible') { ?>
+<tr>
+<th style="width:15em;">自定义效果</th>
+<td>
+请修改道具描述和道具效果一致<br />
+<table>
+<tr>
+<th width="100">隐身时间</th>
+<td>
+<select name="custom[effectivetime]">
+<option value="">默认</option>
+<option value="86400"<?php if($thevalue['custom']['effectivetime']==86400) { ?> selected<?php } ?>>24小时</option>
+<option value="259200"<?php if($thevalue['custom']['effectivetime']==259200) { ?> selected<?php } ?>>3天</option>
+<option value="432000"<?php if($thevalue['custom']['effectivetime']==432000) { ?> selected<?php } ?>>5天</option>
+<option value="604800"<?php if($thevalue['custom']['effectivetime']==604800) { ?> selected<?php } ?>>7天</option>
+</select>
+默认为 24 小时
+</td>
+</tr>
 </table>
+</td>
+</tr>
+<?php } elseif($_GET['mid'] == 'superstar') { ?>
+<tr>
+<th style="width:15em;">自定义效果</th>
+<td>
+请修改道具描述和道具效果一致<br />
+<table>
+<tr>
+<th width="100">持续时间</th>
+<td>
+<select name="custom[effectivetime]">
+<option value="">默认</option>
+<option value="86400"<?php if($thevalue['custom']['effectivetime']==86400) { ?> selected<?php } ?>>24小时</option>
+<option value="259200"<?php if($thevalue['custom']['effectivetime']==259200) { ?> selected<?php } ?>>3天</option>
+<option value="432000"<?php if($thevalue['custom']['effectivetime']==432000) { ?> selected<?php } ?>>5天</option>
+<option value="604800"<?php if($thevalue['custom']['effectivetime']==604800) { ?> selected<?php } ?>>7天</option>
+</select>							
+</td>
+默认为 7天
+</tr>
+</table>
+</td>
+</tr>
+<?php } elseif($_GET['mid'] == 'friendnum') { ?>
+<tr>
+<th style="width:15em;">自定义效果</th>
+<td>
+请修改道具描述和道具效果一致<br />
+<table>
+<tr>
+<th width="100">增加好友数</th>
+<td>
+<select name="custom[addnum]">
+<option value="">默认</option>
+<option value="5"<?php if($thevalue['custom']['addnum']==5) { ?> selected<?php } ?>>5</option>
+<option value="10"<?php if($thevalue['custom']['addnum']==10) { ?> selected<?php } ?>>10</option>
+<option value="20"<?php if($thevalue['custom']['addnum']==20) { ?> selected<?php } ?>>20</option>
+<option value="50"<?php if($thevalue['custom']['addnum']==50) { ?> selected<?php } ?>>50</option>
+<option value="100"<?php if($thevalue['custom']['addnum']==100) { ?> selected<?php } ?>>100</option>
+</select>
+默认为 10
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<?php } elseif($_GET['mid'] == 'attachsize') { ?>
+<tr>
+<th style="width:15em;">自定义效果</th>
+<td>
+请修改道具描述和道具效果一致<br />
+<table>
+<tr>
+<th width="100">增加容量</th>
+<td>
+<select name="custom[addsize]">
+<option value="">默认</option>
+<option value="5"<?php if($thevalue['custom']['addsize']==5) { ?> selected<?php } ?>>5M</option>
+<option value="10"<?php if($thevalue['custom']['addsize']==10) { ?> selected<?php } ?>>10M</option>
+<option value="20"<?php if($thevalue['custom']['addsize']==20) { ?> selected<?php } ?>>20M</option>
+<option value="50"<?php if($thevalue['custom']['addsize']==50) { ?> selected<?php } ?>>50M</option>
+<option value="100"<?php if($thevalue['custom']['addsize']==100) { ?> selected<?php } ?>>100M</option>
+</select>
+默认为 10M
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<?php } elseif($_GET['mid'] == 'visit') { ?>
+<tr>
+<th style="width:15em;">自定义效果</th>
+<td>
+请修改道具描述和道具效果一致<br />
+<table>
+<tr>
+<th width="100">访问好友数</th>
+<td>
+<select name="custom[maxvisit]">
+<option value="">默认</option>
+<option value="5"<?php if($thevalue['custom']['maxvisit']==5) { ?> selected<?php } ?>>5</option>
+<option value="10"<?php if($thevalue['custom']['maxvisit']==10) { ?> selected<?php } ?>>10</option>
+<option value="20"<?php if($thevalue['custom']['maxvisit']==20) { ?> selected<?php } ?>>20</option>
+<option value="50"<?php if($thevalue['custom']['maxvisit']==50) { ?> selected<?php } ?>>50</option>
+</select>
+默认为 10
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<?php } elseif($_GET['mid'] == 'gift') { ?>
+<tr>
+<th style="width:15em;">自定义效果</th>
+<td>
+请修改道具描述和道具效果一致<br />
+<table>
+<tr>
+<th width="100">每份积分最大值</th>
+<td>
+<select name="custom[maxchunk]">
+<option value="">默认</option>
+<option value="5"<?php if($thevalue['custom']['maxchunk']==5) { ?> selected<?php } ?>>5</option>
+<option value="10"<?php if($thevalue['custom']['maxchunk']==10) { ?> selected<?php } ?>>10</option>
+<option value="20"<?php if($thevalue['custom']['maxchunk']==20) { ?> selected<?php } ?>>20</option>
+<option value="50"<?php if($thevalue['custom']['maxchunk']==50) { ?> selected<?php } ?>>50</option>
+<option value="100"<?php if($thevalue['custom']['maxchunk']==100) { ?> selected<?php } ?>>100</option>
+<option value="999"<?php if($thevalue['custom']['maxchunk']=='999') { ?> selected<?php } ?>>不限</option>
+</select>
+默认为 20
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<?php } elseif($_GET['mid'] == 'viewmagic') { ?>
+<tr>
+<th style="width:15em;">自定义效果</th>
+<td>
+请修改道具描述和道具效果一致<br />
+<table>
+<tr>
+<th width="100">最多查看数</th>
+<td>
+<select name="custom[maxview]">
+<option value="">默认</option>
+<option value="5"<?php if($thevalue['custom']['maxview']==5) { ?> selected<?php } ?>>5</option>
+<option value="10"<?php if($thevalue['custom']['maxview']==10) { ?> selected<?php } ?>>10</option>
+<option value="20"<?php if($thevalue['custom']['maxview']==20) { ?> selected<?php } ?>>20</option>
+<option value="50"<?php if($thevalue['custom']['maxview']==50) { ?> selected<?php } ?>>50</option>
+<option value="999"<?php if($thevalue['custom']['maxview']=='999') { ?> selected<?php } ?>>不限</option>
+</select>
+默认为 10
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<?php } elseif($_GET['mid'] == 'viewvisitor') { ?>
+<tr>
+<th style="width:15em;">自定义效果</th>
+<td>
+请修改道具描述和道具效果一致<br />
+<table>
+<tr>
+<th width="100">最多查看数</th>
+<td>
+<select name="custom[maxview]">
+<option value="">默认</option>
+<option value="5"<?php if($thevalue['custom']['maxview']==5) { ?> selected<?php } ?>>5</option>
+<option value="10"<?php if($thevalue['custom']['maxview']==10) { ?> selected<?php } ?>>10</option>
+<option value="20"<?php if($thevalue['custom']['maxview']==20) { ?> selected<?php } ?>>20</option>
+<option value="50"<?php if($thevalue['custom']['maxview']==50) { ?> selected<?php } ?>>50</option>
+</select>
+默认为 10
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<?php } elseif($_GET['mid'] == 'detector') { ?>
+<tr>
+<th style="width:15em;">自定义效果</th>
+<td>
+请修改道具描述和道具效果一致<br />
+<table>
+<tr>
+<th width="100">最多探测数</th>
+<td>
+<select name="custom[maxdetect]">
+<option value="">默认</option>
+<option value="5"<?php if($thevalue['custom']['maxdetect']==5) { ?> selected<?php } ?>>5</option>
+<option value="10"<?php if($thevalue['custom']['maxdetect']==10) { ?> selected<?php } ?>>10</option>
+<option value="20"<?php if($thevalue['custom']['maxdetect']==20) { ?> selected<?php } ?>>20</option>
+<option value="50"<?php if($thevalue['custom']['maxdetect']==50) { ?> selected<?php } ?>>50</option>
+</select>
+默认为 10
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<?php } elseif($_GET['mid'] == 'call') { ?>
+<tr>
+<th style="width:15em;">自定义效果</th>
+<td>
+请修改道具描述和道具效果一致<br />
+<table>
+<tr>
+<th width="100">最多点名数</th>
+<td>
+<select name="custom[maxcall]">
+<option value="">默认</option>
+<option value="5"<?php if($thevalue['custom']['maxcall']==5) { ?> selected<?php } ?>>5</option>
+<option value="10"<?php if($thevalue['custom']['maxcall']==10) { ?> selected<?php } ?>>10</option>
+<option value="20"<?php if($thevalue['custom']['maxcall']==20) { ?> selected<?php } ?>>20</option>
+<option value="50"<?php if($thevalue['custom']['maxcall']==50) { ?> selected<?php } ?>>50</option>
+</select>
+默认为 10
+</td>
+</tr>
+</table>
+</td>
+</tr>
 <?php } ?>
+</table>
 </div>
 
 <div class="footactions">
-<?php if($allowbatch && $perpage<=100) { ?><input type="checkbox" id="chkall" name="chkall" onclick="checkAll(this.form, 'ids')">全选<?php } ?>
-<input type="hidden" name="mpurl" value="<?=$mpurl?>">
-<input type="submit" name="batchsubmit" value="批量删除" onclick="return confirm('本操作不可恢复，确认删除？');" class="submit">
-
-<div class="pages"><?=$multi?></div>
+<input type="hidden" name="mid" value="<?=$thevalue['mid']?>" />
+<input type="submit" name="editsubmit" value="提交" class="submit">
 </div>
 
 </form>
+
 <?php } else { ?>
+<form method="post" action="admincp.php?ac=magic&view=<?=$_GET['view']?>">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+
 <div class="bdrcontent">
-<p>指定条件下还没有数据</p>
+<table cellspacing="0" cellpadding="0" class="formtable">
+<tr>
+<th width="100">图标</th>
+<th>道具</th>
+<?php if($_GET['view'] != 'disabled') { ?>
+<th width="80">道具单价</th>
+<th width="80">显示顺序</th>
+<?php } ?>
+<th width="80">操作</th>
+</tr>
+<?php if(is_array($list)) { foreach($list as $key => $value) { ?>
+<tr>
+<th><img src="image/magic/<?=$value['mid']?>.gif" alt="<?=$value['name']?>" /></th>
+<td>
+<b><?=$value['name']?></b>
+<p><?=$value['description']?></p>				
+</td>
+<?php if($_GET['view'] != 'disabled') { ?>
+<td><input type="text" name="charge[<?=$key?>]" value="<?=$value['charge']?>" size="5" maxlength="5" /></td>
+<td><input type="text" name="displayorder[<?=$key?>]" value="<?=$value['displayorder']?>" size="5" maxlength="5" /></td>
+<?php } ?>
+<td><a href="admincp.php?ac=magic&op=edit&mid=<?=$key?>&view=<?=$_GET['view']?>">编辑</a></td>
+</tr>
+<?php } } ?>
+</table>
+</div>
+
+<?php if($_GET['view'] != 'disabled') { ?>
+<div class="footactions">
+<input type="submit" name="ordersubmit" value="更新数据" class="submit">
 </div>
 <?php } ?>
+
+</form>
+
+<?php } ?>
+
 </div>
 </div>
 

@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/post|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369056261', 'admin/tpl/post');?><?php $_TPL['menunames'] = array(
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/userapp|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188507', 'admin/tpl/userapp');?><?php $_TPL['menunames'] = array(
 		'index' => '管理首页',
 		'config' => '站点设置',
 		'privacy' => '隐私设置',
@@ -13,6 +13,7 @@
 		'censor' => '词语屏蔽',
 		'ad' => '广告设置',
 		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
 		'app' => 'UCenter应用',
 		'network' => '随便看看',
 		'cache' => '缓存更新',
@@ -90,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -163,103 +165,112 @@
 
 <div class="mainarea">
 <div class="maininner">
-
-<form method="get" action="admincp.php">
-<div class="block style4">
-
-<table cellspacing="3" cellpadding="3">
-<tr><th>群组ID</th><td><input type="text" name="tagid" value="<?=$_GET['tagid']?>"></td>
-<th>话题ID</th><td><input type="text" name="tid" value="<?=$_GET['tid']?>"></td>
-</tr>
-<?php if($allowmanage) { ?>
-<tr><th>作者UID</th><td><input type="text" name="uid" value="<?=$_GET['uid']?>"></td>
-<th>作者名</th><td><input type="text" name="username" value="<?=$_GET['username']?>"></td>
-</tr>
-<?php } ?>
-<tr><th>发布时间</th><td colspan="3">
-<input type="text" name="dateline1" value="<?=$_GET['dateline1']?>" size="10"> ~
-<input type="text" name="dateline2" value="<?=$_GET['dateline2']?>" size="10"> (YYYY-MM-DD)
-</td></tr>
-<tr><th>内容*</th><td><input type="text" name="message" value="<?=$_GET['message']?>"></td>
-<th>IP</th><td><input type="text" name="ip" value="<?=$_GET['ip']?>"></td>
-</tr>
-<tr><th>是否主题帖</th><td colspan="3">
-<select name="isthread">
-<option value="">不限制</option>
-<option value="1"<?php if($_GET['isthread']==1) { ?> selected<?php } ?>>主题帖</option>
-</select>
-</td></tr>
-
-<tr><th>结果排序</th>
-<td colspan="3">
-<select name="orderby">
-<option value="">默认排序</option>
-<option value="dateline"<?=$orderby['dateline']?>>发布时间</option>
-</select>
-<select name="ordersc">
-<option value="desc"<?=$ordersc['desc']?>>递减</option>
-<option value="asc"<?=$ordersc['asc']?>>递增</option>
-</select>
-<select name="perpage">
-<option value="20"<?=$perpages['20']?>>每页显示20个</option>
-<option value="50"<?=$perpages['50']?>>每页显示50个</option>
-<option value="100"<?=$perpages['100']?>>每页显示100个</option>
-<option value="1000"<?=$perpages['1000']?>>一次处理1000个</option>
-</select>
-<input type="hidden" name="ac" value="post">
-<input type="submit" name="searchsubmit" value="搜索" class="submit">
-</td>
-</tr>
-</table>
-</div>
-</form>
-
-<?php if($list) { ?>
-
-<form method="post" action="admincp.php?ac=post&tagid=<?=$tagid?>">
-<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
 <div class="bdrcontent">
 
-<?php if($perpage>100) { ?>
-<p>总共有满足条件的数据 <strong><?=$count?></strong> 个</p>
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<input type="hidden" name="ids[]" value="<?=$value['pid']?>">
-<?php } } ?>
+<?php if($_SCONFIG['my_status']) { ?>
+<p></p>
 
-<?php } else { ?>
-
-<table cellspacing="0" cellpadding="0" class="formtable">
-<?php if(is_array($list)) { foreach($list as $value) { ?>
+<table width="100%">
 <tr>
-<td width="25"><input type="<?php if($allowbatch) { ?>checkbox<?php } else { ?>radio<?php } ?>" name="ids[]" value="<?=$value['pid']?>"></td>
 <td>
-<?php if($value['isthread']) { ?>[主题]<?php } else { ?>[回帖]<?php } ?> <a href="space.php?uid=<?=$space['uid']?>&do=thread&id=<?=$value['tid']?>" target="_blank"><?=$threads[$value['tid']]?></a>
-<br><?=$value['message']?> <?php if($wheresql == 1 ) { ?><a href="<?=$mpurl?>&pid=<?=$value['pid']?>">...</a><?php } ?>
-<p>
-<?php if($allowmanage) { ?><a href="<?=$mpurl?>&uid=<?=$value['uid']?>"><?=$value['username']?></a> (<a href="<?=$mpurl?>&ip=<?=$value['ip']?>"><?=$value['ip']?></a>)&nbsp;<?php } ?>
-<?php echo sgmdate('Y-m-d H:i',$value[dateline]); ?>
-</p>
+<strong>本站MYOP应用管理</strong><br>
+如果用户应用功能无法与ManYou通讯，请重新同步站点信息；如果想要关闭用户应用功能，点击“关闭用户应用功能”；注意：关闭用户应用功能后当前所有的应用都将处于禁用状态。
 </td>
 </tr>
-<?php } } ?>
-</table>
-<?php } ?>
-</div>
-
-<div class="footactions">
-<?php if($allowbatch && $perpage<=100) { ?><input type="checkbox" id="chkall" name="chkall" onclick="checkAll(this.form, 'ids')">全选<?php } ?>
-<input type="hidden" name="mpurl" value="<?=$mpurl?>">
-<input type="submit" name="deletesubmit" value="批量删除" onclick="return confirm('本操作不可恢复，确认删除？');" class="submit">
-
-<div class="pages"><?=$multi?></div>
-</div>
-
+<tr>
+<td>
+<table><tr><td>
+<form method="post" action="admincp.php?ac=userapp">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<input type="hidden" name="my_hidden" value="1">
+<input type="submit" name="mysubmit" value="同步信息" class="submit">
 </form>
+</td><td>
+<form method="post" action="admincp.php?ac=userapp">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<input type="hidden" name="my_hidden" value="1">
+<input type="submit" name="closemysubmit" value="关闭用户应用功能" class="submit">
+</form>
+</td></tr></table>
+</td>
+</tr>
+</table>
 <?php } else { ?>
+<form method="post" action="admincp.php?ac=userapp">
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<table width="100%">
+<tr><td>
+<strong>MYOP用户多应用功能简介</strong><br>
+开启用户应用功能后，用户可以自由选择各种不同的或好玩有趣、或实用的等应用（诸如停车位、好友买卖、电影、送礼物......）在站内进行使用。<br>
+面对如此众多的好玩好用的应用，作为站长，您可以:<br><br>
+1. 可选择全部开启模式，用户可以自由选择MYOP上面的全部应用；<br>
+2. 可选择自定义开启模式，由你按照自己的站点情况，选择自己想要的特定应用来提供给站点用户；<br>
+<br>
+<strong>本多应用功能由 <a target="_blank" href="http://www.manyou.com">MYOP开放平台</a> 提供</strong>。<br>
+Manyou Open Platform(Manyou开放平台/MYOP)服务是由Comsenz公司为应用开发者提供的开放平台。<br>
+作为UCenter Home使用网站的开放平台应用开发标准（API），Manyou将为您站点UCenter Home的用户提供各种个性化的互联网应用。<br><br>
+启用服务前，<a href="http://wiki.developer.manyou.com/wiki/index.php?title=MYOP%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E5%8D%8F%E8%AE%AE&printable=yes" target="_blank">请先阅读MYOP网站服务协议</a><br><br>
+</td></tr>
+<tr><td>
+<input type="hidden" name="my_hidden" value="1">
+<input type="submit" name="mysubmit" value="启用服务" class="submit">
+</td></tr>
+</table>
+</form>
+<?php } ?>
+</div>
+<br>
+
+<?php if($_SCONFIG['my_status']) { ?>
+<script type="text/javascript" src="http://static.manyou.com/scripts/my_iframe.js"></script>
+<script language="javascript">
+var prefixURL = "<?=$my_prefix?>";
+var suffixURL = "<?=$my_suffix?>";
+var queryString = '';
+var url = "<?=$url?>";
+var oldHash = null;
+var timer = null;
+var server = new MyXD.Server("ifm0");
+server.registHandler('iframeHasLoaded');
+server.registHandler('setTitle');
+server.start();
+
+function iframeHasLoaded(ifm_id) {
+        MyXD.Util.showIframe(ifm_id);
+        document.getElementById('loading').style.display = 'none';
+}
+function  htmlspecialchars_decode(string) {
+string = string.toString();
+string = string.replace(/&amp;/g, '&');
+string = string.replace(/&lt;/g, '<');
+string = string.replace(/&gt;/g, '>');
+string = string.replace(/&quot;/g, '"');
+string = string.replace(/&#039;/g, "'");
+return string;
+
+}
+function setTitle(x) {
+<?php $my_site_name=htmlspecialchars($_SCONFIG['sitename'], ENT_QUOTES); ?>
+var my_site_name = htmlspecialchars_decode('<?=$my_site_name?>');
+
+x = htmlspecialchars_decode(x);
+document.title = x + ' - <?php if($space) { ?><?php echo saddslashes($_SN[$space[uid]]) ?> - <?php } ?>' + my_site_name + ' - Powered by UCenter Home';
+}
+
+</script>
+
+
 <div class="bdrcontent">
-<p>指定条件下还没有数据</p>
+    <div id="loading" style="display:block; padding:100px 0 100px 0;text-align:center;color:#999999;font-size:12px;">
+    <img src="image/my/loading.gif" alt="loading..." style="position:relative;top:11px;"/>  页面加载中...
+</div>
+<center>
+    <iframe id="ifm0" frameborder="0" width="810px" scrolling="no" height="810px" style="position:absolute; top:-5000px; left:-5000px;" src="<?=$url?>"></iframe>
+</center>
+
 </div>
 <?php } ?>
+
 </div>
 </div>
 
@@ -442,4 +453,5 @@ showreward();
         <?php } ?>
 </body>
 </html>
-<?php } ?><?php ob_out();?>
+<?php } ?>
+<?php ob_out();?>

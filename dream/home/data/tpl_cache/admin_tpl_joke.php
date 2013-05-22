@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/pic|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369056254', 'admin/tpl/pic');?><?php $_TPL['menunames'] = array(
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/joke|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369131555', 'admin/tpl/joke');?><?php $_TPL['menunames'] = array(
 		'index' => '管理首页',
 		'config' => '站点设置',
 		'privacy' => '隐私设置',
@@ -13,6 +13,7 @@
 		'censor' => '词语屏蔽',
 		'ad' => '广告设置',
 		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
 		'app' => 'UCenter应用',
 		'network' => '随便看看',
 		'cache' => '缓存更新',
@@ -90,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -164,117 +166,14 @@
 <div class="mainarea">
 <div class="maininner">
 
-<form method="get" action="admincp.php">
-<div class="block style4">
 
-<table cellspacing="3" cellpadding="3">
-<tr>
-<th>所在相册ID</th><td><input type="text" name="albumid" value="<?=$_GET['albumid']?>"></td>
-<?php if($allowmanage) { ?>
-<th>作者名</th><td><input type="text" name="username" value="<?=$_GET['username']?>" /></td>
-<?php } else { ?>
-<td>&nbsp;</td><td>&nbsp;</td>
-<?php } ?>
-</tr>
-<tr>
-<th>指定图片ID</th><td><input type="text" name="picid" value="<?=$_GET['picid']?>"></td>
-<th>发布IP</th><td><input type="text" name="postip" value="<?=$_GET['postip']?>"></td>
-</tr>
-<tr>
-<th>文件名*</th><td><input type="text" name="filename" value="<?=$_GET['filename']?>"></td>
-<th>图片说明*</th><td><input type="text" name="title" value="<?=$_GET['title']?>"></td>
-</tr>
-<tr><th>热度</th><td colspan="3">
-<input type="text" name="hot1" value="<?=$_GET['hot1']?>" size="10"> ~
-<input type="text" name="hot2" value="<?=$_GET['hot2']?>" size="10">
-</td></tr>
-<tr>
-<th>上传时间</th><td colspan="3">
-<input type="text" name="dateline1" value="<?=$_GET['dateline1']?>" size="10"> ~
-<input type="text" name="dateline2" value="<?=$_GET['dateline2']?>" size="10"> (格式为: YYYY-MM-DD)
-</td>
-</tr>
 
-<tr>
-<th>结果排序</th>
-<td colspan="3">
-<select name="orderby">
-<option value="">默认排序</option>
-<option value="dateline"<?=$orderby['dateline']?>>上传时间</option>
-<option value="size"<?=$orderby['size']?>>图片大小</option>
-<option value="hot"<?=$orderby['hot']?>>热度</option>
-</select>
-<select name="ordersc">
-<option value="desc"<?=$ordersc['desc']?>>递减</option>
-<option value="asc"<?=$ordersc['asc']?>>递增</option>
-</select>
-<select name="perpage">
-<option value="20"<?=$perpages['20']?>>每页显示20个</option>
-<option value="50"<?=$perpages['50']?>>每页显示50个</option>
-<option value="100"<?=$perpages['100']?>>每页显示100个</option>
-<option value="1000"<?=$perpages['1000']?>>一次处理1000个</option>
-</select>
-<input type="hidden" name="ac" value="pic">
-<input type="submit" name="searchsubmit" value="搜索" class="submit">
-</td>
-</tr>
-</table>
-</div>
+<form method="post" id="batchform" action="admincp.php?ac=joke">
+笑话标题:<br/><input type="text" id="subject" name="subject" style="width:400px;"></input><br/>
+笑话内容:<br/><textarea class="userData" name="message" id="message" style="width:400px;height:100px;"></textarea>
+<input type="hidden" name="uploadsubmit" id="uploadsubmit" value="true" />
+<input type="submit"></input>
 </form>
-
-<?php if($list) { ?>
-
-<form method="post" action="admincp.php?ac=pic">
-<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
-<div class="bdrcontent">
-
-<?php if($perpage>100) { ?>
-<p>总共有满足条件的数据 <strong><?=$count?></strong> 个</p>
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<input type="hidden" name="ids[]" value="<?=$value['picid']?>">
-<?php } } ?>
-
-<?php } else { ?>
-
-<table cellspacing="0" cellpadding="0" class="formtable">
-<tr>
-<?php if(is_array($list)) { foreach($list as $key => $value) { ?>
-<td width="105">
-<a href="<?=$value['bigpic']?>" target="_blank"><img src="<?=$value['pic']?>" width="90" alt="<?=$value['filename']?>"></a>
-<input type="<?php if($allowbatch) { ?>checkbox<?php } else { ?>radio<?php } ?>" name="ids[]" value="<?=$value['picid']?>"> 选择
-</td>
-<td>
-<?php if($value['title']) { ?><?=$value['title']?><br /><?php } ?>
-大小: <?=$value['size']?>
-<br />相册: <a href="admincp.php?ac=pic&uid=<?=$value['uid']?>&albumid=<?=$value['albumid']?>"><?php if($value['albumid']) { ?><?=$albums[$value['albumid']]['albumname']?><?php } else { ?>默认相册<?php } ?></a>
-<?php if($allowmanage) { ?><br />作者: <a href="admincp.php?ac=pic&uid=<?=$value['uid']?>"><?=$users[$value['uid']]?></a><?php } ?>
-<br />时间: <?php echo sgmdate('Y-m-d H:i',$value[dateline]); ?>
-<?php if($value['hot']) { ?><br /><span style="color:red;">热度: <?=$value['hot']?></span><?php } ?>
-<br><a href="admincp.php?ac=comment&id=<?=$value['picid']?>&idtype=picid">评论管理</a>
-</td>
-<?php if($key%2==1) { ?></tr><tr><?php } ?>
-<?php } } ?>
-</tr>
-</table>
-
-<?php } ?>
-</div>
-
-<div class="footactions">
-<?php if($allowbatch && $perpage<=100) { ?><input type="checkbox" id="chkall" name="chkall" onclick="checkAll(this.form, 'ids')">全选<?php } ?>
-<input type="hidden" name="mpurl" value="<?=$mpurl?>">
-<input type="submit" name="batchsubmit" value="批量删除" onclick="return confirm('本操作不可恢复，确认删除？');" class="submit">
-
-<div class="pages"><?=$multi?></div>
-</div>
-
-</form>
-
-<?php } else { ?>
-<div class="bdrcontent">
-<p>指定条件下还没有数据</p>
-</div>
-<?php } ?>
 
 </div>
 </div>

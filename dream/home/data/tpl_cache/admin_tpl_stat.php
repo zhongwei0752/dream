@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/privacy|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369056157', 'admin/tpl/privacy');?><?php $_TPL['menunames'] = array(
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/stat|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188582', 'admin/tpl/stat');?><?php $_TPL['menunames'] = array(
 		'index' => '管理首页',
 		'config' => '站点设置',
 		'privacy' => '隐私设置',
@@ -13,6 +13,7 @@
 		'censor' => '词语屏蔽',
 		'ad' => '广告设置',
 		'userapp' => 'MYOP应用',
+		'joke' => '医疗笑话发布',
 		'app' => 'UCenter应用',
 		'network' => '随便看看',
 		'cache' => '缓存更新',
@@ -90,6 +91,7 @@
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=friend">好友</a></li>
 <li><a href="network.php">随便看看</a></li>
 
@@ -164,224 +166,48 @@
 <div class="mainarea">
 <div class="maininner">
 
-<form method="post" action="admincp.php?ac=privacy">
-<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+<form method="get" action="admincp.php">
 
 <div class="bdrcontent">
-
-<div class="title">
-<h3>系统开放程度</h3>
-<p>可以根据自己的需求，决定系统的内容开放程度。</p>
+如果发现站点某些统计出现问题（比如某些人的日志数有误）时候，才使用本功能进行重新统计。重新统计对服务器负载占用严重，建议选择站点访问人数较少的时候进行。
 </div>
 
-<table class="formtable">
+<br />
+<div class="bdrcontent">
+
+<table cellspacing="0" cellpadding="0" class="formtable">
 <tr>
-<th style="width:12em;">游客开放浏览</th>
+<th style="width:12em;">选择更新统计数类型</th>
 <td>
-<input type="radio" name="config[networkpublic]" value="1"<?php if($configs['networkpublic'] == 1) { ?> checked<?php } ?>>是
-<input type="radio" name="config[networkpublic]" value="0"<?php if($configs['networkpublic'] == 0) { ?> checked<?php } ?>>否
-<br>用户不需要登录也能浏览随便看看、未设置隐私的个人空间，同时，站内的信息也可以被搜索引擎收录。</td>
-</tr>
-</table>
-<br>
-
-<div class="title">
-<h3>新用户默认隐私设置</h3>
-<p>新用户将采用站内的默认隐私设置。用户可以修改自己的隐私设置，以下设置只对其他用户访问个人主页生效</p>
-</div>
-
-<table class="formtable">
-<tr>
-<th style="width:12em;">空间首页</th>
-<td><select name="privacy[view][index]">
-<option value="0"<?=$sels['view']['index']['0']?>>全站用户可见</option>
-<option value="1"<?=$sels['view']['index']['1']?>>仅好友可见</option>
-<option value="2"<?=$sels['view']['index']['2']?>>仅自己可见</option>
-</select></td>
-</tr>
-<tr>
-<th>好友列表</th>
-<td><select name="privacy[view][friend]">
-<option value="0"<?=$sels['view']['friend']['0']?>>全站用户可见</option>
-<option value="1"<?=$sels['view']['friend']['1']?>>仅好友可见</option>
-<option value="2"<?=$sels['view']['friend']['2']?>>仅自己可见</option>
-</select></td>
-</tr>
-<tr>
-<th>留言板</th>
-<td><select name="privacy[view][wall]">
-<option value="0"<?=$sels['view']['wall']['0']?>>全站用户可见</option>
-<option value="1"<?=$sels['view']['wall']['1']?>>仅好友可见</option>
-<option value="2"<?=$sels['view']['wall']['2']?>>仅自己可见</option>
-</select></td>
-</tr>
-<tr>
-<th>个人动态</th>
-<td><select name="privacy[view][feed]">
-<option value="0"<?=$sels['view']['feed']['0']?>>全站用户可见</option>
-<option value="1"<?=$sels['view']['feed']['1']?>>仅好友可见</option>
-</select></td>
-</tr>
-<tr>
-<th>群组</th>
-<td><select name="privacy[view][mtag]">
-<option value="0"<?=$sels['view']['mtag']['0']?>>全站用户可见</option>
-<option value="1"<?=$sels['view']['mtag']['1']?>>仅好友可见</option>
-<option value="2"<?=$sels['view']['mtag']['2']?>>仅自己可见</option>
-</select>
-
-</td>
-</tr>
-<tr>
-<th>活动</th>
-<td><select name="privacy[view][event]">
-<option value="0"<?=$sels['view']['event']['0']?>>全站用户可见</option>
-<option value="1"<?=$sels['view']['event']['1']?>>仅好友可见</option>
+<select name="counttype">
+<option value="blog_replynum">日志回复数</option>
+<option value="space_friendnum">空间好友数</option>
+<option value="space_friend">空间好友缓存</option>
+<option value="mtag_membernum">群组成员数</option>
+<option value="mtag_threadnum">群组话题数</option>
+<option value="mtag_postnum">群组回帖数</option>
+<option value="thread_replynum">话题回复数</option>
+<option value="album_picnum">相册图片数</option>
+<option value="tag_blognum">标签日志数</option>
 </select>
 </td>
 </tr>
+
 <tr>
-<th>记录</th>
-<td><select name="privacy[view][doing]">
-<option value="0"<?=$sels['view']['doing']['0']?>>全站用户可见</option>
-<option value="1"<?=$sels['view']['doing']['1']?>>仅好友可见</option>
-</select><br/>
-在全站的记录列表中可能会出现记录信息。 
-</td>
-</tr>
-<tr>
-<th>日志</th>
-<td><select name="privacy[view][blog]">
-<option value="0"<?=$sels['view']['blog']['0']?>>全站用户可见</option>
-<option value="1"<?=$sels['view']['blog']['1']?>>仅好友可见</option>
-</select><br/>
-相关浏览权限需要在每篇日志中单独设置方可完全生效。
-</td>
-</tr>
-<tr>
-<th>相册</th>
-<td><select name="privacy[view][album]">
-<option value="0"<?=$sels['view']['album']['0']?>>全站用户可见</option>
-<option value="1"<?=$sels['view']['album']['1']?>>仅好友可见</option>
-</select><br/>
-相关浏览权限需要在每个相册中单独设置方可完全生效。
-</tr>
-<tr>
-<th>分享</th>
-<td><select name="privacy[view][share]">
-<option value="0"<?=$sels['view']['share']['0']?>>全站用户可见</option>
-<option value="1"<?=$sels['view']['share']['1']?>>仅好友可见</option>
-</select><br/>
-在全站的分享列表中可能会出现分享信息。 
-</td>
-</tr>
-<tr>
-<th>投票</th>
-<td><select name="privacy[view][poll]">
-<option value="0"<?=$sels['view']['poll']['0']?>>全站用户可见</option>
-<option value="1"<?=$sels['view']['poll']['1']?>>仅好友可见</option>
-</select><br/>
-在全站的投票列表中可能会出现投票信息。 
+<th>每次处理个数</th>
+<td>
+<input type="text" name="perpage" value="10" size="10">
 </td>
 </tr>
 </table>
-
-<br>
-
-<div class="title">
-<h3>默认动态发布设置</h3>
-<p>设置系统默认将哪些动作发布到个人动态里面。用户可以修改这些默认设置。</p>
-</div>
-<table class="formtable">
-<tr>
-<th style="width:12em;">&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][doing]" value="1"<?=$sels['feed']['doing']?>>记录</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][blog]" value="1"<?=$sels['feed']['blog']?>>撰写日志</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][upload]" value="1"<?=$sels['feed']['upload']?>>上传图片</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][share]" value="1"<?=$sels['feed']['share']?>>添加分享</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][poll]" value="1"<?=$sels['feed']['poll']?>>发起投票</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][joinpoll]" value="1"<?=$sels['feed']['joinpoll']?>>参与投票</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][thread]" value="1"<?=$sels['feed']['thread']?>>发起话题</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][post]" value="1"<?=$sels['feed']['post']?>>对话题回复</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][mtag]" value="1"<?=$sels['feed']['mtag']?>>加入群组</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][event]" value="1"<?=$sels['feed']['event']?>>组织活动</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][join]" value="1"<?=$sels['feed']['join']?>>参加活动</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][friend]" value="1"<?=$sels['feed']['friend']?>>添加好友</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][comment]" value="1"<?=$sels['feed']['comment']?>>发表评论/留言</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][show]" value="1"<?=$sels['feed']['show']?>>竞价排名</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][credit]" value="1"<?=$sels['feed']['credit']?>>积分消费</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][spaceopen]" value="1"<?=$sels['feed']['spaceopen']?>>新空间开通</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][invite]" value="1"<?=$sels['feed']['invite']?>>邀请好友</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][task]" value="1"<?=$sels['feed']['task']?>>完成任务</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][profile]" value="1"<?=$sels['feed']['profile']?>>更新个人资料</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td><input type="checkbox" name="privacy[feed][click]" value="1"<?=$sels['feed']['click']?>>对日志/图片/话题表态</td>
-</tr>
-</table>
-
 </div>
 
 <div class="footactions">
-<input type="submit" name="thevaluesubmit" value="提交" class="submit">
+<input type="hidden" name="ac" value="stat">
+<input type="submit" name="countsubmit" value="统计更新" class="submit">
 </div>
-
 </form>
+
 </div>
 </div>
 
