@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/userapp|admin/tpl/header|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/footer', '1369188507', 'admin/tpl/userapp');?><?php $_TPL['menunames'] = array(
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/news|admin/tpl/header|template/green/cp_topic_menu|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/space_topic_inc|template/green/footer', '1369216441', 'admin/tpl/news');?><?php $_TPL['menunames'] = array(
 		'index' => '管理首页',
 		'config' => '站点设置',
 		'privacy' => '隐私设置',
@@ -14,6 +14,7 @@
 		'ad' => '广告设置',
 		'userapp' => 'MYOP应用',
 		'joke' => '医疗笑话发布',
+		'news' => '今日资讯发布',
 		'app' => 'UCenter应用',
 		'network' => '随便看看',
 		'cache' => '缓存更新',
@@ -92,7 +93,7 @@
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
 <li><a href="space.php?do=joke">医疗笑话</a></li>
-<li><a href="space.php?do=friend">好友</a></li>
+<li><a href="space.php?do=news">今日资讯</a></li>
 <li><a href="network.php">随便看看</a></li>
 
 <?php } else { ?>
@@ -162,118 +163,329 @@
 
 <div id="cp_content">
 
-
 <div class="mainarea">
 <div class="maininner">
-<div class="bdrcontent">
 
-<?php if($_SCONFIG['my_status']) { ?>
-<p></p>
+<?php if($_GET['op'] == 'delete') { ?>
 
-<table width="100%">
-<tr>
-<td>
-<strong>本站MYOP应用管理</strong><br>
-如果用户应用功能无法与ManYou通讯，请重新同步站点信息；如果想要关闭用户应用功能，点击“关闭用户应用功能”；注意：关闭用户应用功能后当前所有的应用都将处于禁用状态。
-</td>
-</tr>
-<tr>
-<td>
-<table><tr><td>
-<form method="post" action="admincp.php?ac=userapp">
+<h1>删除今日资讯</h1>
+<a href="javascript:hideMenu();" class="float_del" title="关闭">关闭</a>
+<div class="popupmenu_inner">
+<form method="post" action="admincp?ac=news&op=delete&newsid=<?=$newsid?>">
+<p>确定删除指定的今日资讯吗？</p>
+<p class="btn_line">
+<input type="hidden" name="refer" value="<?=$_SGLOBAL['refer']?>" />
+<input type="hidden" name="deletesubmit" value="true" />
+<input type="submit" name="btnsubmit" value="确定" class="submit" />
+</p>
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
-<input type="hidden" name="my_hidden" value="1">
-<input type="submit" name="mysubmit" value="同步信息" class="submit">
 </form>
-</td><td>
-<form method="post" action="admincp.php?ac=userapp">
+</div>
+
+<?php } elseif($_GET['op'] == 'edithot') { ?>
+
+<h1>调整热度</h1>
+<a href="javascript:hideMenu();" class="float_del" title="关闭">关闭</a>
+<div class="popupmenu_inner">
+<form method="post" action="admincp?ac=news&op=edithot&newsid=<?=$newsid?>">
+<p class="btn_line">
+新的热度：<input type="text" name="hot" value="<?=$news['hot']?>" size="5"> 
+<input type="hidden" name="refer" value="<?=$_SGLOBAL['refer']?>" />
+<input type="hidden" name="hotsubmit" value="true" />
+<input type="submit" name="btnsubmit" value="确定" class="submit" />
+</p>
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
-<input type="hidden" name="my_hidden" value="1">
-<input type="submit" name="closemysubmit" value="关闭用户应用功能" class="submit">
 </form>
-</td></tr></table>
-</td>
-</tr>
-</table>
+</div>
+
 <?php } else { ?>
-<form method="post" action="admincp.php?ac=userapp">
-<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+
+<script language="javascript" src="image/editor/editor_function.js"></script>
+<script language="javascript" src="source/script_news.js"></script>
+
+<?php if($topic) { ?>
+<h2 class="title">
+<img src="image/app/topic.gif" />热闹 - <a href="space.php?do=topic&topicid=<?=$topicid?>"><?=$topic['subject']?></a>
+</h2>
+<div class="tabs_header">
+<ul class="tabs">
+<li class="active"><a href="javascript:;"><span>凑个热闹</span></a></li>
+<li><a href="space.php?do=topic&topicid=<?=$topicid?>"><span>查看热闹</span></a></li>
+</ul>
+<?php if(checkperm('managetopic') || $topic['uid']==$_SGLOBAL['supe_uid']) { ?>
+<div class="r_option">
+<a href="cp.php?ac=topic&op=edit&topicid=<?=$topic['topicid']?>">编辑</a> | 
+<a href="cp.php?ac=topic&op=delete&topicid=<?=$topic['topicid']?>" id="a_delete_<?=$topic['topicid']?>" onclick="ajaxmenu(event,this.id);">删除</a>
+</p>
+</div>
+<?php } ?>
+</div>
+
+
+<div class="affiche">
 <table width="100%">
-<tr><td>
-<strong>MYOP用户多应用功能简介</strong><br>
-开启用户应用功能后，用户可以自由选择各种不同的或好玩有趣、或实用的等应用（诸如停车位、好友买卖、电影、送礼物......）在站内进行使用。<br>
-面对如此众多的好玩好用的应用，作为站长，您可以:<br><br>
-1. 可选择全部开启模式，用户可以自由选择MYOP上面的全部应用；<br>
-2. 可选择自定义开启模式，由你按照自己的站点情况，选择自己想要的特定应用来提供给站点用户；<br>
-<br>
-<strong>本多应用功能由 <a target="_blank" href="http://www.manyou.com">MYOP开放平台</a> 提供</strong>。<br>
-Manyou Open Platform(Manyou开放平台/MYOP)服务是由Comsenz公司为应用开发者提供的开放平台。<br>
-作为UCenter Home使用网站的开放平台应用开发标准（API），Manyou将为您站点UCenter Home的用户提供各种个性化的互联网应用。<br><br>
-启用服务前，<a href="http://wiki.developer.manyou.com/wiki/index.php?title=MYOP%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E5%8D%8F%E8%AE%AE&printable=yes" target="_blank">请先阅读MYOP网站服务协议</a><br><br>
-</td></tr>
-<tr><td>
-<input type="hidden" name="my_hidden" value="1">
-<input type="submit" name="mysubmit" value="启用服务" class="submit">
+<tr>
+<?php if($topic['pic']) { ?>
+<td width="160" id="event_icon" valign="top">
+<img src="<?=$topic['pic']?>" width="150">
+</td>
+<?php } ?>
+<td valign="top">
+<h2>
+<a href="space.php?do=topic&topicid=<?=$topic['topicid']?>"><?=$topic['subject']?></a>
+</h2>
+
+<div style="padding:5px 0;"><?=$topic['message']?></div>
+<ul>
+<li class="gray">发起作者: <a href="space.php?uid=<?=$topic['uid']?>"><?=$_SN[$topic['uid']]?></a></li>
+<li class="gray">发起时间: <?=$topic['dateline']?></li>
+<?php if($topic['endtime']) { ?><li class="gray">参与截止: <?=$topic['endtime']?></li><?php } ?>
+<?php if($topic['joinnum']) { ?>
+<li class="gray">参与人次: <?=$topic['joinnum']?></li>
+<?php } ?>
+<li class="gray">最后参与: <?=$topic['lastpost']?></li>
+</ul>
+
+<?php if($topic['allowjoin']) { ?>
+<a href="<?=$topic['joinurl']?>" class="feed_po" id="hot_add" onmouseover="showMenu(this.id)">凑个热闹</a>
+<ul id="hot_add_menu" class="dropmenu_drop" style="display:none;">
+<?php if(in_array('blog', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=blog&topicid=<?=$topicid?>">发表日志</a></li>
+<?php } ?>
+<?php if(in_array('pic', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=upload&topicid=<?=$topicid?>">上传图片</a></li>
+<?php } ?>
+<?php if(in_array('thread', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=thread&topicid=<?=$topicid?>">发起话题</a></li>
+<?php } ?>
+<?php if(in_array('poll', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=poll&topicid=<?=$topicid?>">发起投票</a></li>
+<?php } ?>
+<?php if(in_array('event', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=event&topicid=<?=$topicid?>">发起活动</a></li>
+<?php } ?>
+<?php if(in_array('share', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=share&topicid=<?=$topicid?>">添加分享</a></li>
+<?php } ?>
+</ul>
+<?php } else { ?>
+<p class="r_option">该热闹已经截止</p>
+<?php } ?>
+</td>
+</tr></table>
+</div>
+
+<?php } else { ?>
+<h2 class="title"><img src="image/app/news.gif" />今日资讯</h2>
+<div class="tabs_header">
+<ul class="tabs">
+<?php if($news['newsid']) { ?>
+<li class="active"><a href="admincp?ac=news&newsid=<?=$news['newsid']?>"><span>编辑今日资讯</span></a></li>
+<?php } ?>
+<li<?php if(empty($news['newsid'])) { ?> class="active"<?php } ?>><a href="admincp?ac=news"><span>发表新今日资讯</span></a></li>
+<li><a href="admincp?ac=import"><span>今日资讯导入</span></a></li>
+<li><a href="space.php?uid=<?=$space['uid']?>&do=news&view=me"><span>返回我的今日资讯</span></a></li>
+</ul>
+</div>
+<?php } ?>
+
+<div class="c_form">
+
+<style type="text/css">
+.userData {behavior:url(#default#userdata);}
+</style>
+
+
+<form method="post" action="adminadmincp?ac=news&newsid=<?=$news['newsid']?>" enctype="multipart/form-data">
+<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
+<tr>
+<td>
+<select name="classid" id="classid" onchange="addSort(this)">
+<option value="0">选择分类</option>
+<?php if(is_array($classarr)) { foreach($classarr as $value) { ?>
+<?php if($value['classid'] == $news['classid']) { ?>
+<option value="<?=$value['classid']?>" selected><?=$value['classname']?></option>
+<?php } else { ?>
+<option value="<?=$value['classid']?>"><?=$value['classname']?></option>
+<?php } ?>
+<?php } } ?>
+<?php if(!$news['uid'] || $news['uid']==$_SGLOBAL['supe_uid']) { ?><option value="addoption" style="color:red;">+新建分类</option><?php } ?>
+</select>
+<input type="text" class="t_input" id="subject" name="subject" value="<?=$news['subject']?>" size="60" onblur="relatekw();" />
+</td>
+</tr>
+<tr>
+<td>
+<a id="doodleBox" href="magic.php?mid=doodle&showid=news_doodle&target=uchome-ttHtmlEditor&from=editor" style="display:none"></a>
+<textarea class="userData" name="message" id="uchome-ttHtmlEditor" style="height:100%;width:100%;display:none;border:0px"><?=$news['message']?></textarea>
+<iframe src="editor.php?charset=<?=$_SC['charset']?>&allowhtml=<?=$allowhtml?>&doodle=<?php if(isset($_SGLOBAL['magic']['doodle'])) { ?>1<?php } ?>" name="uchome-ifrHtmlEditor" id="uchome-ifrHtmlEditor" scrolling="no" border="0" frameborder="0" style="width:100%;border: 1px solid #C5C5C5;" height="400"></iframe>
+</td>
+</tr>
+</table>
+<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
+<tr>
+<th width="100">标签</th>
+<td><input type="text" class="t_input" size="40" id="tag" name="tag" value="<?=$news['tag']?>"> <input type="button" name="clickbutton[]" value="自动获取" class="button" onclick="relatekw();"></td>
+</tr>
+
+<?php if($news['uid'] && $news['uid']!=$_SGLOBAL['supe_uid']) { ?>
+<?php $selectgroupstyle='display:none'; ?>
+<tbody style="display:none;">
+<?php } ?>
+<tr>
+<th>隐私设置</th>
+<td>
+<select name="friend" onchange="passwordShow(this.value);">
+<option value="0"<?=$friendarr['0']?>>全站用户可见</option>
+<option value="1"<?=$friendarr['1']?>>全好友可见</option>
+<option value="2"<?=$friendarr['2']?>>仅指定的好友可见</option>
+<option value="3"<?=$friendarr['3']?>>仅自己可见</option>
+<option value="4"<?=$friendarr['4']?>>凭密码查看</option>
+</select>
+<span id="span_password" style="<?=$passwordstyle?>">密码:<input type="text" name="password" value="<?=$news['password']?>" size="10" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"></span>
+<input type="checkbox" name="noreply" value="1"<?php if($news['noreply']) { ?> checked<?php } ?>> 不允许评论
+</td>
+</tr>
+<?php if($news['uid'] && $news['uid']!=$_SGLOBAL['supe_uid']) { ?></tbody><?php } ?>
+<tbody id="tb_selectgroup" style="<?=$selectgroupstyle?>">
+<tr>
+<th>指定好友</th>
+<td><select name="selectgroup" onchange="getgroup(this.value);">
+<option value="">从好友组选择好友</option>
+<?php if(is_array($groups)) { foreach($groups as $key => $value) { ?>
+<option value="<?=$key?>"><?=$value?></option>
+<?php } } ?>
+</select> 多次选择会累加到下面的好友名单</td>
+</tr>
+<tr>
+<th>&nbsp;</th>
+<td>
+<textarea name="target_names" id="target_names" style="width:85%;" rows="3"><?=$news['target_names']?></textarea>
+<br>(可以填写多个好友名，请用空格进行分割)</td>
+</tr>
+</tbody>
+
+
+<?php if(checkperm('managenews')) { ?>
+<tr>
+<th width="100">热度</th>
+<td>
+<input type="text" class="t_input" name="hot" id="hot" value="<?=$news['hot']?>" size="5">
+</td>
+</tr>
+<?php } ?>
+
+<?php if(checkperm('seccode')) { ?>
+<?php if($_SCONFIG['questionmode']) { ?>
+<tr>
+<th style="vertical-align: top;">请回答验证问题</th>
+<td>
+<p><?php question(); ?></p>
+<input type="text" id="seccode" name="seccode" value="" size="15" class="t_input" />
+</td>
+</tr>
+<?php } else { ?>
+<tr>
+<th style="vertical-align: top;">请填写验证码</th>
+<td>
+<script>seccode();</script>
+<p>请输入上面的4位字母或数字，看不清可<a href="javascript:updateseccode()">更换一张</a></p>
+<input type="text" id="seccode" name="seccode" value="" size="15" class="t_input" />
+</td>
+</tr>
+<?php } ?>
+<?php } ?>
+
+<tr>
+<th width="100">动态选项</th>
+<td>
+<input type="checkbox" name="makefeed" id="makefeed" value="1"<?php if(ckprivacy('news', 1)) { ?> checked<?php } ?>> 产生动态 (<a href="admincp?ac=privacy#feed" target="_blank">更改默认设置</a>)
+</td>
+</tr>			
+</table>
+<input type="hidden" name="newssubmit" value="true" />
+<input type="button" id="newsbutton" name="newsbutton" value="提交发布" onclick="validate(this);" style="display: none;" />
+<input type="hidden" name="topicid" value="<?=$_GET['topicid']?>" />
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+</form>
+
+<?php if(!$_SGLOBAL['inajax'] && (!$news['uid'] || $news['uid']==$_SGLOBAL['supe_uid'])) { ?>
+<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
+<tr><th width="100">图片</th><td>
+<input type="button" name="clickbutton[]" value="上传图片" class="button" onclick="edit_album_show('pic')">
+<input type="button" name="clickbutton[]" value="插入图片" class="button" onclick="edit_album_show('album')">
 </td></tr>
 </table>
+<?php } ?>
+
+<table cellspacing="4" cellpadding="4" width="100%" id="uchome-edit-pic" class="infotable" style="display:none;">
+<tr>
+<th width="100">&nbsp;</th>
+<td>
+<strong>选择图片</strong>: 
+<table summary="Upload" cellspacing="2" cellpadding="0">
+<tbody id="attachbodyhidden" style="display:none">
+<tr>
+<td>
+<form method="post" id="upload" action="admincp?ac=upload" enctype="multipart/form-data" target="uploadframe" style="background: transparent;">
+<input type="file" name="attach" style="border: 1px solid #CCC;" />
+<span id="localfile"></span>
+<input type="hidden" name="uploadsubmit" id="uploadsubmit" value="true" />
+<input type="hidden" name="albumid" id="albumid" value="0" />
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
 </form>
+</td>
+</tr>
+</tbody>
+<tbody id="attachbody"></tbody>
+</table>
+<strong>存储相册</strong>: 
+<table cellspacing="2" cellpadding="0">
+<tr>
+<td>
+<select name="albumid" id="uploadalbum" onchange="addSort(this)">
+<option value="-1">请选择相册</option>
+<option value="-1">默认相册</option>
+<?php if(is_array($albums)) { foreach($albums as $value) { ?>
+<option value="<?=$value['albumid']?>"><?=$value['albumname']?></option>
+<?php } } ?>
+<option value="addoption" style="color:red;">+新建相册</option>
+</select>
+<script src="source/script_upload.js" type="text/javascript"></script>
+<iframe id="uploadframe" name="uploadframe" width="0" height="0" marginwidth="0" frameborder="0" src="about:blank"></iframe>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table cellspacing="4" cellpadding="4" width="100%" class="infotable" id="uchome-edit-album" style="display:none;">
+<tr>
+<th width="100">&nbsp;</th>
+<td>
+选择相册: <select name="view_albumid" onchange="picView(this.value)">
+<option value="none">选择一个相册</option>
+<option value="0">默认相册</option>
+<?php if(is_array($albums)) { foreach($albums as $value) { ?>
+<option value="<?=$value['albumid']?>"><?=$value['albumname']?></option>
+<?php } } ?>
+</select> (点击图片可以插入到内容中)
+<div id="albumpic_body"></div>
+</td>
+</tr>
+</table>
+<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
+<tr>
+<th width="100">&nbsp;</th>
+<td>
+<input type="button" id="issuance" onclick="document.getElementById('newsbutton').click();" value="保存发布" class="submit" /></td>
+</tr>
+</table>
+</div>
+
 <?php } ?>
 </div>
-<br>
-
-<?php if($_SCONFIG['my_status']) { ?>
-<script type="text/javascript" src="http://static.manyou.com/scripts/my_iframe.js"></script>
-<script language="javascript">
-var prefixURL = "<?=$my_prefix?>";
-var suffixURL = "<?=$my_suffix?>";
-var queryString = '';
-var url = "<?=$url?>";
-var oldHash = null;
-var timer = null;
-var server = new MyXD.Server("ifm0");
-server.registHandler('iframeHasLoaded');
-server.registHandler('setTitle');
-server.start();
-
-function iframeHasLoaded(ifm_id) {
-        MyXD.Util.showIframe(ifm_id);
-        document.getElementById('loading').style.display = 'none';
-}
-function  htmlspecialchars_decode(string) {
-string = string.toString();
-string = string.replace(/&amp;/g, '&');
-string = string.replace(/&lt;/g, '<');
-string = string.replace(/&gt;/g, '>');
-string = string.replace(/&quot;/g, '"');
-string = string.replace(/&#039;/g, "'");
-return string;
-
-}
-function setTitle(x) {
-<?php $my_site_name=htmlspecialchars($_SCONFIG['sitename'], ENT_QUOTES); ?>
-var my_site_name = htmlspecialchars_decode('<?=$my_site_name?>');
-
-x = htmlspecialchars_decode(x);
-document.title = x + ' - <?php if($space) { ?><?php echo saddslashes($_SN[$space[uid]]) ?> - <?php } ?>' + my_site_name + ' - Powered by UCenter Home';
-}
-
-</script>
-
-
-<div class="bdrcontent">
-    <div id="loading" style="display:block; padding:100px 0 100px 0;text-align:center;color:#999999;font-size:12px;">
-    <img src="image/my/loading.gif" alt="loading..." style="position:relative;top:11px;"/>  页面加载中...
 </div>
-<center>
-    <iframe id="ifm0" frameborder="0" width="810px" scrolling="no" height="810px" style="position:absolute; top:-5000px; left:-5000px;" src="<?=$url?>"></iframe>
-</center>
-
-</div>
-<?php } ?>
-
-</div>
-</div>
-
 <div class="side">
 <?php if($menus['0']) { ?>
 <div class="block style1">
@@ -316,7 +528,6 @@ document.title = x + ' - <?php if($space) { ?><?php echo saddslashes($_SN[$space
 </div>
 <?php } ?>
 </div>
-
 </div>
 
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
@@ -453,5 +664,4 @@ showreward();
         <?php } ?>
 </body>
 </html>
-<?php } ?>
-<?php ob_out();?>
+<?php } ?><?php ob_out();?>
