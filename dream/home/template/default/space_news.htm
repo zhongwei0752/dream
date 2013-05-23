@@ -49,7 +49,7 @@
 								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 								</span>
 							</span>
-							<img src="files/content_pic1.jpg" alt="" />
+							<img src="http://www.kriesi.at/demos/newscast/light/files/content_pic1.jpg" alt="" />
 						</a>
 					</div><!-- end .featured -->
 					
@@ -61,7 +61,7 @@
 								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  										Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 								</span>
 							</span>
-							<img src="files/content_pic2.jpg" alt="" />
+							<img src="http://www.kriesi.at/demos/newscast/light/files/content_pic2.jpg" alt="" />
 						</a>
 					</div><!-- end .featured -->
 					
@@ -73,7 +73,7 @@
 								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 										Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 								</span>
 							</span>
-							<img src="files/content_pic3.jpg" alt="" />
+							<img src="http://www.kriesi.at/demos/newscast/light/files/content_pic3.jpg" alt="" />
 						</a>
 					</div><!-- end .featured -->
 					
@@ -85,7 +85,7 @@
 								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  										Ut enim ad minim veniam, Ut enim ad minim veniam, Ut enim ad minim veniam.
 								</span>
 							</span>
-							<img src="files/content_pic4.jpg" alt="" />
+							<img src="http://www.kriesi.at/demos/newscast/light/files/content_pic4.jpg" alt="" />
 						</a>
 					</div><!-- end .featured -->
 					
@@ -97,7 +97,7 @@
 								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  										Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 								</span>
 							</span>
-							<img src="files/content_pic5.jpg" alt="" />
+							<img src="http://www.kriesi.at/demos/newscast/light/files/content_pic5.jpg" alt="" />
 						</a>
 					</div><!-- end .featured -->
 					
@@ -118,15 +118,15 @@
 			<!--{loop $list $value}-->
 			<div class="entry">
 				<div class="entry-previewimage rounded preloading_background">
-					<a href="single.html"><img height="180" width="180" src="files/medium_pic1.jpg" alt="" /></a>
+					<a href="single.html"><img height="180" width="180" src="http://www.kriesi.at/demos/newscast/light/files/medium_pic1.jpg" alt="" /></a>
 				</div>
 				
 				<div class="entry-content">
-					<h1 class="entry-heading"><a href='single.html'>$value[subject]</a></h1>
+					<h1 class="entry-heading"><a href='space.php?uid=$value[uid]&do=$do&id=$value[newsid]'>$value[subject]</a></h1>
 					<div class="entry-head">
 						<span class="date ie6fix"><!--{date('Y-m-d H:i',$value[dateline],1)}--></span>
-						<span class="comments ie6fix"><a href="single.html">$value[replynum] 个评论</a></span>
-						<span class="author ie6fix"><a href="single.html">by Kriesi</a></span>
+						<span class="comments ie6fix"><a href="space.php?uid=$value[uid]&do=$do&id=$value[newsid]#comment">$value[replynum] 个评论</a></span>
+						<span class="author ie6fix"><a href="space.php?uid=$value[uid]">by {$_SN[$value[uid]]}</a></span>
 					</div>
 					
 					<div class="entry-text">
@@ -136,10 +136,7 @@
 					</div>
 					
 					<div class="entry-bottom">
-						<span class="categories"><!--{loop $news[tag] $tagid $tagname}-->
-		<a href="space.php?uid=$blog[uid]&do=tag&id=$tagid">$tagname</a>&nbsp;
-		<!--{/loop}--></span>
-						<a href="page.html" class="more-link">Read more</a>
+						<a href="space.php?uid=$value[uid]&do=$do&id=$value[newsid]" class="more-link">Read more</a>
 					</div>
 				</div>
 			</div>
@@ -180,25 +177,25 @@
 		            <h3>Community News</h3>
 					<div class='entry box_entry'>
 					<h4><a href='single.html'>How to use the upcoming CSS 3 properties in IE 6</a></h4>
-					<a class='alignleft preloading_background' href='single.html'><img src='files/mini_pic1.jpg' alt='' class='rounded'/></a>
+					<a class='alignleft preloading_background' href='single.html'><img src='http://www.kriesi.at/demos/newscast/light/files/mini_pic1.jpg' alt='' class='rounded'/></a>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad min.</p>
 					</div>
 					
 					<div class='entry box_entry'>
 					<h4><a href='single.html'>Holidays in Florida</a></h4>
-					<a class='alignleft preloading_background' href='single.html'><img src='files/mini_pic2.jpg' alt='' class='rounded'/></a>
+					<a class='alignleft preloading_background' href='single.html'><img src='http://www.kriesi.at/demos/newscast/light/files/mini_pic2.jpg' alt='' class='rounded'/></a>
 					<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad min lorem ipsum dolor sit amet, consectetur adipisicing elit,</p>
 					</div>
 					
 					<div class='entry box_entry'>
 					<h4><a href='single.html'>Road to Perdition</a></h4>
-					<a class='alignleft preloading_background' href='single.html'><img src='files/mini_pic3.jpg' alt='' class='rounded'/></a>
+					<a class='alignleft preloading_background' href='single.html'><img src='http://www.kriesi.at/demos/newscast/light/files/mini_pic3.jpg' alt='' class='rounded'/></a>
 					<p>Ut enim ad min lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 					</div>
 					
 					<div class='entry box_entry'>
 					<h4><a href='single.html'>Vienna by night is a really beautiful city</a></h4>
-					<a class='alignleft preloading_background' href='single.html'><img src='files/mini_pic4.jpg' alt='' class='rounded'/></a>
+					<a class='alignleft preloading_background' href='single.html'><img src='http://www.kriesi.at/demos/newscast/light/files/mini_pic4.jpg' alt='' class='rounded'/></a>
 					<p>Consectetur adipisicing elit. Sed do eiusmod tempor sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad min lorem ipsum dolor sit amet.</p>
 					</div>
 					
@@ -225,10 +222,10 @@
 			<div class="sidebar ">
 				<div class="box box_small link_list">
 	            	<h3>Advertise with us</h3>
-	            	<a href='http://www.themeforest.net?ref=Kriesi'><img src='files/tf.gif' class='rounded' height="125" width="125" alt='' /></a>
-	            	<a href='http://www.activeden.net?ref=Kriesi'><img src='files/actived.gif' class='rounded' height="125" width="125" alt='' /></a>
-	            	<a href='http://www.codecanyon.net?ref=Kriesi'><img src='files/cc.gif' class='rounded' height="125" width="125" alt='' /></a>
-	            	<a href='http://www.graphicriver.net?ref=Kriesi'><img src='files/gr.gif' class='rounded' height="125" width="125" alt='' /></a>
+	            	<a href='http://www.themeforest.net?ref=Kriesi'><img src='http://www.kriesi.at/demos/newscast/light/files/tf.gif' class='rounded' height="125" width="125" alt='' /></a>
+	            	<a href='http://www.activeden.net?ref=Kriesi'><img src='http://www.kriesi.at/demos/newscast/light/files/actived.gif' class='rounded' height="125" width="125" alt='' /></a>
+	            	<a href='http://www.codecanyon.net?ref=Kriesi'><img src='http://www.kriesi.at/demos/newscast/light/files/cc.gif' class='rounded' height="125" width="125" alt='' /></a>
+	            	<a href='http://www.graphicriver.net?ref=Kriesi'><img src='http://www.kriesi.at/demos/newscast/light/files/gr.gif' class='rounded' height="125" width="125" alt='' /></a>
 				
             	</div><!--end box -->
 			
@@ -295,23 +292,23 @@
 	        <h3>Gallery</h3>
 			<ul class="flickr">
 			<li><a title="Jetty" href="http://www.flickr.com/photos/ukphotoart/4337815441/in/pool-613394@N22">
-			<img alt="Jetty" src="files/gallery/pic_1.jpg" /></a></li>
+			<img alt="Jetty" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_1.jpg" /></a></li>
 			<li><a title="genesis" href="http://www.flickr.com/photos/tbhpyrhe/4340647027/in/pool-613394@N22">
-			<img alt="genesis" src="files/gallery/pic_2.jpg" /></a></li>
+			<img alt="genesis" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_2.jpg" /></a></li>
 			<li><a title="Buddha of earth" href="http://www.flickr.com/photos/rensrecluse/4331523575/in/pool-613394@N22">
 			<img alt="Buddha of earth" src="files/gallery/pic_3.jpg" /></a></li>
 			<li><a title="Web Design" href="http://www.flickr.com/photos/8144623@N08/4341234800/in/pool-613394@N22">
-			<img alt="Web Design" src="files/gallery/pic_4.jpg" /></a></li>
+			<img alt="Web Design" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_4.jpg" /></a></li>
 			<li><a title="Web Design" href="http://www.flickr.com/photos/8144623@N08/4341234796/in/pool-613394@N22">
-			<img alt="Web Design" src="files/gallery/pic_5.jpg" /></a></li>
+			<img alt="Web Design" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_5.jpg" /></a></li>
 			<li><a title="OP" href="http://www.flickr.com/photos/satoboy/4340576325/in/pool-613394@N22">
-			<img alt="OP" src="files/gallery/pic_6.jpg" /></a></li>
+			<img alt="OP" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_6.jpg" /></a></li>
 			<li><a title="Unbound Dance Company" href="http://www.flickr.com/photos/11916764@N05/4340570423/in/pool-613394@N22">
 			<img alt="Unbound Dance Company" src="files/gallery/pic_7.jpg" /></a></li>
 			<li><a title="Untitled" href="http://www.flickr.com/photos/vearts/4340519289/in/pool-613394@N22">
-			<img alt="Untitled" src="files/gallery/pic_8.jpg" /></a></li>
+			<img alt="Untitled" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_8.jpg" /></a></li>
 			<li><a title="lyann" href="http://www.flickr.com/photos/30154406@N08/4326774184/in/pool-613394@N22">
-			<img alt="lyann" src="files/gallery/pic_9.jpg" /></a></li>
+			<img alt="lyann" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_9.jpg" /></a></li>
 			</ul>
 	    </div><!--end box -->
     </div>

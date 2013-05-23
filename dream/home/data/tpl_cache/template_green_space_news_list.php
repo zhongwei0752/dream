@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_news_list|template/green/header|template/green/space_menu|template/green/footer', '1369217640', 'template/green/space_news_list');?><?php $_TPL['titles'] = array('今日资讯'); ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_news_list|template/green/header|template/green/space_menu|template/green/footer', '1369274361', 'template/green/space_news_list');?><?php $_TPL['titles'] = array('今日资讯'); ?>
 <?php $friendsname = array(1 => '仅好友可见',2 => '指定好友可见',3 => '仅自己可见',4 => '凭密码可见'); ?>
 
 <?php if(empty($_SGLOBAL['inajax'])) { ?>

@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_news|template/green/header|template/green/cp_topic_menu|template/green/footer|template/green/space_topic_inc', '1369217397', 'template/green/cp_news');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_news|template/green/header|template/green/cp_topic_menu|template/green/footer|template/green/space_topic_inc', '1369277044', 'template/green/cp_news');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -45,7 +45,7 @@
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
 <li><a href="space.php?do=joke">医疗笑话</a></li>
-<li><a href="space.php?do=news">今日资讯</a></li>
+<li><a href="space.php?do=news&orderby=dateline">今日资讯</a></li>
 <li><a href="network.php">随便看看</a></li>
 
 <?php } else { ?>
