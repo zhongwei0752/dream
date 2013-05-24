@@ -391,6 +391,24 @@ if($id) {
 		}
 	}
 
+	$query1 = $_SGLOBAL['db']->query("SELECT bf.message, bf.target_ids, bf.magiccolor, b.* FROM ".tname('littlenews')." b $f_index
+				LEFT JOIN ".tname('littlenewsfield')." bf ON bf.littlenewsid=b.littlenewsid
+				WHERE $wheresql
+				ORDER BY b.dateline DESC LIMIT 0,6");
+	while ($value1 = $_SGLOBAL['db']->fetch_array($query1)) {
+			$list1[] = $value1;
+	}
+	$query2 = $_SGLOBAL['db']->query("SELECT * FROM ".tname('navnews')." 
+				ORDER BY dateline DESC LIMIT 0,5");
+	while ($value2 = $_SGLOBAL['db']->fetch_array($query2)) {
+			$list2[] = $value2;
+	}
+	$query3 = $_SGLOBAL['db']->query("SELECT * FROM ".tname('zhuantinews')." 
+				ORDER BY dateline DESC LIMIT 0,5");
+	while ($value3 = $_SGLOBAL['db']->fetch_array($query3)) {
+			$list3[] = $value3;
+	}
+
 	//·ÖÒ³
 	$multi = multi($count, $perpage, $page, $theurl);
 

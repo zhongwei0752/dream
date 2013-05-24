@@ -1,0 +1,61 @@
+<!--{template header}-->
+<script language="javascript" src="image/editor/editor_function.js"></script>
+<script language="javascript" src="source/script_navnews.js"></script>
+
+<!--{if $topic}-->
+	<!--{template cp_topic_menu}-->
+<!--{else}-->
+	<h2 class="title"><img src="image/app/navnews.gif" />首页大图</h2>
+	<div class="tabs_header">
+		<ul class="tabs">
+			<!--{if $navnews[navnewsid]}-->
+			<li class="active"><a href="cp.php?ac=navnews&navnewsid=$navnews[navnewsid]"><span>编辑首页大图</span></a></li>
+			<!--{/if}-->
+			<li<!--{if empty($navnews[navnewsid])}--> class="active"<!--{/if}-->><a href="cp.php?ac=navnews"><span>发表新首页大图</span></a></li>
+			<li><a href="space.php?uid=$space[uid]&do=news&orderby=dateline"><span>返回我的首页大图</span></a></li>
+		</ul>
+	</div>
+<!--{/if}-->
+
+<div class="c_form">
+
+	<style type="text/css">
+		.userData {behavior:url(#default#userdata);}
+	</style>
+
+首页大图发布:<hr style="height:1px;border:none;border-top:1px dashed #555555;"/>
+	<form method="post" action="cp.php?ac=navnews" enctype="multipart/form-data">
+		<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
+			<tr>
+				<td>
+					封面图片下面字体:<input type="text" class="t_input" id="subject" name="subject" value="$navnews[subject]" size="60" onblur="relatekw();" /><br/>
+					封面图片:<input type="file" name="files" value="$navnews[imageurl]" /><br/>
+					封面描述:<textarea name="message"></textarea>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="navnewssubmit" value="true" />
+		<input type="submit" id="navnewsbutton" name="navnewsbutton" value="提交发布" onclick="validate(this);"  />
+		<input type="hidden" name="topicid" value="$_GET[topicid]" />
+		<input type="hidden" name="formhash" value="<!--{eval echo formhash();}-->" />
+	</form>
+专题发布发布:<hr style="height:1px;border:none;border-top:1px dashed #555555;"/>
+<form method="post" action="cp.php?ac=navnews" enctype="multipart/form-data">
+		<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
+			<tr>
+				<td>
+					专题图片下面字体:<input type="text" class="t_input" id="subject" name="subject" value="$navnews[subject]" size="60" onblur="relatekw();" /><br/>
+					专题图片:<input type="file" name="files" value="$navnews[imageurl]" /><br/>
+					专题链接:<textarea name="message"></textarea>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="zhuantisubmit" value="true" />
+		<input type="submit" id="zhuantibutton" name="zhuantibutton" value="提交发布" onclick="validate(this);"  />
+		
+		<input type="hidden" name="formhash" value="<!--{eval echo formhash();}-->" />
+	</form>
+
+</div>
+
+<!--{template footer}-->

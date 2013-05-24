@@ -12,19 +12,11 @@ $_SGLOBAL['click']=Array
 			'idtype' => 'blogid',
 			'displayorder' => '0'
 			),
-		5 => Array
+		2 => Array
 			(
-			'clickid' => 5,
-			'name' => '鸡蛋',
-			'icon' => 'jidan.gif',
-			'idtype' => 'blogid',
-			'displayorder' => '0'
-			),
-		4 => Array
-			(
-			'clickid' => 4,
-			'name' => '鲜花',
-			'icon' => 'xianhua.gif',
+			'clickid' => 2,
+			'name' => '雷人',
+			'icon' => 'leiren.gif',
 			'idtype' => 'blogid',
 			'displayorder' => '0'
 			),
@@ -36,12 +28,82 @@ $_SGLOBAL['click']=Array
 			'idtype' => 'blogid',
 			'displayorder' => '0'
 			),
-		2 => Array
+		4 => Array
 			(
-			'clickid' => 2,
+			'clickid' => 4,
+			'name' => '鲜花',
+			'icon' => 'xianhua.gif',
+			'idtype' => 'blogid',
+			'displayorder' => '0'
+			),
+		5 => Array
+			(
+			'clickid' => 5,
+			'name' => '鸡蛋',
+			'icon' => 'jidan.gif',
+			'idtype' => 'blogid',
+			'displayorder' => '0'
+			)
+		),
+	'tid' => Array
+		(
+		13 => Array
+			(
+			'clickid' => 13,
 			'name' => '雷人',
 			'icon' => 'leiren.gif',
-			'idtype' => 'blogid',
+			'idtype' => 'tid',
+			'displayorder' => '0'
+			),
+		14 => Array
+			(
+			'clickid' => 14,
+			'name' => '鲜花',
+			'icon' => 'xianhua.gif',
+			'idtype' => 'tid',
+			'displayorder' => '0'
+			),
+		15 => Array
+			(
+			'clickid' => 15,
+			'name' => '鸡蛋',
+			'icon' => 'jidan.gif',
+			'idtype' => 'tid',
+			'displayorder' => '0'
+			),
+		12 => Array
+			(
+			'clickid' => 12,
+			'name' => '迷惑',
+			'icon' => 'mihuo.gif',
+			'idtype' => 'tid',
+			'displayorder' => '0'
+			),
+		11 => Array
+			(
+			'clickid' => 11,
+			'name' => '搞笑',
+			'icon' => 'gaoxiao.gif',
+			'idtype' => 'tid',
+			'displayorder' => '0'
+			)
+		),
+	'discussionid' => Array
+		(
+		16 => Array
+			(
+			'clickid' => 16,
+			'name' => '同意',
+			'icon' => 'xianhua.gif',
+			'idtype' => 'discussionid',
+			'displayorder' => '0'
+			),
+		17 => Array
+			(
+			'clickid' => 17,
+			'name' => '反对',
+			'icon' => 'jidan.gif',
+			'idtype' => 'discussionid',
 			'displayorder' => '0'
 			)
 		),
@@ -64,65 +126,22 @@ $_SGLOBAL['click']=Array
 			'displayorder' => '0'
 			)
 		),
-	'discussionid' => Array
+	'newsid' => Array
 		(
-		17 => Array
+		20 => Array
 			(
-			'clickid' => 17,
-			'name' => '反对',
-			'icon' => 'jidan.gif',
-			'idtype' => 'discussionid',
-			'displayorder' => '0'
-			),
-		16 => Array
-			(
-			'clickid' => 16,
-			'name' => '同意',
+			'clickid' => 20,
+			'name' => '顶',
 			'icon' => 'xianhua.gif',
-			'idtype' => 'discussionid',
+			'idtype' => 'newsid',
 			'displayorder' => '0'
-			)
-		),
-	'tid' => Array
-		(
-		15 => Array
+			),
+		21 => Array
 			(
-			'clickid' => 15,
-			'name' => '鸡蛋',
+			'clickid' => 21,
+			'name' => '倒',
 			'icon' => 'jidan.gif',
-			'idtype' => 'tid',
-			'displayorder' => '0'
-			),
-		14 => Array
-			(
-			'clickid' => 14,
-			'name' => '鲜花',
-			'icon' => 'xianhua.gif',
-			'idtype' => 'tid',
-			'displayorder' => '0'
-			),
-		13 => Array
-			(
-			'clickid' => 13,
-			'name' => '雷人',
-			'icon' => 'leiren.gif',
-			'idtype' => 'tid',
-			'displayorder' => '0'
-			),
-		12 => Array
-			(
-			'clickid' => 12,
-			'name' => '迷惑',
-			'icon' => 'mihuo.gif',
-			'idtype' => 'tid',
-			'displayorder' => '0'
-			),
-		11 => Array
-			(
-			'clickid' => 11,
-			'name' => '搞笑',
-			'icon' => 'gaoxiao.gif',
-			'idtype' => 'tid',
+			'idtype' => 'newsid',
 			'displayorder' => '0'
 			)
 		),
@@ -136,19 +155,11 @@ $_SGLOBAL['click']=Array
 			'idtype' => 'picid',
 			'displayorder' => '0'
 			),
-		9 => Array
+		6 => Array
 			(
-			'clickid' => 9,
-			'name' => '鲜花',
-			'icon' => 'xianhua.gif',
-			'idtype' => 'picid',
-			'displayorder' => '0'
-			),
-		8 => Array
-			(
-			'clickid' => 8,
-			'name' => '雷人',
-			'icon' => 'leiren.gif',
+			'clickid' => 6,
+			'name' => '漂亮',
+			'icon' => 'piaoliang.gif',
 			'idtype' => 'picid',
 			'displayorder' => '0'
 			),
@@ -160,11 +171,19 @@ $_SGLOBAL['click']=Array
 			'idtype' => 'picid',
 			'displayorder' => '0'
 			),
-		6 => Array
+		8 => Array
 			(
-			'clickid' => 6,
-			'name' => '漂亮',
-			'icon' => 'piaoliang.gif',
+			'clickid' => 8,
+			'name' => '雷人',
+			'icon' => 'leiren.gif',
+			'idtype' => 'picid',
+			'displayorder' => '0'
+			),
+		9 => Array
+			(
+			'clickid' => 9,
+			'name' => '鲜花',
+			'icon' => 'xianhua.gif',
 			'idtype' => 'picid',
 			'displayorder' => '0'
 			)

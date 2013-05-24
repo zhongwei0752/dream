@@ -1,7 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_news_list|template/green/header|template/green/space_menu|template/green/footer', '1369274361', 'template/green/space_news_list');?><?php $_TPL['titles'] = array('今日资讯'); ?>
-<?php $friendsname = array(1 => '仅好友可见',2 => '指定好友可见',3 => '仅自己可见',4 => '凭密码可见'); ?>
-
-<?php if(empty($_SGLOBAL['inajax'])) { ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_navnews|template/green/header|template/green/cp_topic_menu|template/green/footer|template/green/space_topic_inc', '1369389002', 'template/green/cp_navnews');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -48,7 +45,7 @@
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
 <li><a href="space.php?do=joke">医疗笑话</a></li>
-<li><a href="space.php?do=news">今日资讯</a></li>
+<li><a href="space.php?do=news&orderby=dateline">今日资讯</a></li>
 <li><a href="network.php">随便看看</a></li>
 
 <?php } else { ?>
@@ -111,213 +108,134 @@
 
 <?php } ?>
 
+<script language="javascript" src="image/editor/editor_function.js"></script>
+<script language="javascript" src="source/script_navnews.js"></script>
 
-<?php if(!empty($_SGLOBAL['inajax'])) { ?>
-<div id="space_news" class="feed">
-<h3 class="feed_header">
-<a href="cp.php?ac=news" class="r_option" target="_blank">发表今日资讯</a>
-今日资讯(共 <?=$count?> 篇)
-</h3>
-<?php if($count) { ?>
-<ul class="line_list">
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<li>
-<span class="gray r_option"><?php echo sgmdate('m-d H:i',$value[dateline],1); ?></span>
-<h4><a href="space.php?uid=<?=$space['uid']?>&do=news&id=<?=$value['newsid']?>" target="_blank" <?php if($value['magiccolor']) { ?> class="magiccolor<?=$value['magiccolor']?>"<?php } ?>><?=$value['subject']?></a></h4>
-<div class="detail">
-<?=$value['message']?>
-</div>
-</li>
-<?php } } ?>
-</ul>
-<?php if($pricount) { ?>
-<div class="c_form">本页有 <?=$pricount?> 篇今日资讯因作者的隐私设置而隐藏</div>
-<?php } ?>
-<div class="page"><?=$multi?></div>
-<?php } else { ?>
-<div class="c_form">还没有相关的今日资讯。</div>
-<?php } ?>
-</div>
-<?php } else { ?>
-
-<?php if($space['self']) { ?>
-<div class="searchbar floatright">
-<form method="get" action="space.php">
-<input name="searchkey" value="" size="15" class="t_input" type="text">
-<input name="searchsubmit" value="搜索今日资讯" class="submit" type="submit">
-<input type="hidden" name="searchmode" value="1" />
-<input type="hidden" name="do" value="news" />
-<input type="hidden" name="view" value="all" />
-<input type="hidden" name="orderby" value="dateline" />
-</form>
-</div>
-<h2 class="title"><img src="image/app/news.gif" />今日资讯</h2>
+<?php if($topic) { ?>
+<h2 class="title">
+<img src="image/app/topic.gif" />热闹 - <a href="space.php?do=topic&topicid=<?=$topicid?>"><?=$topic['subject']?></a>
+</h2>
 <div class="tabs_header">
 <ul class="tabs">
-<?php if($space['friendnum']) { ?><li<?=$actives['we']?>><a href="space.php?uid=<?=$space['uid']?>&do=<?=$do?>&view=we"><span>好友最新今日资讯</span></a></li><?php } ?>
-<li<?=$actives['all']?>><a href="space.php?uid=<?=$space['uid']?>&do=<?=$do?>&view=all"><span>大家的今日资讯</span></a></li>
-<li<?=$actives['me']?>><a href="space.php?uid=<?=$space['uid']?>&do=<?=$do?>&view=me"><span>我的今日资讯</span></a></li>
-<li<?=$actives['click']?>><a href="space.php?uid=<?=$space['uid']?>&do=<?=$do?>&view=click"><span>我表态过的今日资讯</span></a></li>
-<li class="null"><a href="cp.php?ac=news">发表新今日资讯</a></li>
+<li class="active"><a href="javascript:;"><span>凑个热闹</span></a></li>
+<li><a href="space.php?do=topic&topicid=<?=$topicid?>"><span>查看热闹</span></a></li>
 </ul>
-</div>		
-<?php } else { ?>
-<?php $_TPL['spacetitle'] = "今日资讯";
-	$_TPL['spacemenus'][] = "<a href=\"space.php?uid=$space[uid]&do=$do&view=me\">TA的所有今日资讯</a>"; ?>
-<div class="c_header a_header">
-<div class="avatar48"><a href="space.php?uid=<?=$space['uid']?>"><?php echo avatar($space[uid],small); ?></a></div>
-<?php if($_SGLOBAL['refer']) { ?>
-<a class="r_option" href="<?=$_SGLOBAL['refer']?>">&laquo; 返回上一页</a>
-<?php } ?>
-<p style="font-size:14px"><?=$_SN[$space['uid']]?>的<?=$_TPL['spacetitle']?></p>
-<a href="space.php?uid=<?=$space['uid']?>" class="spacelink"><?=$_SN[$space['uid']]?>的主页</a>
-<?php if($_TPL['spacemenus']) { ?>
-<?php if(is_array($_TPL['spacemenus'])) { foreach($_TPL['spacemenus'] as $value) { ?> <span class="pipe">&raquo;</span> <?=$value?><?php } } ?>
+<?php if(checkperm('managetopic') || $topic['uid']==$_SGLOBAL['supe_uid']) { ?>
+<div class="r_option">
+<a href="cp.php?ac=topic&op=edit&topicid=<?=$topic['topicid']?>">编辑</a> | 
+<a href="cp.php?ac=topic&op=delete&topicid=<?=$topic['topicid']?>" id="a_delete_<?=$topic['topicid']?>" onclick="ajaxmenu(event,this.id);">删除</a>
+</p>
+</div>
 <?php } ?>
 </div>
 
-<div class="h_status">按照发布时间排序</div>
-<?php } ?>
 
-<div id="content" style="width:640px;">
-<?php if($_GET['orderby'] && $_GET['orderby'] != 'dateline') { ?>
-<div class="h_status">
-排行时间范围：
-<a href="space.php?do=news&view=all&orderby=<?=$_GET['orderby']?>"<?=$day_actives['0']?>>全部</a><span class="pipe">|</span>
-<a href="space.php?do=news&view=all&orderby=<?=$_GET['orderby']?>&day=1"<?=$day_actives['1']?>>最近一天</a><span class="pipe">|</span>
-<a href="space.php?do=news&view=all&orderby=<?=$_GET['orderby']?>&day=2"<?=$day_actives['2']?>>最近两天</a><span class="pipe">|</span>
-<a href="space.php?do=news&view=all&orderby=<?=$_GET['orderby']?>&day=7"<?=$day_actives['7']?>>最近七天</a><span class="pipe">|</span>
-<a href="space.php?do=news&view=all&orderby=<?=$_GET['orderby']?>&day=30"<?=$day_actives['30']?>>最近三十天</a><span class="pipe">|</span>
-<a href="space.php?do=news&view=all&orderby=<?=$_GET['orderby']?>&day=90"<?=$day_actives['90']?>>最近三个月</a><span class="pipe">|</span>
-<a href="space.php?do=news&view=all&orderby=<?=$_GET['orderby']?>&day=120"<?=$day_actives['120']?>>最近六个月</a>
-</div>
+<div class="affiche">
+<table width="100%">
+<tr>
+<?php if($topic['pic']) { ?>
+<td width="160" id="event_icon" valign="top">
+<img src="<?=$topic['pic']?>" width="150">
+</td>
 <?php } ?>
+<td valign="top">
+<h2>
+<a href="space.php?do=topic&topicid=<?=$topic['topicid']?>"><?=$topic['subject']?></a>
+</h2>
 
-<?php if($searchkey) { ?>
-<div class="h_status">以下是搜索今日资讯 <span style="color:red;font-weight:bold;"><?=$searchkey?></span> 结果列表</div>
-<?php } ?>
-
-<?php if($count) { ?>
-<div class="entry_list">
+<div style="padding:5px 0;"><?=$topic['message']?></div>
 <ul>
-<?php if(is_array($list)) { foreach($list as $value) { ?>
-<li>
-<div class="avatardiv">
-<div class="avatar48"><a href="space.php?uid=<?=$value['uid']?>"><?php echo avatar($value[uid],small); ?></a></div>
-<?php if($value['hot']) { ?><div class="digb"><?=$value['hot']?></div><?php } ?>
-</div>
-
-<div class="title">
-<a href="cp.php?ac=share&type=news&id=<?=$value['newsid']?>" id="a_share_<?=$value['newsid']?>" onclick="ajaxmenu(event, this.id, 1)" class="a_share">分享</a>
-<h4><a href="space.php?uid=<?=$value['uid']?>&do=<?=$do?>&id=<?=$value['newsid']?>" <?php if($value['magiccolor']) { ?> class="magiccolor<?=$value['magiccolor']?>"<?php } ?>><?=$value['subject']?></a></h4>
-<div>
-<?php if($value['friend']) { ?>
-<span class="r_option locked gray"><a href="<?=$theurl?>&friend=<?=$value['friend']?>" class="gray"><?=$friendsname[$value['friend']]?></a></span>
+<li class="gray">发起作者: <a href="space.php?uid=<?=$topic['uid']?>"><?=$_SN[$topic['uid']]?></a></li>
+<li class="gray">发起时间: <?=$topic['dateline']?></li>
+<?php if($topic['endtime']) { ?><li class="gray">参与截止: <?=$topic['endtime']?></li><?php } ?>
+<?php if($topic['joinnum']) { ?>
+<li class="gray">参与人次: <?=$topic['joinnum']?></li>
 <?php } ?>
-<a href="space.php?uid=<?=$value['uid']?>"><?=$_SN[$value['uid']]?></a> <span class="gray"><?php echo sgmdate('Y-m-d H:i',$value[dateline],1); ?></span>
-</div>
-</div>
-<div class="detail image_right l_text s_clear" id="news_article_<?=$value['newsid']?>">
-<?php if($value['pic']) { ?><p class="image"><a href="space.php?uid=<?=$value['uid']?>&do=news&id=<?=$value['newsid']?>"><img src="<?=$value['pic']?>" alt="<?=$value['subject']?>" /></a></p><?php } ?>
-<?=$value['message']?>
-</div>
-<div class="gray">
-<?php if($classarr[$value['classid']]) { ?>分类: <a href="space.php?uid=<?=$value['uid']?>&do=news&classid=<?=$value['classid']?>"><?=$classarr[$value['classid']]?></a><span class="pipe">|</span><?php } ?>
-<?php if($value['viewnum']) { ?><a href="space.php?uid=<?=$value['uid']?>&do=<?=$do?>&id=<?=$value['newsid']?>"><?=$value['viewnum']?> 次阅读</a><span class="pipe">|</span><?php } ?>
-<?php if($value['replynum']) { ?><a href="space.php?uid=<?=$value['uid']?>&do=<?=$do?>&id=<?=$value['newsid']?>#comment"><?=$value['replynum']?> 个评论</a><?php } else { ?>没有评论<?php } ?>
-</div>
-</li>
-<?php } } ?>
-<?php if($pricount) { ?>
-<li>
-<div class="title">本页有 <?=$pricount?> 篇今日资讯因作者的隐私设置而隐藏</div>
-</li>
+<li class="gray">最后参与: <?=$topic['lastpost']?></li>
+</ul>
+
+<?php if($topic['allowjoin']) { ?>
+<a href="<?=$topic['joinurl']?>" class="feed_po" id="hot_add" onmouseover="showMenu(this.id)">凑个热闹</a>
+<ul id="hot_add_menu" class="dropmenu_drop" style="display:none;">
+<?php if(in_array('blog', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=blog&topicid=<?=$topicid?>">发表日志</a></li>
+<?php } ?>
+<?php if(in_array('pic', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=upload&topicid=<?=$topicid?>">上传图片</a></li>
+<?php } ?>
+<?php if(in_array('thread', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=thread&topicid=<?=$topicid?>">发起话题</a></li>
+<?php } ?>
+<?php if(in_array('poll', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=poll&topicid=<?=$topicid?>">发起投票</a></li>
+<?php } ?>
+<?php if(in_array('event', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=event&topicid=<?=$topicid?>">发起活动</a></li>
+<?php } ?>
+<?php if(in_array('share', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=share&topicid=<?=$topicid?>">添加分享</a></li>
 <?php } ?>
 </ul>
+<?php } else { ?>
+<p class="r_option">该热闹已经截止</p>
+<?php } ?>
+</td>
+</tr></table>
 </div>
-
-<div class="page"><?=$multi?></div>
 
 <?php } else { ?>
-<div class="c_form">还没有相关的今日资讯。</div>
+<h2 class="title"><img src="image/app/navnews.gif" />首页大图</h2>
+<div class="tabs_header">
+<ul class="tabs">
+<?php if($navnews['navnewsid']) { ?>
+<li class="active"><a href="cp.php?ac=navnews&navnewsid=<?=$navnews['navnewsid']?>"><span>编辑首页大图</span></a></li>
 <?php } ?>
-
-</div>
-
-<div id="sidebar" style="width:150px;">
-
-<?php if($userlist) { ?>
-<div class="cat">
-<h3>按好友查看</h3>
-<ul class="post_list line_list">
-<li>
-选择好友:<br>
-<select name="fuidsel" onchange="fuidgoto(this.value);">
-<option value="">全部好友</option>
-<?php if(is_array($userlist)) { foreach($userlist as $value) { ?>
-<option value="<?=$value['fuid']?>"<?=$fuid_actives[$value['fuid']]?>><?=$_SN[$value['fuid']]?></option>
-<?php } } ?>
-</select>
-</li>
+<li<?php if(empty($navnews['navnewsid'])) { ?> class="active"<?php } ?>><a href="cp.php?ac=navnews"><span>发表新首页大图</span></a></li>
+<li><a href="space.php?uid=<?=$space['uid']?>&do=news&orderby=dateline"><span>返回我的首页大图</span></a></li>
 </ul>
 </div>
 <?php } ?>
 
-<?php if($classarr) { ?>
-<div class="cat">
-<h3>今日资讯分类</h3>
-<ul class="post_list line_list">
-<li<?php if(!$_GET['classid']) { ?> class="current"<?php } ?>><a href="space.php?uid=<?=$space['uid']?>&do=news&view=me">全部今日资讯</a></li>
-<?php if(is_array($classarr)) { foreach($classarr as $classid => $classname) { ?>
-<li<?php if($_GET['classid']==$classid) { ?> class="current"<?php } ?>>
-<?php if($space['self']) { ?>
-<a href="cp.php?ac=class&op=edit&classid=<?=$classid?>" id="c_edit_<?=$classid?>" onclick="ajaxmenu(event, this.id)" class="c_edit">编辑</a>
-<a href="cp.php?ac=class&op=delete&classid=<?=$classid?>" id="c_delete_<?=$classid?>" onclick="ajaxmenu(event, this.id)" class="c_delete">删除</a>
-<?php } ?>
-<a href="space.php?uid=<?=$space['uid']?>&do=news&classid=<?=$classid?>&view=me"><?=$classname?></a>
-</li>
-<?php } } ?>
-</ul>
-</div>
-<?php } ?>
+<div class="c_form">
 
-<?php if($_GET['view'] == 'click') { ?>
-<div class="cat">
-<h3>表态动作</h3>
-<ul class="post_list line_list">
-<li<?=$click_actives['all']?>><a href="space.php?do=news&view=click">全部动作</a></li>
-<?php if(is_array($clicks)) { foreach($clicks as $value) { ?>
-<li<?=$click_actives[$value['clickid']]?>>
-<a href="space.php?do=news&view=click&clickid=<?=$value['clickid']?>"><?=$value['name']?></a>
-</li>
-<?php } } ?>
-</ul>
-</div>
-<?php } elseif($_GET['view'] == 'all') { ?>
-<div class="cat">
-<h3>排行榜</h3>
-<ul class="post_list line_list">
-<li<?=$all_actives['all']?>><a href="space.php?do=news&view=all">推荐阅读</a></li>
-<li<?=$all_actives['dateline']?>><a href="space.php?do=news&view=all&orderby=dateline">最新发表</a></li>
-<li<?=$all_actives['hot']?>><a href="space.php?do=news&view=all&orderby=hot&day=<?=$_GET['hotday']?>">人气排行</a></li>
-<li<?=$all_actives['replynum']?>><a href="space.php?do=news&view=all&orderby=replynum&day=<?=$_GET['hotday']?>">评论排行</a></li>
-<li<?=$all_actives['viewnum']?>><a href="space.php?do=news&view=all&orderby=viewnum&day=<?=$_GET['hotday']?>">查看排行</a></li>
-<?php if(is_array($clicks)) { foreach($clicks as $value) { ?>
-<li<?=$all_actives['click_'.$value['clickid']]?>><a href="space.php?do=news&view=all&orderby=click_<?=$value['clickid']?>&day=<?=$_GET['hotday']?>"><?=$value['name']?>排行</a></li>
-<?php } } ?>
-</ul>
+<style type="text/css">
+.userData {behavior:url(#default#userdata);}
+</style>
+
+首页大图发布:<hr style="height:1px;border:none;border-top:1px dashed #555555;"/>
+<form method="post" action="cp.php?ac=navnews" enctype="multipart/form-data">
+<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
+<tr>
+<td>
+封面图片下面字体:<input type="text" class="t_input" id="subject" name="subject" value="<?=$navnews['subject']?>" size="60" onblur="relatekw();" /><br/>
+封面图片:<input type="file" name="files" value="<?=$navnews['imageurl']?>" /><br/>
+封面描述:<textarea name="message"></textarea>
+</td>
+</tr>
+</table>
+<input type="hidden" name="navnewssubmit" value="true" />
+<input type="submit" id="navnewsbutton" name="navnewsbutton" value="提交发布" onclick="validate(this);"  />
+<input type="hidden" name="topicid" value="<?=$_GET['topicid']?>" />
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+</form>
+专题发布发布:<hr style="height:1px;border:none;border-top:1px dashed #555555;"/>
+<form method="post" action="cp.php?ac=navnews" enctype="multipart/form-data">
+<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
+<tr>
+<td>
+专题图片下面字体:<input type="text" class="t_input" id="subject" name="subject" value="<?=$navnews['subject']?>" size="60" onblur="relatekw();" /><br/>
+专题图片:<input type="file" name="files" value="<?=$navnews['imageurl']?>" /><br/>
+专题链接:<textarea name="message"></textarea>
+</td>
+</tr>
+</table>
+<input type="hidden" name="zhuantisubmit" value="true" />
+<input type="submit" id="zhuantibutton" name="zhuantibutton" value="提交发布" onclick="validate(this);"  />
+
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+</form>
 
 </div>
-<?php } ?>
-
-</div>
-
-<script>
-function fuidgoto(fuid) {
-window.location.href = "space.php?do=news&view=we&fuid="+fuid;
-}
-</script>
-<?php } ?>
 
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>

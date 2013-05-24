@@ -47,8 +47,7 @@
 			<li class="active"><a href="cp.php?ac=news&newsid=$news[newsid]"><span>编辑今日资讯</span></a></li>
 			<!--{/if}-->
 			<li<!--{if empty($news[newsid])}--> class="active"<!--{/if}-->><a href="cp.php?ac=news"><span>发表新今日资讯</span></a></li>
-			<li><a href="cp.php?ac=import"><span>今日资讯导入</span></a></li>
-			<li><a href="space.php?uid=$space[uid]&do=news&view=me"><span>返回我的今日资讯</span></a></li>
+			<li><a href="space.php?uid=$space[uid]&do=news&orderby=dateline"><span>返回我的今日资讯</span></a></li>
 		</ul>
 	</div>
 <!--{/if}-->
@@ -75,7 +74,8 @@
 						<!--{/loop}-->
 						<!--{if !$news['uid'] || $news['uid']==$_SGLOBAL['supe_uid']}--><option value="addoption" style="color:red;">+新建分类</option><!--{/if}-->
 					</select>
-					<input type="text" class="t_input" id="subject" name="subject" value="$news[subject]" size="60" onblur="relatekw();" />
+					<input type="text" class="t_input" id="subject" name="subject" value="$news[subject]" size="60" onblur="relatekw();" /><br/>
+					封面图片:<input type="file" name="files" value="$news[imageurl]" />
 				</td>
 			</tr>
 			<tr>

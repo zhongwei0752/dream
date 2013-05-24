@@ -1,7 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_news', '1369277241', 'template/green/space_news');?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_news', '1369389499', 'template/green/space_news');?><head>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -40,67 +37,19 @@
 <div id="feature_wrap">
 <!-- ###################################################################### -->
 <div id="featured">
-
+<?php if(is_array($list2)) { foreach($list2 as $value2) { ?>
 <div class="featured featured1">
 <a href="single.html">
 <span class='feature_excerpt'>
-<strong class='sliderheading'>Tutorial: Picture of the week</strong>
+<strong class='sliderheading'><?=$value2['subject']?></strong>
 <span class='slidercontent'>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+<?=$value2['message']?>
 </span>
 </span>
-<img src="http://www.kriesi.at/demos/newscast/light/files/content_pic1.jpg" alt="" />
+<img src="<?=$value2['image1url']?>" alt="" />
 </a>
 </div><!-- end .featured -->
-
-<div class="featured featured2">
-<a href="single.html">
-<span class='feature_excerpt'>
-<strong class='sliderheading'>How to create a picture with vivid colors</strong>
-<span class='slidercontent'>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  										Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-</span>
-</span>
-<img src="http://www.kriesi.at/demos/newscast/light/files/content_pic2.jpg" alt="" />
-</a>
-</div><!-- end .featured -->
-
-<div class="featured featured3">
-<a href="single.html">
-<span class='feature_excerpt'>
-<strong class='sliderheading'>Tutorial: Funky artwork in Illustrator</strong>
-<span class='slidercontent'>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 										Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-</span>
-</span>
-<img src="http://www.kriesi.at/demos/newscast/light/files/content_pic3.jpg" alt="" />
-</a>
-</div><!-- end .featured -->
-
-<div class="featured featured4">
-<a href="single.html">
-<span class='feature_excerpt'>
-<strong class='sliderheading'>How to create a beautiful sunset with Photoshop</strong>
-<span class='slidercontent'>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  										Ut enim ad minim veniam, Ut enim ad minim veniam, Ut enim ad minim veniam.
-</span>
-</span>
-<img src="http://www.kriesi.at/demos/newscast/light/files/content_pic4.jpg" alt="" />
-</a>
-</div><!-- end .featured -->
-
-<div class="featured featured5">
-<a href="single.html">
-<span class='feature_excerpt'>
-<strong class='sliderheading'>How to draw realistic ballons in Photoshop</strong>
-<span class='slidercontent'>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna  										Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-</span>
-</span>
-<img src="http://www.kriesi.at/demos/newscast/light/files/content_pic5.jpg" alt="" />
-</a>
-</div><!-- end .featured -->
-
+<?php } } ?>
 </div><!-- end #featured --> 
 
 <span class='bottom_right_rounded_corner ie6fix'></span>
@@ -118,7 +67,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 <?php if(is_array($list)) { foreach($list as $value) { ?>
 <div class="entry">
 <div class="entry-previewimage rounded preloading_background">
-<a href="single.html"><img height="180" width="180" src="http://www.kriesi.at/demos/newscast/light/files/medium_pic1.jpg" alt="" /></a>
+<a href="single.html"><img height="180" width="180" src="<?=$value['image1url']?>" alt="" /></a>
 </div>
 
 <div class="entry-content">
@@ -157,13 +106,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 
 
 
-<div class="pagination">
-<span class="current">1</span>
-<a href="#" class="inactive">2</a>
-<a href="#" class="inactive">3</a>
-<a href="#" class="inactive">4</a>
-<a href="#" class="inactive">5</a>
-</div>
+<div class="page"><?=$multi?></div>
 
 
 </div> 
@@ -174,45 +117,24 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 <div class="sidebar ">
 
 <div class="box box_small community_news">
-            <h3>Community News</h3>
-<div class='entry box_entry'>
-<h4><a href='single.html'>How to use the upcoming CSS 3 properties in IE 6</a></h4>
-<a class='alignleft preloading_background' href='single.html'><img src='http://www.kriesi.at/demos/newscast/light/files/mini_pic1.jpg' alt='' class='rounded'/></a>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad min.</p>
-</div>
 
+            <h3>简讯</h3>
+            <?php if(is_array($list1)) { foreach($list1 as $value1) { ?>
 <div class='entry box_entry'>
-<h4><a href='single.html'>Holidays in Florida</a></h4>
-<a class='alignleft preloading_background' href='single.html'><img src='http://www.kriesi.at/demos/newscast/light/files/mini_pic2.jpg' alt='' class='rounded'/></a>
-<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad min lorem ipsum dolor sit amet, consectetur adipisicing elit,</p>
-</div>
-
-<div class='entry box_entry'>
-<h4><a href='single.html'>Road to Perdition</a></h4>
-<a class='alignleft preloading_background' href='single.html'><img src='http://www.kriesi.at/demos/newscast/light/files/mini_pic3.jpg' alt='' class='rounded'/></a>
-<p>Ut enim ad min lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-</div>
-
-<div class='entry box_entry'>
-<h4><a href='single.html'>Vienna by night is a really beautiful city</a></h4>
-<a class='alignleft preloading_background' href='single.html'><img src='http://www.kriesi.at/demos/newscast/light/files/mini_pic4.jpg' alt='' class='rounded'/></a>
-<p>Consectetur adipisicing elit. Sed do eiusmod tempor sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad min lorem ipsum dolor sit amet.</p>
-</div>
-
+<h4><?=$value1['subject']?></h4>
+<a class='alignleft preloading_background' href='single.html'><img src='<?=$value1['image1url']?>' alt='' class='rounded'/></a>
+<p><?=$value1['message']?></p>
+</div>	<?php } } ?>
             </div><!--end box -->
             
             
 <div class="box box_small">
-            <h3>Archives</h3>
+            <h3>新闻排行榜</h3>
 <ul>
-            	<li><a title="December 2009" href="archive.html">December 2009</a></li>
-<li><a title="September 2009" href="archive.html">September 2009</a></li>
-<li><a title="November 2008" href="archive.html">November 2008</a></li>
-<li><a title="January 2007" href="archive.html">January 2007</a></li>
-<li><a title="December 2009" href="archive.html">December 2006</a></li>
-<li><a title="September 2009" href="archive.html">September 2005</a></li>
-<li><a title="November 2008" href="archive.html">November 2005</a></li>
-<li><a title="January 2007" href="archive.html">January 2004</a></li>
+            	<li><a title="评论排行" href="space.php?do=news&view=all&orderby=replynum&day=7">评论排行</a></li>
+<li><a title="查看排行" href="space.php?do=news&view=all&orderby=viewnum&day=7">查看排行</a></li>
+<li><a title="顶排行" href="space.php?do=news&view=all&orderby=click_20&day=7">顶排行</a></li>
+<li><a title="倒排行" href="space.php?do=news&view=all&orderby=click_21&day=7">倒排行</a></li>
             </ul>
             </div><!--end box -->
             
@@ -221,32 +143,34 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 
 <div class="sidebar ">
 <div class="box box_small link_list">
-            	<h3>Advertise with us</h3>
-            	<a href='http://www.themeforest.net?ref=Kriesi'><img src='http://www.kriesi.at/demos/newscast/light/files/tf.gif' class='rounded' height="125" width="125" alt='' /></a>
-            	<a href='http://www.activeden.net?ref=Kriesi'><img src='http://www.kriesi.at/demos/newscast/light/files/actived.gif' class='rounded' height="125" width="125" alt='' /></a>
-            	<a href='http://www.codecanyon.net?ref=Kriesi'><img src='http://www.kriesi.at/demos/newscast/light/files/cc.gif' class='rounded' height="125" width="125" alt='' /></a>
-            	<a href='http://www.graphicriver.net?ref=Kriesi'><img src='http://www.kriesi.at/demos/newscast/light/files/gr.gif' class='rounded' height="125" width="125" alt='' /></a>
+            	<h3>专题</h3>
+            	<?php if(is_array($list3)) { foreach($list3 as $value3) { ?>
+            	<a href='<?=$value3['message']?>'><img src='<?=$value3['image1url']?>' class='rounded' height="125" width="125" alt='<?=$value3['subject']?>' /></a><span>专题名:<?=$value3['subject']?></span><?php } } ?>
+
+            	
 
             	</div><!--end box -->
 
 <div class="box box_small">
-            	<h3>Categories</h3>
+            	<h3>投稿</h3>
 <ul>
-            	<li><a href="archive.html">Photoshop</a></li>
-<li><a href="archive.html">Photography</a></li>
-<li><a href="archive.html">Web Design</a></li>
-<li><a href="archive.html">Coding</a></li>
-<li><a href="archive.html">Painting</a></li>
+            	<li><a href="#">邮箱:<br/>623610577@qq.com</a></li>
+<li><a href="#">QQ:623610577</a></li>
             </ul>
             </div><!--end box -->
             
             <div class="box box_small">
-            	<h3>Pages</h3>
+            	<h3>导航</h3>
 <ul>
-            	<li><a href="page.html">About this Project</a></li>
-<li><a href="page.html">Team</a></li>
-<li><a href="page.html">Jobs</a></li>
-<li><a href="contact.php">Contact</a></li>
+            	<li><a href="space.php?do=home">首页</a></li>
+<li><a href="space.php?do=medicine">用药助手</a></li>
+<li><a href="space.php?do=activity">活动</a></li>
+<li><a href="space.php?do=group">群组</a></li>
+<li><a href="space.php?do=discussion">案例讨论</a></li>
+<li><a href="space.php?do=joke">医疗笑话</a></li>
+<li><a href="space.php?do=news&orderby=dateline">今日资讯</a></li>
+
+
             </ul>
             </div><!--end box -->
             
@@ -261,66 +185,53 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 </div><!-- end contentwrap --> 
 <!-- ###################################################################### -->
 
-
 <!-- Footer     ########################################################### -->
 <div id="footerwrap">
 <div id="footer">
 <!-- ###################################################################### -->
 <div class="column column1">
 <div class="box box_small">
-        <h3>Archive</h3>
+<?php if($_SN[$_SGLOBAL['supe_uid']]=='admin') { ?>
+        <h3>管理员发布</h3>
 <ul>
-        	<li><a title="December 2009" href="archive.html">December 2009</a></li>
-<li><a title="September 2009" href="archive.html">September 2009</a></li>
-<li><a title="November 2008" href="archive.html">November 2008</a></li>
-<li><a title="January 2007" href="archive.html">January 2007</a></li>
+        	<li><a title="发布新闻" href="cp.php?ac=news">发布新闻</a></li>
+<li><a title="发布简讯" href="cp.php?ac=littlenews">发布简讯</a></li>
+<li><a title="发布首页大图" href="cp.php?ac=navnews">发布首页大图&专题</a></li>
+
         </ul>
+        <?php } else { ?>
+        <h3>用户快捷入口</h3>
+<ul>
+        	<li><a title="查询药品" href="space.php?do=medicine">查询药品</a></li>
+<li><a title="发起活动" href="cp.php?ac=event">发起活动</a></li>
+<li><a title="创建群组" href="cp.php?ac=mtag">创建群组</a></li>
+<li><a title="发起新话题" href="cp.php?ac=thread">发起新话题</a></li>
+<li><a title="发起新案例讨论" href="cp.php?ac=discussion">发起新案例讨论</a></li>
+<li><a title="查看医疗笑话" href="space.php?do=joke">查看医疗笑话</a></li>
+<li><a title="查看本周专题" href="space.php?do=subject">查看本周专题</a></li>
+
+
+        </ul>
+        <?php } ?>
     </div><!--end box -->
     
-    <div class="box box_small">
-        <h3>Categories</h3>
-<ul>
-    			<li><a href="archive.html">Photoshop</a></li>
-<li><a href="archive.html">Photography</a></li>
-<li><a href="archive.html">Web Design</a></li>
-        </ul>
-    </div><!--end box -->
+   
     </div>
     
     <div class="column column2">
 <div class="box box_small gallery">
-        <h3>Gallery</h3>
+        <h3>逝去的岁月，华丽的分割线</h3>
 <ul class="flickr">
-<li><a title="Jetty" href="http://www.flickr.com/photos/ukphotoart/4337815441/in/pool-613394@N22">
-<img alt="Jetty" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_1.jpg" /></a></li>
-<li><a title="genesis" href="http://www.flickr.com/photos/tbhpyrhe/4340647027/in/pool-613394@N22">
-<img alt="genesis" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_2.jpg" /></a></li>
-<li><a title="Buddha of earth" href="http://www.flickr.com/photos/rensrecluse/4331523575/in/pool-613394@N22">
-<img alt="Buddha of earth" src="files/gallery/pic_3.jpg" /></a></li>
-<li><a title="Web Design" href="http://www.flickr.com/photos/8144623@N08/4341234800/in/pool-613394@N22">
-<img alt="Web Design" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_4.jpg" /></a></li>
-<li><a title="Web Design" href="http://www.flickr.com/photos/8144623@N08/4341234796/in/pool-613394@N22">
-<img alt="Web Design" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_5.jpg" /></a></li>
-<li><a title="OP" href="http://www.flickr.com/photos/satoboy/4340576325/in/pool-613394@N22">
-<img alt="OP" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_6.jpg" /></a></li>
-<li><a title="Unbound Dance Company" href="http://www.flickr.com/photos/11916764@N05/4340570423/in/pool-613394@N22">
-<img alt="Unbound Dance Company" src="files/gallery/pic_7.jpg" /></a></li>
-<li><a title="Untitled" href="http://www.flickr.com/photos/vearts/4340519289/in/pool-613394@N22">
-<img alt="Untitled" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_8.jpg" /></a></li>
-<li><a title="lyann" href="http://www.flickr.com/photos/30154406@N08/4326774184/in/pool-613394@N22">
-<img alt="lyann" src="http://www.kriesi.at/demos/newscast/light/files/gallery/pic_9.jpg" /></a></li>
+<li><a title="时间轴" href="space.php?do=timer">时间轴</a></li>
 </ul>
     </div><!--end box -->
     </div>
     
         <div class="column column3">
 <div class="box box_small">
-<h3><a href="page.html">Contribute to our Site!</a></h3>
-<p>Consectetur adipisicing elit tempor incididunt ut labore. Sed do eiusmod tempor incididunt ut labore. Consectetur adipisicing elit.</p>
-<p class='small_block'><img alt="" src="images/skin1/newspaper_add_32.png" class='ie6fix noborder alignleft'/>If you want to contribute tutorials, news or other stuff please contact us. We pay 150 for each approved article.</p>
-<p class='small_block'><img alt="" src="images/skin1/lightbulb_32.png" class='ie6fix noborder alignleft'/>Consectetur adipisicing elit. Sed do eiusmod tempor incididunt ut labore.</p>
-<p class='small_block'><img alt="" src="images/skin1/info_button_32.png" class='ie6fix noborder alignleft'/>This site uses valid HTML and CSS. All content Copyright &copy; 2010 Newscast, Inc</p>
-<p class='small_block'><img alt="" src="images/skin1/rss_32.png" class='ie6fix noborder alignleft'/>If you like what we do, please don't hestitate and subscribe to our <a href=''>RSS Feed.</a></p>
+<h3><a href="#">power by watermelon team</a></h3>
+<p>西瓜冰团队-永不逝去的名字</p>
+
 </div>
     </div>
     
@@ -328,7 +239,4 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 <!-- ###################################################################### -->
 </div><!-- end footer --> 
 </div><!-- end footerwrap --> 
-<!-- ###################################################################### -->	
-
-</body>
-</html><?php ob_out();?>
+<!-- ###################################################################### -->	<?php ob_out();?>

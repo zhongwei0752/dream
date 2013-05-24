@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_news|template/green/header|template/green/cp_topic_menu|template/green/footer|template/green/space_topic_inc', '1369277044', 'template/green/cp_news');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_thread|template/green/header|template/green/cp_topic_menu|template/green/footer|template/green/space_topic_inc', '1369389219', 'template/green/cp_thread');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -109,17 +109,76 @@
 <?php } ?>
 
 
-<?php if($_GET['op'] == 'delete') { ?>
+<?php if($_GET['op'] == 'edit') { ?>
 
-<h1>删除今日资讯</h1>
+
+
+<h1>编辑</h1>
 <a href="javascript:hideMenu();" class="float_del" title="关闭">关闭</a>
 <div class="popupmenu_inner">
-<form method="post" action="cp.php?ac=news&op=delete&newsid=<?=$newsid?>">
-<p>确定删除指定的今日资讯吗？</p>
+
+<form id="editpostform_<?=$pid?>" name="editpostform_<?=$pid?>" method="post" action="cp.php?ac=thread&op=edit&pid=<?=$pid?>&tagid=<?=$tagid?>&eventid=<?=$eventid?>">
+<table>
+<tr>
+<th style="vertical-align: top;"><label for="message">内容：</label></th>
+<td>
+<a href="###" id="face_<?=$pid?>" onclick="showFace(this.id, 'message_<?=$pid?>');return false;"><img src="image/facelist.gif" align="absmiddle" /></a>
+<img src="image/zoomin.gif" onmouseover="this.style.cursor='pointer'" onclick="zoomTextarea('message_<?=$pid?>', 1)">
+<img src="image/zoomout.gif" onmouseover="this.style.cursor='pointer'" onclick="zoomTextarea('message_<?=$pid?>', 0)"><br/>
+<textarea id="message_<?=$pid?>" name="message" onkeydown="ctrlEnter(event, 'posteditsubmit_btn');" <?php if($post['isthread']) { ?>rows="18" style="width:98%;"<?php } else { ?>rows="8" cols="50"<?php } ?>><?=$post['message']?></textarea>
+</td>
+</tr>
+<tbody id="editwebimg">
+<tr>
+<th>图片：</th>
+<td>
+<input class="t_input" type="text" onfocus="if(this.value == 'http://')this.value='';" onblur="if(this.value=='')this.value='http://'" name="pics[]" value="http://" size="40" />&nbsp;
+<a href="javascript:;" onclick="insertWebImg(this.previousSibling.previousSibling)">插入</a> &nbsp;
+<a href="javascript:;" onclick="delRow(this, 'editwebimg')">删除</a>
+</td>
+</tr>
+</tbody>
+<tr>
+<th>&nbsp;</th>
+<td>
+<a href="javascript:;" onclick="copyRow('editwebimg')">+增加图片</a> <span class="gray">只支持 .jpg、.gif、.png为结尾的URL地址</span>
+</td>
+</tr>
+<tr>
+<th>&nbsp;</th>
+<td>
+<input type="hidden" name="pid" value="<?=$pid?>">
+<input type="hidden" name="refer" value="<?=$_SGLOBAL['refer']?>" />
+<input type="hidden" name="posteditsubmit" value="true" />
+<?php if($_SGLOBAL['inajax']) { ?>
+<input type="button" name="posteditsubmit_btn" id="posteditsubmit_btn" value="提交" class="submit" onclick="ajaxpost('editpostform_<?=$pid?>', 'post_edit', 1)" />
+<?php } else { ?>
+<input type="submit" name="posteditsubmit_btn" id="posteditsubmit_btn" value="提交" class="submit" />
+<?php } ?>
+
+<div id="__editpostform_<?=$pid?>"></div>
+</td>
+</tr>
+</table>
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+</form>
+</div>
+
+<?php } elseif($_GET['op'] == 'delete') { ?>
+
+<h1>删除回帖</h1>
+<a href="javascript:hideMenu();" class="float_del" title="关闭">关闭</a>
+<div class="popupmenu_inner" id="__deletepostform_<?=$pid?>">
+<form id="deletepostform_<?=$pid?>" name="deletepostform_<?=$pid?>" method="post" action="cp.php?ac=thread&op=delete&pid=<?=$pid?>&tagid=<?=$tagid?>&eventid=<?=$eventid?>">
+<p>确定删除指定的帖子吗？</p>
 <p class="btn_line">
 <input type="hidden" name="refer" value="<?=$_SGLOBAL['refer']?>" />
-<input type="hidden" name="deletesubmit" value="true" />
-<input type="submit" name="btnsubmit" value="确定" class="submit" />
+<?php if($_SGLOBAL['inajax']) { ?>
+<input type="hidden" name="postdeletesubmit" value="true" />
+<input type="button" name="postdeletesubmit_btn" value="提交" class="submit" onclick="ajaxpost('deletepostform_<?=$pid?>', 'post_delete', 2000)" />&nbsp;
+<?php } else { ?>
+<input type="submit" name="postdeletesubmit" value="提交" class="submit" />&nbsp;
+<?php } ?>
 </p>
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
 </form>
@@ -130,9 +189,9 @@
 <h1>调整热度</h1>
 <a href="javascript:hideMenu();" class="float_del" title="关闭">关闭</a>
 <div class="popupmenu_inner">
-<form method="post" action="cp.php?ac=news&op=edithot&newsid=<?=$newsid?>">
+<form method="post" action="cp.php?ac=thread&op=edithot&tid=<?=$tid?>">
 <p class="btn_line">
-新的热度：<input type="text" name="hot" value="<?=$news['hot']?>" size="5"> 
+新的热度：<input type="text" name="hot" value="<?=$thread['hot']?>" size="5">
 <input type="hidden" name="refer" value="<?=$_SGLOBAL['refer']?>" />
 <input type="hidden" name="hotsubmit" value="true" />
 <input type="submit" name="btnsubmit" value="确定" class="submit" />
@@ -141,10 +200,63 @@
 </form>
 </div>
 
+<?php } elseif($_GET['op'] == 'reply') { ?>
+
+<h1>回复</h1>
+<a href="javascript:hideMenu();" class="float_del" title="关闭">关闭</a>
+<div class="popupmenu_inner">
+<form id="reply_postform_<?=$post['pid']?>" name="reply_postform_<?=$post['pid']?>" method="post" action="cp.php?ac=thread&eventid=<?=$eventid?>">
+<table>
+<tr>
+<th><label for="message">内容：</label></th>
+<td>
+<a href="###" id="face_<?=$post['pid']?>" onclick="showFace(this.id, 'message_<?=$post['pid']?>');return false;"><img src="image/facelist.gif" align="absmiddle" /></a>
+<img src="image/zoomin.gif" onmouseover="this.style.cursor='pointer'" onclick="zoomTextarea('message_<?=$post['pid']?>', 1)">
+<img src="image/zoomout.gif" onmouseover="this.style.cursor='pointer'" onclick="zoomTextarea('message_<?=$post['pid']?>', 0)"><br/>
+<textarea id="message_<?=$post['pid']?>" name="message" onkeydown="ctrlEnter(event, 'postsubmit');" rows="8" cols="70"></textarea>
+</td>
+</tr>
+<tbody id="replybimg">
+<tr>
+<td>图片：</td>
+<td>
+<input class="t_input" type="text" name="pics[]" onfocus="if(this.value == 'http://')this.value='';" onblur="if(this.value=='')this.value='http://'" value="http://" size="30" />&nbsp;
+<a href="javascript:;" onclick="insertWebImg(this.previousSibling.previousSibling)">插入</a> &nbsp;
+<a href="javascript:;" onclick="delRow(this, 'replybimg')">删除</a>
+</td>
+</tr>
+</tbody>
+<tr>
+<th>&nbsp;</th>
+<td>
+<a href="javascript:;" onclick="copyRow('replybimg')">+增加图片</a> <span class="gray">只支持 .jpg、.gif、.png为结尾的URL地址</span>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td>
+<input type="hidden" name="refer" value="<?=$_SGLOBAL['refer']?>" />
+<input type="hidden" name="tid" value="<?=$post['tid']?>" />
+<input type="hidden" name="pid" value="<?=$post['pid']?>" />
+<?php if($_SGLOBAL['inajax']) { ?>
+<input type="hidden" name="postsubmit" value="true" />
+<input type="submit" name="postsubmit_btn" id="postsubmit" value="回复" class="submit" onclick="ajaxpost('reply_postform_<?=$post['pid']?>', 'post_add', 1)" />
+<?php } else { ?>
+<input type="submit" name="postsubmit" id="postsubmit" value="回复" class="submit" />
+<?php } ?>
+<div id="__reply_postform_<?=$post['pid']?>"></div>
+</td>
+</tr>
+</table>
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+</form>
+</div>
+
 <?php } else { ?>
 
 <script language="javascript" src="image/editor/editor_function.js"></script>
-<script language="javascript" src="source/script_news.js"></script>
+<script language="javascript" src="source/script_blog.js"></script>
 
 <?php if($topic) { ?>
 <h2 class="title">
@@ -219,118 +331,87 @@
 </div>
 
 <?php } else { ?>
-<h2 class="title"><img src="image/app/news.gif" />今日资讯</h2>
+<h2 class="title">
+<?php if($eventid) { ?>
+<img src="image/app/event.gif">活动 - <a href="space.php?do=event&id=<?=$eventid?>"><?=$event['title']?></a>
+<?php } else { ?>
+<img src="image/app/mtag.gif" />群组
+<?php } ?>
+</h2>
 <div class="tabs_header">
 <ul class="tabs">
-<?php if($news['newsid']) { ?>
-<li class="active"><a href="cp.php?ac=news&newsid=<?=$news['newsid']?>"><span>编辑今日资讯</span></a></li>
+<?php if($eventid) { ?>
+<li class="active"><a href="cp.php?ac=thread&eventid=<?=$eventid?>"><span>发表活动话题</span></a></li>
+<li><a href="space.php?do=event&id=<?=$eventid?>"><span>返回活动</span></a></li>
+<?php } elseif($thread) { ?>
+<li class="active"><a href="cp.php?ac=thread&op=edit&pid=<?=$post['pid']?>"><span>编辑话题</span></a></li>
+<li><a href="space.php?do=mtag&tagid=<?=$thread['tagid']?>&view=list"><span>返回讨论区</span></a></li>
+<?php } else { ?>
+<li class="active"><a href="cp.php?ac=thread"><span>发表新话题</span></a></li>
+<li><a href="space.php?do=thread&view=me"><span>返回我的话题</span></a></li>
 <?php } ?>
-<li<?php if(empty($news['newsid'])) { ?> class="active"<?php } ?>><a href="cp.php?ac=news"><span>发表新今日资讯</span></a></li>
-<li><a href="cp.php?ac=import"><span>今日资讯导入</span></a></li>
-<li><a href="space.php?uid=<?=$space['uid']?>&do=news&view=me"><span>返回我的今日资讯</span></a></li>
 </ul>
 </div>
 <?php } ?>
 
 <div class="c_form">
 
-<style type="text/css">
+<style>
 .userData {behavior:url(#default#userdata);}
 </style>
 
-
-<form method="post" action="cp.php?ac=news&newsid=<?=$news['newsid']?>" enctype="multipart/form-data">
+<form method="post" action="cp.php?ac=thread&eventid=<?=$eventid?>" enctype="multipart/form-data">
 <table cellspacing="4" cellpadding="4" width="100%" class="infotable">
+<?php if($eventid) { ?>
 <tr>
 <td>
-<select name="classid" id="classid" onchange="addSort(this)">
-<option value="0">选择分类</option>
-<?php if(is_array($classarr)) { foreach($classarr as $value) { ?>
-<?php if($value['classid'] == $news['classid']) { ?>
-<option value="<?=$value['classid']?>" selected><?=$value['classname']?></option>
+<input type="hidden" name="tagid" maxlength="100" value="<?=$tagid?>" />
+</td>
+</tr>
+<?php } elseif(!$tagid) { ?>
+<tr>
+<td>
+<select name="tagid" id="tagid">
+<?php if(is_array($mtaglist)) { foreach($mtaglist as $fieldid => $values) { ?>
+<?php if(is_array($values)) { foreach($values as $value) { ?>
+<option value="<?=$value['tagid']?>">[<?=$_SGLOBAL['profield'][$value['fieldid']]['title']?>] <?=$value['tagname']?></option>>
+<?php } } ?>
+<?php } } ?>
+</select>
+<a href="cp.php?ac=mtag">创建新群组</a>
+</td>
+</tr>
 <?php } else { ?>
-<option value="<?=$value['classid']?>"><?=$value['classname']?></option>
-<?php } ?>
-<?php } } ?>
-<?php if(!$news['uid'] || $news['uid']==$_SGLOBAL['supe_uid']) { ?><option value="addoption" style="color:red;">+新建分类</option><?php } ?>
-</select>
-<input type="text" class="t_input" id="subject" name="subject" value="<?=$news['subject']?>" size="60" onblur="relatekw();" />
-</td>
-</tr>
 <tr>
-<td>
-<a id="doodleBox" href="magic.php?mid=doodle&showid=news_doodle&target=uchome-ttHtmlEditor&from=editor" style="display:none"></a>
-<textarea class="userData" name="message" id="uchome-ttHtmlEditor" style="height:100%;width:100%;display:none;border:0px"><?=$news['message']?></textarea>
-<iframe src="editor.php?charset=<?=$_SC['charset']?>&allowhtml=<?=$allowhtml?>&doodle=<?php if(isset($_SGLOBAL['magic']['doodle'])) { ?>1<?php } ?>" name="uchome-ifrHtmlEditor" id="uchome-ifrHtmlEditor" scrolling="no" border="0" frameborder="0" style="width:100%;border: 1px solid #C5C5C5;" height="400"></iframe>
-</td>
-</tr>
-</table>
-<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
-<tr>
-<th width="100">标签</th>
-<td><input type="text" class="t_input" size="40" id="tag" name="tag" value="<?=$news['tag']?>"> <input type="button" name="clickbutton[]" value="自动获取" class="button" onclick="relatekw();"></td>
-</tr>
-
-<?php if($news['uid'] && $news['uid']!=$_SGLOBAL['supe_uid']) { ?>
-<?php $selectgroupstyle='display:none'; ?>
-<tbody style="display:none;">
-<?php } ?>
-<tr>
-<th>隐私设置</th>
-<td>
-<select name="friend" onchange="passwordShow(this.value);">
-<option value="0"<?=$friendarr['0']?>>全站用户可见</option>
-<option value="1"<?=$friendarr['1']?>>全好友可见</option>
-<option value="2"<?=$friendarr['2']?>>仅指定的好友可见</option>
-<option value="3"<?=$friendarr['3']?>>仅自己可见</option>
-<option value="4"<?=$friendarr['4']?>>凭密码查看</option>
-</select>
-<span id="span_password" style="<?=$passwordstyle?>">密码:<input type="text" name="password" value="<?=$news['password']?>" size="10" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"></span>
-<input type="checkbox" name="noreply" value="1"<?php if($news['noreply']) { ?> checked<?php } ?>> 不允许评论
-</td>
-</tr>
-<?php if($news['uid'] && $news['uid']!=$_SGLOBAL['supe_uid']) { ?></tbody><?php } ?>
-<tbody id="tb_selectgroup" style="<?=$selectgroupstyle?>">
-<tr>
-<th>指定好友</th>
-<td><select name="selectgroup" onchange="getgroup(this.value);">
-<option value="">从好友组选择好友</option>
-<?php if(is_array($groups)) { foreach($groups as $key => $value) { ?>
-<option value="<?=$key?>"><?=$value?></option>
-<?php } } ?>
-</select> 多次选择会累加到下面的好友名单</td>
-</tr>
-<tr>
-<th>&nbsp;</th>
-<td>
-<textarea name="target_names" id="target_names" style="width:85%;" rows="3"><?=$news['target_names']?></textarea>
-<br>(可以填写多个好友名，请用空格进行分割)</td>
-</tr>
-</tbody>
-
-
-<?php if(checkperm('managenews')) { ?>
-<tr>
-<th width="100">热度</th>
-<td>
-<input type="text" class="t_input" name="hot" id="hot" value="<?=$news['hot']?>" size="5">
+<td><?=$mtag['tagname']?><?php if(!$thread) { ?> [<a href="cp.php?ac=thread">切换</a>]<?php } ?>
+<input type="hidden" name="tagid" value="<?=$tagid?>" />
 </td>
 </tr>
 <?php } ?>
+<tr>
+<td><input type="text" class="t_input" id="subject" name="subject" value="<?=$thread['subject']?>" size="60" /></td>
+</tr>
+<tr>
+<td>
+<a id="doodleBox" href="magic.php?mid=doodle&showid=blog_doodle&target=uchome-ttHtmlEditor&from=editor" style="display:none"></a>
+<textarea class="userData" name="message" id="uchome-ttHtmlEditor" style="height:100%;width:100%;display:none;border:0px"><?=$post['message']?></textarea>
+<iframe src="editor.php?charset=<?=$_SC['charset']?>&allowhtml=<?php echo checkperm('allowhtml') ?>&doodle=<?php if(isset($_SGLOBAL['magic']['doodle'])) { ?>1<?php } ?>" name="uchome-ifrHtmlEditor" id="uchome-ifrHtmlEditor" scrolling="no" border="0" frameborder="0" style="width:100%;border: 1px solid #C5C5C5;" height="400"></iframe>
+</td>
+</tr>
 
 <?php if(checkperm('seccode')) { ?>
 <?php if($_SCONFIG['questionmode']) { ?>
 <tr>
-<th style="vertical-align: top;">请回答验证问题</th>
 <td>
+<p>请回答验证问题</p>
 <p><?php question(); ?></p>
 <input type="text" id="seccode" name="seccode" value="" size="15" class="t_input" />
 </td>
 </tr>
 <?php } else { ?>
 <tr>
-<th style="vertical-align: top;">请填写验证码</th>
 <td>
+<p>请填写验证码</p>
 <script>seccode();</script>
 <p>请输入上面的4位字母或数字，看不清可<a href="javascript:updateseccode()">更换一张</a></p>
 <input type="text" id="seccode" name="seccode" value="" size="15" class="t_input" />
@@ -340,32 +421,30 @@
 <?php } ?>
 
 <tr>
-<th width="100">动态选项</th>
 <td>
-<input type="checkbox" name="makefeed" id="makefeed" value="1"<?php if(ckprivacy('news', 1)) { ?> checked<?php } ?>> 产生动态 (<a href="cp.php?ac=privacy#feed" target="_blank">更改默认设置</a>)
+<input type="checkbox" name="makefeed" id="makefeed" value="1"<?php if(empty($mtag['viewperm']) && ckprivacy('thread', 1)) { ?> checked<?php } ?>> 产生动态 (<a href="cp.php?ac=privacy#feed" target="_blank">更改默认设置</a>)
 </td>
-</tr>			
+</tr>
+
 </table>
-<input type="hidden" name="newssubmit" value="true" />
-<input type="button" id="newsbutton" name="newsbutton" value="提交发布" onclick="validate(this);" style="display: none;" />
+<input type="hidden" name="tid" value="<?=$thread['tid']?>" />
+<input type="hidden" name="threadsubmit" value="true" />
+<input type="button" id="threadbutton" name="threadbutton" value="提交发布" onclick="validate(this);" style="display: none;" />
 <input type="hidden" name="topicid" value="<?=$_GET['topicid']?>" />
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
 </form>
-
-<?php if(!$_SGLOBAL['inajax'] && (!$news['uid'] || $news['uid']==$_SGLOBAL['supe_uid'])) { ?>
+<?php if(!$thread['uid'] || $thread['uid']==$_SGLOBAL['supe_uid']) { ?>
 <table cellspacing="4" cellpadding="4" width="100%" class="infotable">
-<tr><th width="100">图片</th><td>
+<tr><td>
 <input type="button" name="clickbutton[]" value="上传图片" class="button" onclick="edit_album_show('pic')">
 <input type="button" name="clickbutton[]" value="插入图片" class="button" onclick="edit_album_show('album')">
 </td></tr>
 </table>
 <?php } ?>
-
 <table cellspacing="4" cellpadding="4" width="100%" id="uchome-edit-pic" class="infotable" style="display:none;">
 <tr>
-<th width="100">&nbsp;</th>
 <td>
-<strong>选择图片</strong>: 
+<strong>选择图片</strong>:
 <table summary="Upload" cellspacing="2" cellpadding="0">
 <tbody id="attachbodyhidden" style="display:none">
 <tr>
@@ -382,7 +461,7 @@
 </tbody>
 <tbody id="attachbody"></tbody>
 </table>
-<strong>存储相册</strong>: 
+<strong>存储相册</strong>:
 <table cellspacing="2" cellpadding="0">
 <tr>
 <td>
@@ -404,7 +483,6 @@
 </table>
 <table cellspacing="4" cellpadding="4" width="100%" class="infotable" id="uchome-edit-album" style="display:none;">
 <tr>
-<th width="100">&nbsp;</th>
 <td>
 选择相册: <select name="view_albumid" onchange="picView(this.value)">
 <option value="none">选择一个相册</option>
@@ -419,14 +497,13 @@
 </table>
 <table cellspacing="4" cellpadding="4" width="100%" class="infotable">
 <tr>
-<th width="100">&nbsp;</th>
-<td>
-<input type="button" id="issuance" onclick="document.getElementById('newsbutton').click();" value="保存发布" class="submit" /></td>
+<td><input type="button" id="issuance" onclick="document.getElementById('threadbutton').click();" value="保存发布" class="submit" /></td>
 </tr>
 </table>
 </div>
 
 <?php } ?>
+
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>
 <?php if($_SGLOBAL['ad']['contentbottom']) { ?><br style="line-height:0;clear:both;"/><div id="ad_contentbottom"><?php adshow('contentbottom'); ?></div><?php } ?>

@@ -98,7 +98,11 @@ $_SGLOBAL['usergroup']=Array
 		'allowjoke' => '0',
 		'managejoke' => '0',
 		'allownews' => '0',
-		'managenews' => '0'
+		'managenews' => '0',
+		'allowlittlenews' => '0',
+		'managelittlenews' => '0',
+		'allownavnews' => '0',
+		'managenavnews' => '0'
 		)
 	)
 ?>

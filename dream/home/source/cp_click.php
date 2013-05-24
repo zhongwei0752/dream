@@ -48,6 +48,10 @@ switch ($idtype) {
 		$sql = "SELECT b.* FROM ".tname('joke')." b WHERE b.jokeid='$id'";
 		$tablename = tname('joke');
 		break;
+	case 'newsid':
+		$sql = "SELECT b.* FROM ".tname('news')." b WHERE b.newsid='$id'";
+		$tablename = tname('news');
+		break;
 	default:
 		$idtype = 'blogid';
 		$sql = "SELECT b.*, bf.hotuser FROM ".tname('blog')." b
@@ -118,7 +122,7 @@ if($_GET['op'] == 'add') {
 			$note_type = 'clickblog';
 			$q_note = cplang('note_click_blog', array("space.php?uid=$item[uid]&do=blog&id=$item[blogid]", $item['subject']));
 			break;
-			case 'discussionid':
+		case 'discussionid':
 			$fs['title_template'] = cplang('feed_click_discussion');
 			$fs['title_data'] = array(
 				'touser' => "<a href=\"space.php?uid=$item[uid]\">{$_SN[$item['uid']]}</a>",
@@ -128,7 +132,7 @@ if($_GET['op'] == 'add') {
 			$note_type = 'clickdiscussion';
 			$q_note = cplang('note_click_discussion', array("space.php?uid=$item[uid]&do=discussion&id=$item[discussionid]", $item['subject']));
 			break;
-			case 'jokeid':
+		case 'jokeid':
 			$fs['title_template'] = cplang('feed_click_joke');
 			$fs['title_data'] = array(
 				'touser' => "<a href=\"space.php?uid=$item[uid]\">{$_SN[$item['uid']]}</a>",
@@ -137,6 +141,16 @@ if($_GET['op'] == 'add') {
 			);
 			$note_type = 'clickjoke';
 			$q_note = cplang('note_click_joke', array("space.php?uid=$item[uid]&do=joke&id=$item[jokeid]", $item['subject']));
+			break;
+		case 'newsid':
+			$fs['title_template'] = cplang('feed_click_news');
+			$fs['title_data'] = array(
+				'touser' => "<a href=\"space.php?uid=$item[uid]\">{$_SN[$item['uid']]}</a>",
+				'subject' => "<a href=\"space.php?uid=$item[uid]&do=news&id=$item[newsid]\">$item[subject]</a>",
+				'click' => $click['name']
+			);
+			$note_type = 'clicknews';
+			$q_note = cplang('note_click_news', array("space.php?uid=$item[uid]&do=news&id=$item[newsid]", $item['subject']));
 			break;
 		case 'tid':
 			$fs['title_template'] = cplang('feed_click_thread');

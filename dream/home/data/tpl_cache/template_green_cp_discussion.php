@@ -1,52 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('admin/tpl/news|admin/tpl/header|template/green/cp_topic_menu|admin/tpl/side|admin/tpl/footer|template/green/header|template/green/space_topic_inc|template/green/footer', '1369216441', 'admin/tpl/news');?><?php $_TPL['menunames'] = array(
-		'index' => '管理首页',
-		'config' => '站点设置',
-		'privacy' => '隐私设置',
-		'usergroup' => '用户组',
-		'credit' => '积分规则',
-		'profilefield' => '用户栏目',
-		'profield' => '群组栏目',
-		'eventclass' => '活动分类',
-		'magic' => '道具设置',
-		'task' => '有奖任务',
-		'spam' => '防灌水设置',
-		'censor' => '词语屏蔽',
-		'ad' => '广告设置',
-		'userapp' => 'MYOP应用',
-		'joke' => '医疗笑话发布',
-		'news' => '今日资讯发布',
-		'app' => 'UCenter应用',
-		'network' => '随便看看',
-		'cache' => '缓存更新',
-		'log' => '系统log记录',
-		'space' => '用户管理',
-		'feed' => '动态(feed)',
-		'share' => '分享',
-		'blog' => '日志',
-		'album' => '相册',
-		'pic' => '图片',
-		'comment' => '评论/留言',
-		'thread' => '话题',
-		'post' => '回帖',
-		'doing' => '记录',
-		'tag' => '标签',
-		'mtag' => '群组',
-		'poll' => '投票',
-		'event' => '活动',
-		'magiclog' => '道具记录',
-		'report' => '举报',
-		'block' => '数据调用',
-		'template' => '模板编辑',
-		'backup' => '数据备份',
-		'stat' => '统计更新',
-		'cron' => '系统计划任务',
-		'click' => '表态动作',
-		'ip' => '访问IP设置',
-		'hotuser' => '推荐成员设置',
-		'defaultuser' => '默认好友设置',
-	); ?>
-<?php $_TPL['nosidebar'] = 1; ?>
-<?php if(empty($_SGLOBAL['inajax'])) { ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_discussion|template/green/header|template/green/cp_topic_menu|template/green/footer|template/green/space_topic_inc', '1369389244', 'template/green/cp_discussion');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -93,7 +45,7 @@
 <li><a href="space.php?do=group">群组</a></li>
 <li><a href="space.php?do=discussion">案例讨论</a></li>
 <li><a href="space.php?do=joke">医疗笑话</a></li>
-<li><a href="space.php?do=news">今日资讯</a></li>
+<li><a href="space.php?do=news&orderby=dateline">今日资讯</a></li>
 <li><a href="network.php">随便看看</a></li>
 
 <?php } else { ?>
@@ -157,22 +109,13 @@
 <?php } ?>
 
 
-<style type="text/css">
-@import url(admin/tpl/style.css);
-</style>
-
-<div id="cp_content">
-
-<div class="mainarea">
-<div class="maininner">
-
 <?php if($_GET['op'] == 'delete') { ?>
 
-<h1>删除今日资讯</h1>
+<h1>删除案例讨论</h1>
 <a href="javascript:hideMenu();" class="float_del" title="关闭">关闭</a>
 <div class="popupmenu_inner">
-<form method="post" action="admincp?ac=news&op=delete&newsid=<?=$newsid?>">
-<p>确定删除指定的今日资讯吗？</p>
+<form method="post" action="cp.php?ac=discussion&op=delete&discussionid=<?=$discussionid?>">
+<p>确定删除指定的案例讨论吗？</p>
 <p class="btn_line">
 <input type="hidden" name="refer" value="<?=$_SGLOBAL['refer']?>" />
 <input type="hidden" name="deletesubmit" value="true" />
@@ -187,9 +130,9 @@
 <h1>调整热度</h1>
 <a href="javascript:hideMenu();" class="float_del" title="关闭">关闭</a>
 <div class="popupmenu_inner">
-<form method="post" action="admincp?ac=news&op=edithot&newsid=<?=$newsid?>">
+<form method="post" action="cp.php?ac=discussion&op=edithot&discussionid=<?=$discussionid?>">
 <p class="btn_line">
-新的热度：<input type="text" name="hot" value="<?=$news['hot']?>" size="5"> 
+新的热度：<input type="text" name="hot" value="<?=$discussion['hot']?>" size="5"> 
 <input type="hidden" name="refer" value="<?=$_SGLOBAL['refer']?>" />
 <input type="hidden" name="hotsubmit" value="true" />
 <input type="submit" name="btnsubmit" value="确定" class="submit" />
@@ -201,7 +144,7 @@
 <?php } else { ?>
 
 <script language="javascript" src="image/editor/editor_function.js"></script>
-<script language="javascript" src="source/script_news.js"></script>
+<script language="javascript" src="source/script_discussion.js"></script>
 
 <?php if($topic) { ?>
 <h2 class="title">
@@ -276,15 +219,14 @@
 </div>
 
 <?php } else { ?>
-<h2 class="title"><img src="image/app/news.gif" />今日资讯</h2>
+<h2 class="title"><img src="image/app/discussion.gif" />案例讨论</h2>
 <div class="tabs_header">
 <ul class="tabs">
-<?php if($news['newsid']) { ?>
-<li class="active"><a href="admincp?ac=news&newsid=<?=$news['newsid']?>"><span>编辑今日资讯</span></a></li>
+<?php if($discussion['discussionid']) { ?>
+<li class="active"><a href="cp.php?ac=discussion&discussionid=<?=$discussion['discussionid']?>"><span>编辑案例讨论</span></a></li>
 <?php } ?>
-<li<?php if(empty($news['newsid'])) { ?> class="active"<?php } ?>><a href="admincp?ac=news"><span>发表新今日资讯</span></a></li>
-<li><a href="admincp?ac=import"><span>今日资讯导入</span></a></li>
-<li><a href="space.php?uid=<?=$space['uid']?>&do=news&view=me"><span>返回我的今日资讯</span></a></li>
+<li<?php if(empty($discussion['discussionid'])) { ?> class="active"<?php } ?>><a href="cp.php?ac=discussion"><span>发表新案例讨论</span></a></li>
+<li><a href="space.php?uid=<?=$space['uid']?>&do=discussion&view=me"><span>返回我的案例讨论</span></a></li>
 </ul>
 </div>
 <?php } ?>
@@ -296,39 +238,34 @@
 </style>
 
 
-<form method="post" action="adminadmincp?ac=news&newsid=<?=$news['newsid']?>" enctype="multipart/form-data">
+<form method="post" action="cp.php?ac=discussion&discussionid=<?=$discussion['discussionid']?>" enctype="multipart/form-data">
 <table cellspacing="4" cellpadding="4" width="100%" class="infotable">
 <tr>
 <td>
-<select name="classid" id="classid" onchange="addSort(this)">
-<option value="0">选择分类</option>
-<?php if(is_array($classarr)) { foreach($classarr as $value) { ?>
-<?php if($value['classid'] == $news['classid']) { ?>
-<option value="<?=$value['classid']?>" selected><?=$value['classname']?></option>
-<?php } else { ?>
-<option value="<?=$value['classid']?>"><?=$value['classname']?></option>
-<?php } ?>
-<?php } } ?>
-<?php if(!$news['uid'] || $news['uid']==$_SGLOBAL['supe_uid']) { ?><option value="addoption" style="color:red;">+新建分类</option><?php } ?>
-</select>
-<input type="text" class="t_input" id="subject" name="subject" value="<?=$news['subject']?>" size="60" onblur="relatekw();" />
+案例名称:<input type="text" class="t_input" id="subject" name="subject" value="<?=$discussion['subject']?>" size="60" onblur="relatekw();" />
 </td>
 </tr>
 <tr>
 <td>
-<a id="doodleBox" href="magic.php?mid=doodle&showid=news_doodle&target=uchome-ttHtmlEditor&from=editor" style="display:none"></a>
-<textarea class="userData" name="message" id="uchome-ttHtmlEditor" style="height:100%;width:100%;display:none;border:0px"><?=$news['message']?></textarea>
-<iframe src="editor.php?charset=<?=$_SC['charset']?>&allowhtml=<?=$allowhtml?>&doodle=<?php if(isset($_SGLOBAL['magic']['doodle'])) { ?>1<?php } ?>" name="uchome-ifrHtmlEditor" id="uchome-ifrHtmlEditor" scrolling="no" border="0" frameborder="0" style="width:100%;border: 1px solid #C5C5C5;" height="400"></iframe>
+案例基本情况描述:<a id="doodleBox" href="magic.php?mid=doodle&showid=discussion_doodle&target=uchome-ttHtmlEditor&from=editor" style="display:none"></a>
+<textarea class="userData" name="message" id="uchome-ttHtmlEditor" style="height:100%;width:100%;display:none;border:0px"><?=$discussion['message']?></textarea>
+<iframe src="editor.php?charset=<?=$_SC['charset']?>&allowhtml=<?=$allowhtml?>&doodle=<?php if(isset($_SGLOBAL['magic']['doodle'])) { ?>1<?php } ?>" name="uchome-ifrHtmlEditor" id="uchome-ifrHtmlEditor" scrolling="no" border="0" frameborder="0" style="width:100%;border: 1px solid #C5C5C5;" height="200"></iframe>
+</td>
+</tr>
+<tr>
+<td>
+案例采取的治疗方法:
+<textarea class="think" name="think" id="uchome-ttHtmlEditor" style="height:200px;width:100%;"><?=$discussion['think']?></textarea>
 </td>
 </tr>
 </table>
 <table cellspacing="4" cellpadding="4" width="100%" class="infotable">
 <tr>
 <th width="100">标签</th>
-<td><input type="text" class="t_input" size="40" id="tag" name="tag" value="<?=$news['tag']?>"> <input type="button" name="clickbutton[]" value="自动获取" class="button" onclick="relatekw();"></td>
+<td><input type="text" class="t_input" size="40" id="tag" name="tag" value="<?=$discussion['tag']?>"> <input type="button" name="clickbutton[]" value="自动获取" class="button" onclick="relatekw();"></td>
 </tr>
 
-<?php if($news['uid'] && $news['uid']!=$_SGLOBAL['supe_uid']) { ?>
+<?php if($discussion['uid'] && $discussion['uid']!=$_SGLOBAL['supe_uid']) { ?>
 <?php $selectgroupstyle='display:none'; ?>
 <tbody style="display:none;">
 <?php } ?>
@@ -342,11 +279,11 @@
 <option value="3"<?=$friendarr['3']?>>仅自己可见</option>
 <option value="4"<?=$friendarr['4']?>>凭密码查看</option>
 </select>
-<span id="span_password" style="<?=$passwordstyle?>">密码:<input type="text" name="password" value="<?=$news['password']?>" size="10" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"></span>
-<input type="checkbox" name="noreply" value="1"<?php if($news['noreply']) { ?> checked<?php } ?>> 不允许评论
+<span id="span_password" style="<?=$passwordstyle?>">密码:<input type="text" name="password" value="<?=$discussion['password']?>" size="10" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"></span>
+<input type="checkbox" name="noreply" value="1"<?php if($discussion['noreply']) { ?> checked<?php } ?>> 不允许评论
 </td>
 </tr>
-<?php if($news['uid'] && $news['uid']!=$_SGLOBAL['supe_uid']) { ?></tbody><?php } ?>
+<?php if($discussion['uid'] && $discussion['uid']!=$_SGLOBAL['supe_uid']) { ?></tbody><?php } ?>
 <tbody id="tb_selectgroup" style="<?=$selectgroupstyle?>">
 <tr>
 <th>指定好友</th>
@@ -360,17 +297,17 @@
 <tr>
 <th>&nbsp;</th>
 <td>
-<textarea name="target_names" id="target_names" style="width:85%;" rows="3"><?=$news['target_names']?></textarea>
+<textarea name="target_names" id="target_names" style="width:85%;" rows="3"><?=$discussion['target_names']?></textarea>
 <br>(可以填写多个好友名，请用空格进行分割)</td>
 </tr>
 </tbody>
 
 
-<?php if(checkperm('managenews')) { ?>
+<?php if(checkperm('managediscussion')) { ?>
 <tr>
 <th width="100">热度</th>
 <td>
-<input type="text" class="t_input" name="hot" id="hot" value="<?=$news['hot']?>" size="5">
+<input type="text" class="t_input" name="hot" id="hot" value="<?=$discussion['hot']?>" size="5">
 </td>
 </tr>
 <?php } ?>
@@ -399,21 +336,22 @@
 <tr>
 <th width="100">动态选项</th>
 <td>
-<input type="checkbox" name="makefeed" id="makefeed" value="1"<?php if(ckprivacy('news', 1)) { ?> checked<?php } ?>> 产生动态 (<a href="admincp?ac=privacy#feed" target="_blank">更改默认设置</a>)
+<input type="checkbox" name="makefeed" id="makefeed" value="1"<?php if(ckprivacy('discussion', 1)) { ?> checked<?php } ?>> 产生动态 (<a href="cp.php?ac=privacy#feed" target="_blank">更改默认设置</a>)
 </td>
 </tr>			
 </table>
-<input type="hidden" name="newssubmit" value="true" />
-<input type="button" id="newsbutton" name="newsbutton" value="提交发布" onclick="validate(this);" style="display: none;" />
+<input type="hidden" name="discussionsubmit" value="true" />
+<input type="button" id="discussionbutton" name="discussionbutton" value="提交发布" onclick="validate(this);" style="display: none;" />
 <input type="hidden" name="topicid" value="<?=$_GET['topicid']?>" />
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
 </form>
 
-<?php if(!$_SGLOBAL['inajax'] && (!$news['uid'] || $news['uid']==$_SGLOBAL['supe_uid'])) { ?>
+<?php if(!$_SGLOBAL['inajax'] && (!$discussion['uid'] || $discussion['uid']==$_SGLOBAL['supe_uid'])) { ?>
 <table cellspacing="4" cellpadding="4" width="100%" class="infotable">
 <tr><th width="100">图片</th><td>
 <input type="button" name="clickbutton[]" value="上传图片" class="button" onclick="edit_album_show('pic')">
 <input type="button" name="clickbutton[]" value="插入图片" class="button" onclick="edit_album_show('album')">
+(本上传图片会出现在案例基本情况描述内)
 </td></tr>
 </table>
 <?php } ?>
@@ -427,7 +365,7 @@
 <tbody id="attachbodyhidden" style="display:none">
 <tr>
 <td>
-<form method="post" id="upload" action="admincp?ac=upload" enctype="multipart/form-data" target="uploadframe" style="background: transparent;">
+<form method="post" id="upload" action="cp.php?ac=upload" enctype="multipart/form-data" target="uploadframe" style="background: transparent;">
 <input type="file" name="attach" style="border: 1px solid #CCC;" />
 <span id="localfile"></span>
 <input type="hidden" name="uploadsubmit" id="uploadsubmit" value="true" />
@@ -478,58 +416,12 @@
 <tr>
 <th width="100">&nbsp;</th>
 <td>
-<input type="button" id="issuance" onclick="document.getElementById('newsbutton').click();" value="保存发布" class="submit" /></td>
+<input type="button" id="issuance" onclick="document.getElementById('discussionbutton').click();" value="保存发布" class="submit" /></td>
 </tr>
 </table>
 </div>
 
 <?php } ?>
-</div>
-</div>
-<div class="side">
-<?php if($menus['0']) { ?>
-<div class="block style1">
-<h2>基本设置</h2>
-<ul class="folder">
-<?php if(is_array($acs['0'])) { foreach($acs['0'] as $value) { ?>
-<?php if($menus['0'][$value]) { ?>
-<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
-<?php } ?>
-<?php } } ?>
-</ul>
-</div>
-<?php } ?>
-
-<div class="block style1">
-<h2>批量管理</h2>
-<ul class="folder">
-<?php if(is_array($acs['3'])) { foreach($acs['3'] as $value) { ?>
-<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
-<?php } } ?>
-<?php if(is_array($acs['1'])) { foreach($acs['1'] as $value) { ?>
-<?php if($menus['1'][$value]) { ?>
-<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
-<?php } ?>
-<?php } } ?>
-</ul>
-</div>
-
-<?php if($menus['2']) { ?>
-<div class="block style1">
-<h2>高级设置</h2>
-<ul class="folder">
-<?php if(is_array($acs['2'])) { foreach($acs['2'] as $value) { ?>
-<?php if($menus['2'][$value]) { ?>
-<?php if($ac==$value) { ?><li class="active"><?php } else { ?><li><?php } ?><a href="admincp.php?ac=<?=$value?>"><?=$_TPL['menunames'][$value]?></a></li>
-<?php } ?>
-<?php } } ?>
-<?php if($menus['0']['config']) { ?><li><a href="<?=UC_API?>" target="_blank">UCenter</a></li><?php } ?>
-</ul>
-</div>
-<?php } ?>
-</div>
-</div>
-
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>
 <?php if($_SGLOBAL['ad']['contentbottom']) { ?><br style="line-height:0;clear:both;"/><div id="ad_contentbottom"><?php adshow('contentbottom'); ?></div><?php } ?>

@@ -418,6 +418,17 @@ function getclassnewsarr($uid) {
 	}
 	return $classarr;
 }
+//获取个人分类
+function getclasslittlenewsarr($uid) {
+	global $_SGLOBAL;
+
+	$classarr = array();
+	$query = $_SGLOBAL['db']->query("SELECT classid, classname FROM ".tname('classlittlenews')." WHERE uid='$uid'");
+	while ($value = $_SGLOBAL['db']->fetch_array($query)) {
+		$classarr[$value['classid']] = $value;
+	}
+	return $classarr;
+}
 
 //获取相册
 function getalbums($uid) {

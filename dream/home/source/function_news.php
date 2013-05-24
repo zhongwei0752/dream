@@ -8,11 +8,11 @@ if(!defined('IN_UCHOME')) {
 	exit('Access Denied');
 }
 
-//添加博客
+//脤铆录脫虏漏驴脥
 function news_post($POST, $olds=array()) {
 	global $_SGLOBAL, $_SC, $space;
 	
-	//操作者角色切换
+	//虏脵脳梅脮脽陆脟脡芦脟脨禄禄
 	$isself = 1;
 	if(!empty($olds['uid']) && $olds['uid'] != $_SGLOBAL['supe_uid']) {
 		$isself = 0;
@@ -21,15 +21,15 @@ function news_post($POST, $olds=array()) {
 		$_SGLOBAL['supe_username'] = addslashes($olds['username']);
 	}
 
-	//标题
+	//卤锚脤芒
 	$POST['subject'] = getstr(trim($POST['subject']), 80, 1, 1, 1);
 	if(strlen($POST['subject'])<1) $POST['subject'] = sgmdate('Y-m-d');
 	$POST['friend'] = intval($POST['friend']);
 	
-	//隐私
+	//脪镁脣陆
 	$POST['target_ids'] = '';
 	if($POST['friend'] == 2) {
-		//特定好友
+		//脤脴露篓潞脙脫脩
 		$uids = array();
 		$names = empty($_POST['target_names'])?array():explode(' ', str_replace(cplang('tab_space'), ' ', $_POST['target_names']));
 		if($names) {
@@ -39,14 +39,14 @@ function news_post($POST, $olds=array()) {
 			}
 		}
 		if(empty($uids)) {
-			$POST['friend'] = 3;//仅自己可见
+			$POST['friend'] = 3;//陆枚脳脭录潞驴脡录没
 		} else {
 			$POST['target_ids'] = implode(',', $uids);
 		}
 	} elseif($POST['friend'] == 4) {
-		//加密
+		//录脫脙脺
 		$POST['password'] = trim($POST['password']);
-		if($POST['password'] == '') $POST['friend'] = 0;//公开
+		if($POST['password'] == '') $POST['friend'] = 0;//鹿芦驴陋
 	}
 	if($POST['friend'] !== 2) {
 		$POST['target_ids'] = '';
@@ -56,9 +56,9 @@ function news_post($POST, $olds=array()) {
 	}
 
 	$POST['tag'] = shtmlspecialchars(trim($POST['tag']));
-	$POST['tag'] = getstr($POST['tag'], 500, 1, 1, 1);	//语词屏蔽
+	$POST['tag'] = getstr($POST['tag'], 500, 1, 1, 1);	//脫茂麓脢脝脕卤脦
 
-	//内容
+	//脛脷脠脻
 	if($_SGLOBAL['mobile']) {
 		$POST['message'] = getstr($POST['message'], 0, 1, 0, 1, 1);
 	} else {
@@ -74,10 +74,10 @@ function news_post($POST, $olds=array()) {
 	}
 	$message = $POST['message'];
 
-	//个人分类
+	//赂枚脠脣路脰脌脿
 	if(empty($olds['classid']) || $POST['classid'] != $olds['classid']) {
 		if(!empty($POST['classid']) && substr($POST['classid'], 0, 4) == 'new:') {
-			//分类名
+			//路脰脌脿脙没
 			$classname = shtmlspecialchars(trim(substr($POST['classid'], 4)));
 			$classname = getstr($classname, 0, 1, 1, 1);
 			if(empty($classname)) {
@@ -101,12 +101,12 @@ function news_post($POST, $olds=array()) {
 		$classid = $olds['classid'];
 	}
 	if($classid && empty($classname)) {
-		//是否是自己的
+		//脢脟路帽脢脟脳脭录潞碌脛
 		$classname = getcount('classnews', array('classid'=>$classid, 'uid'=>$_SGLOBAL['supe_uid']), 'classname');
 		if(empty($classname)) $classid = 0;
 	}
 	
-	//主表
+	//脰梅卤铆
 	$newsarr = array(
 		'subject' => $POST['subject'],
 		'classid' => $classid,
@@ -115,10 +115,10 @@ function news_post($POST, $olds=array()) {
 		'noreply' => empty($_POST['noreply'])?0:1
 	);
 
-	//标题图片
+	//卤锚脤芒脥录脝卢
 	$titlepic = '';
 	
-	//获取上传的图片
+	//禄帽脠隆脡脧麓芦碌脛脥录脝卢
 	$uploads = array();
 	if(!empty($POST['picids'])) {
 		$picids = array_keys($POST['picids']);
@@ -136,7 +136,7 @@ function news_post($POST, $olds=array()) {
 		}
 	}
 	
-	//插入文章
+	//虏氓脠毛脦脛脮脗
 	if($uploads) {
 		preg_match_all("/\<img\s.*?\_uchome\_localimg\_([0-9]+).+?src\=\"(.+?)\"/i", $message, $mathes);
 		if(!empty($mathes[1])) {
@@ -155,36 +155,36 @@ function news_post($POST, $olds=array()) {
 				$message = str_replace($idsearchs, 'uchomelocalimg[]', $message);
 			}
 		}
-		//未插入文章
+		//脦麓虏氓脠毛脦脛脮脗
 		foreach ($uploads as $value) {
 			$picurl = pic_get($value['filepath'], $value['thumb'], $value['remote'], 0);
 			$message .= "<div class=\"uchome-message-pic\"><img src=\"$picurl\"><p>$value[title]</p></div>";
 		}
 	}
 	
-	//没有填写任何东西
+	//脙禄脫脨脤卯脨麓脠脦潞脦露芦脦梅
 	$ckmessage = preg_replace("/(\<div\>|\<\/div\>|\s|\&nbsp\;|\<br\>|\<p\>|\<\/p\>)+/is", '', $message);
 	if(empty($ckmessage)) {
 		return false;
 	}
 	
-	//添加slashes
+	//脤铆录脫slashes
 	$message = addslashes($message);
 	
-	//从内容中读取图片
+	//麓脫脛脷脠脻脰脨露脕脠隆脥录脝卢
 	if(empty($titlepic)) {
 		$titlepic = getmessagepic($message);
 		$newsarr['picflag'] = 0;
 	}
 	$newsarr['pic'] = $titlepic;
 	
-	//热度
+	//脠脠露脠
 	if(checkperm('managenews')) {
 		$newsarr['hot'] = intval($POST['hot']);
 	}
 	
 	if($olds['newsid']) {
-		//更新
+		//赂眉脨脗
 		$newsid = $olds['newsid'];
 		updatetable('news', $newsarr, array('newsid'=>$newsid));
 		
@@ -193,7 +193,7 @@ function news_post($POST, $olds=array()) {
 		$newsarr['uid'] = $olds['uid'];
 		$newsarr['username'] = $olds['username'];
 	} else {
-		//参与热闹
+		//虏脦脫毛脠脠脛脰
 		$newsarr['topicid'] = topic_check($POST['topicid'], 'news');
 
 		$newsarr['uid'] = $_SGLOBAL['supe_uid'];
@@ -204,7 +204,7 @@ function news_post($POST, $olds=array()) {
 	
 	$newsarr['newsid'] = $newsid;
 	
-	//附表	
+	//赂陆卤铆	
 	$fieldarr = array(
 		'message' => $message,
 		'postip' => getonlineip(),
@@ -218,7 +218,7 @@ function news_post($POST, $olds=array()) {
 	$tagarr = array();
 	if($POST['tag'] != $oldtagstr) {
 		if(!empty($olds['tag'])) {
-			//先把以前的给清理掉
+			//脧脠掳脩脪脭脟掳碌脛赂酶脟氓脌铆碌么
 			$oldtags = array();
 			$query = $_SGLOBAL['db']->query("SELECT tagid, newsid FROM ".tname('tagnews')." WHERE newsid='$newsid'");
 			while ($value = $_SGLOBAL['db']->fetch_array($query)) {
@@ -230,12 +230,12 @@ function news_post($POST, $olds=array()) {
 			}
 		}
 		$tagarr = tag_batch($newsid, $POST['tag']);
-		//更新附表中的tag
+		//赂眉脨脗赂陆卤铆脰脨碌脛tag
 		$fieldarr['tag'] = empty($tagarr)?'':addslashes(serialize($tagarr));
 	}
 
 	if($olds) {
-		//更新
+		//赂眉脨脗
 		updatetable('newsfield', $fieldarr, array('newsid'=>$newsid));
 	} else {
 		$fieldarr['newsid'] = $newsid;
@@ -243,10 +243,10 @@ function news_post($POST, $olds=array()) {
 		inserttable('newsfield', $fieldarr);
 	}
 
-	//空间更新
+	//驴脮录盲赂眉脨脗
 	if($isself) {
 		if($olds) {
-			//空间更新
+			//驴脮录盲赂眉脨脗
 			$_SGLOBAL['db']->query("UPDATE ".tname('space')." SET updatetime='$_SGLOBAL[timestamp]' WHERE uid='$_SGLOBAL[supe_uid]'");
 		} else {
 			if(empty($space['newsnum'])) {
@@ -255,33 +255,36 @@ function news_post($POST, $olds=array()) {
 			} else {
 				$newsnumsql = 'newsnum=newsnum+1';
 			}
-			//积分
+			//禄媒路脰
 			$reward = getreward('publishnews', 0);
 			$_SGLOBAL['db']->query("UPDATE ".tname('space')." SET {$newsnumsql}, lastpost='$_SGLOBAL[timestamp]', updatetime='$_SGLOBAL[timestamp]', credit=credit+$reward[credit], experience=experience+$reward[experience] WHERE uid='$_SGLOBAL[supe_uid]'");
 			
-			//统计
+			//脥鲁录脝
 			updatestat('news');
 		}
 	}
-	
-	//产生feed
+	//灏侀潰鍥剧墖涓婁紶
+	include("./source/upload.class.php");
+  	$image= new upload;
+  	$image->upload_file($newsid,"news");
+	//虏煤脡煤feed
 	if($POST['makefeed']) {
 		include_once(S_ROOT.'./source/function_feed.php');
 		feed_publish($newsid, 'newsid', $olds?0:1);
 	}
 	
-	//热闹
+	//脠脠脛脰
 	if(empty($olds) && $newsarr['topicid']) {
 		topic_join($newsarr['topicid'], $_SGLOBAL['supe_uid'], $_SGLOBAL['supe_username']);
 	}
 
-	//角色切换
+	//陆脟脡芦脟脨禄禄
 	if(!empty($__SGLOBAL)) $_SGLOBAL = $__SGLOBAL;
 
 	return $newsarr;
 }
 
-//处理tag
+//麓娄脌铆tag
 function tag_batch($newsid, $tags) {
 	global $_SGLOBAL;
 
@@ -329,11 +332,11 @@ function tag_batch($newsid, $tags) {
 	return $tagarr;
 }
 
-//获取日志图片
+//禄帽脠隆脠脮脰戮脥录脝卢
 function getmessagepic($message) {
 	$pic = '';
 	$message = stripslashes($message);
-	$message = preg_replace("/\<img src=\".*?image\/face\/(.+?).gif\".*?\>\s*/is", '', $message);	//移除表情符
+	$message = preg_replace("/\<img src=\".*?image\/face\/(.+?).gif\".*?\>\s*/is", '', $message);	//脪脝鲁媒卤铆脟茅路没
 	preg_match("/src\=[\"\']*([^\>\s]{25,105})\.(jpg|gif|png)/i", $message, $mathes);
 	if(!empty($mathes[1]) || !empty($mathes[2])) {
 		$pic = "{$mathes[1]}.{$mathes[2]}";
@@ -341,7 +344,7 @@ function getmessagepic($message) {
 	return addslashes($pic);
 }
 
-//屏蔽html
+//脝脕卤脦html
 function checkhtml($html) {
 	$html = stripslashes($html);
 	if(!checkperm('allowhtml')) {
@@ -354,7 +357,7 @@ function checkhtml($html) {
 		$replaces[] = '&gt;';
 		
 		if($ms[1]) {
-			$allowtags = 'img|a|font|div|table|tbody|caption|tr|td|th|br|p|b|strong|i|u|em|span|ol|ul|li|blockquote|object|param|embed';//允许的标签
+			$allowtags = 'img|a|font|div|table|tbody|caption|tr|td|th|br|p|b|strong|i|u|em|span|ol|ul|li|blockquote|object|param|embed';//脭脢脨铆碌脛卤锚脟漏
 			$ms[1] = array_unique($ms[1]);
 			foreach ($ms[1] as $value) {
 				$searchs[] = "&lt;".$value."&gt;";
@@ -374,12 +377,12 @@ function checkhtml($html) {
 	return $html;
 }
 
-//视频标签处理
+//脢脫脝碌卤锚脟漏麓娄脌铆
 function news_bbcode($message) {
 	$message = preg_replace("/\[flash\=?(media|real)*\](.+?)\[\/flash\]/ie", "news_flash('\\2', '\\1')", $message);
 	return $message;
 }
-//视频
+//脢脫脝碌
 function news_flash($swf_url, $type='') {
 	$width = '520';
 	$height = '390';
