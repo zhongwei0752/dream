@@ -266,7 +266,7 @@ function littlenews_post($POST, $olds=array()) {
 	//封面图片上传
 	include("./source/upload.class.php");
   	$image= new upload;
-  	$image->upload_file($littlenewsid,"littlenews");
+  	$image->upload_file1($littlenewsid,"littlenews");
 	//²úÉúfeed
 	if($POST['makefeed']) {
 		include_once(S_ROOT.'./source/function_feed.php');

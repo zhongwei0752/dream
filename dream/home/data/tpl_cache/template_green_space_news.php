@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_news', '1369389499', 'template/green/space_news');?><head>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_news', '1369496252', 'template/green/space_news');?><head>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -124,7 +124,8 @@
 <h4><?=$value1['subject']?></h4>
 <a class='alignleft preloading_background' href='single.html'><img src='<?=$value1['image1url']?>' alt='' class='rounded'/></a>
 <p><?=$value1['message']?></p>
-</div>	<?php } } ?>
+</div>	
+<?php } } ?>
             </div><!--end box -->
             
             
@@ -197,6 +198,7 @@
         	<li><a title="发布新闻" href="cp.php?ac=news">发布新闻</a></li>
 <li><a title="发布简讯" href="cp.php?ac=littlenews">发布简讯</a></li>
 <li><a title="发布首页大图" href="cp.php?ac=navnews">发布首页大图&专题</a></li>
+<li><a title="发布笑话" href="cp.php?ac=joke">发布笑话</a></li>
 
         </ul>
         <?php } else { ?>

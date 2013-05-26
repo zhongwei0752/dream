@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_discussion_list|template/green/header|template/green/space_menu|template/green/footer', '1369389243', 'template/green/space_discussion_list');?><?php $_TPL['titles'] = array('案例讨论'); ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_discussion_list|template/green/header|template/green/space_menu|template/green/footer', '1369496754', 'template/green/space_discussion_list');?><?php $_TPL['titles'] = array('案例讨论'); ?>
 <?php $friendsname = array(1 => '仅好友可见',2 => '指定好友可见',3 => '仅自己可见',4 => '凭密码可见'); ?>
 
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
@@ -49,21 +49,13 @@
 <li><a href="space.php?do=discussion">案例讨论</a></li>
 <li><a href="space.php?do=joke">医疗笑话</a></li>
 <li><a href="space.php?do=news&orderby=dateline">今日资讯</a></li>
-<li><a href="network.php">随便看看</a></li>
+<li><a href="space.php?do=subject">本周专题</a></li>
 
 <?php } else { ?>
 <li><a href="index.php">首页</a></li>
 <?php } ?>
 
-<?php if($_SGLOBAL['appmenu']) { ?>
-<?php if($_SGLOBAL['appmenus']) { ?>
-<li class="dropmenu" id="ucappmenu" onclick="showMenu(this.id)">
-<a href="javascript:;">站内导航</a>
-</li>
-<?php } else { ?>
-<li><a target="_blank" href="<?=$_SGLOBAL['appmenu']['url']?>" title="<?=$_SGLOBAL['appmenu']['name']?>"><?=$_SGLOBAL['appmenu']['name']?></a></li>
-<?php } ?>
-<?php } ?>
+
 
 <?php if($_SGLOBAL['supe_uid']) { ?>
 <li><a href="space.php?do=pm<?php if(!empty($_SGLOBAL['member']['newpm'])) { ?>&filter=newpm<?php } ?>">消息<?php if(!empty($_SGLOBAL['member']['newpm'])) { ?><span style="background-color: #e74c3c;border-radius: 30px;color: white;font-size: 12px;font-weight: 500;line-height: 18px;min-width: 8px;padding: 0 5px;margin-left:30px;margin-top:-20px;text-align: center;text-shadow: none;z-index: 10;display: block;"><?=$_SGLOBAL['member']['newpm']?></span><?php } ?></a></li>

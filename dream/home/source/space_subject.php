@@ -6,5 +6,5 @@
 	if(!defined('IN_UCHOME')) {
 	exit('Access Denied');
 }
-include_once template("space_subject");
+include_once template("space_subject_list");
 ?>

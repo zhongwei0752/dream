@@ -1563,7 +1563,7 @@ function avatar($uid, $size='small', $returnsrc = FALSE) {
 	
 	$size = in_array($size, array('big', 'middle', 'small')) ? $size : 'small';
 	$avatarfile = avatar_file($uid, $size);
-	$query = $_SGLOBAL['db']->query("SELECT * FROM ".tname('space')." WHERE uid='$uid'");
+	$query = $_SGLOBAL['db']->query("SELECT * FROM ".tname('spacefield')." WHERE uid='$uid'");
 	$value = $_SGLOBAL['db']->fetch_array($query);
 	if($value['sex']=='1'){
 	return $returnsrc ? UC_API.'/data/avatar/'.$avatarfile : '<img src="'.UC_API.'/data/avatar/'.$avatarfile.'" onerror="this.onerror=null;this.src=\''.UC_API.'/images/noavatar_'.$size.'man.gif\'">';

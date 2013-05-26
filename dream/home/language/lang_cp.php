@@ -56,6 +56,9 @@ $_SGLOBAL['cplang'] = array(
 	'feed_upload_pic' => '{actor} 上传了新图片',
 
 	'feed_click_blog' => '{actor} 送了一个“{click}”给 {touser} 的日志 {subject}',
+	'feed_click_discussion' => '{actor} 送了一个“{click}”给 {touser} 的案例讨论 {subject}',
+	'feed_click_joke' => '{actor} 送了一个“{click}”给 {touser} 的医疗笑话 {subject}',
+	'feed_click_news' => '{actor} 送了一个“{click}”给 {touser} 的资讯 {subject}',
 	'feed_click_thread' => '{actor} 送了一个“{click}”给 {touser} 的话题 {subject}',
 	'feed_click_pic' => '{actor} 送了一个“{click}”给 {touser} 的图片',
 
@@ -175,7 +178,9 @@ $_SGLOBAL['cplang'] = array(
 	'get_passwd_message' => '您只需在提交请求后的三天之内，通过点击下面的链接重置您的密码：<br />\\1<br />(如果上面不是链接形式，请将地址手工粘贴到浏览器地址栏再访问)<br />上面的页面打开后，输入新的密码后提交，之后您即可使用新的密码登录了。',
 	'file_is_too_big' => '文件过大',
 	'feed_blog_password' => '{actor} 发表了新加密日志 {subject}',
+	'feed_discussion_password' => '{actor} 发表了新加密案例讨论 {subject}',
 	'feed_blog' => '{actor} 发表了新日志',
+	'feed_discussion' => '{actor} 发表了新案例讨论',
 	'feed_poll' => '{actor} 发起了新投票',
 	'note_poll_finish' => '您发起的<a href="\\1" target="_blank">《\\2》</a>的投票已结束,<a href="\\1" target="_blank">去写写投票总结</a>',
 	'take_part_in_the_voting' => '{actor} 参与了 {touser} 的{reward}投票 <a href="{url}" target="_blank">{subject}</a>',

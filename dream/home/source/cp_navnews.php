@@ -19,7 +19,7 @@ if($submit){
 	}
 	include("./source/upload.class.php");
   	$image= new upload;
-  	$image->upload_file($navnewsid,"navnews");
+  	$image->upload_file2($navnewsid,"navnews");
 
   }
   $zhuantisubmit=$_POST['zhuantisubmit'];
@@ -34,7 +34,7 @@ if($zhuantisubmit){
 	}
 	include("./source/upload.class.php");
   	$image= new upload;
-  	$image->upload_file($zhuantinewsid,"zhuantinews");
+  	$image->upload_file3($zhuantinewsid,"zhuantinews");
 
   }
 include_once template("cp_navnews");

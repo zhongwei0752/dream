@@ -51,6 +51,43 @@ function feed_publish($id, $idtype, $add=0) {
 				}
 			}
 			break;
+			case 'discussionid':
+			$query = $_SGLOBAL['db']->query("SELECT b.*, bf.* FROM ".tname('discussion')." b
+				LEFT JOIN ".tname('discussionfield')." bf ON bf.discussionid=b.discussionid
+				WHERE b.discussionid='$id'");
+			if($value = $_SGLOBAL['db']->fetch_array($query)) {
+				if($value['friend'] != 3) {
+					//基本
+					$setarr['icon'] = 'discussion';
+					$setarr['id'] = $value['discussionid'];
+					$setarr['idtype'] = $idtype;
+					$setarr['uid'] = $value['uid'];
+					$setarr['username'] = $value['username'];
+					$setarr['dateline'] = $value['dateline'];
+					$setarr['target_ids'] = $value['target_ids'];
+					$setarr['friend'] = $value['friend'];
+					$setarr['hot'] = $value['hot'];
+					
+					//详细
+					$url = "space.php?uid=$value[uid]&do=discussion&id=$value[discussionid]";
+					if($value['friend'] == 4) {//加密
+						$setarr['title_template'] = cplang('feed_blog_password');
+						$setarr['title_data'] = array('subject' => "<a href=\"$url\">$value[subject]</a>");
+					} else {//非私人
+						if($value['pic']) {
+							$setarr['image_1'] = pic_cover_get($value['pic'], $value['picflag']);
+							$setarr['image_1_link'] = $url;
+						}
+						$setarr['title_template'] = cplang('feed_discussion');
+						$setarr['body_template'] = '<b>{subject}</b><br>{summary}';
+						$setarr['body_data'] = array(
+							'subject' => "<a href=\"$url\">$value[subject]</a>",
+							'summary' => getstr($value['message'], 150, 1, 1, 0, 0, -1)
+						);
+					}
+				}
+			}
+			break;
 		case 'albumid':
 			$key = 1;
 			if($id > 0) {
