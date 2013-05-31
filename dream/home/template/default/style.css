@@ -641,7 +641,7 @@ ul#navigation {
     margin: 0 auto;
     padding: 0px;
     bottom: -50px;
-    left:24%;
+    left:20%;
     list-style: none;
     z-index:9999;
 }
@@ -689,4 +689,7 @@ ul#navigation .photos a     {
 }
 ul#navigation .contact a    {
     background-image: url(image/mail.png);
+}
+ul#navigation .zhuanti a    {
+    background-image: url(image/zhuanti.png);
 }

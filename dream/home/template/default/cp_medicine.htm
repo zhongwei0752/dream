@@ -1,5 +1,5 @@
 <!--{template header}-->
-<h2 class="title"><img src="image/icon/friend.gif" />好友</h2>
+<h2 class="title"><img src="image/icon/medicine.gif" />用药助手</h2>
 <div class="tabs_header">
 	<ul class="tabs">
 		<li$actives[medicine]><a href="#"><span>搜索结果</span></a></li>
@@ -7,10 +7,19 @@
 	</ul>
 </div>
 <!--{if $list}-->
-
+找到以下结果:
 <!--{loop $list $value}-->
-
-$value[mingcheng]<br/><br/><br/><br/>
+<table border="1" style="width:500px; margin:0 auto;">
+　<tr><th>名称</th><th>$value[mingcheng]</th></tr>
+  <tr><th>别名</th><th>$value[bieming]</th></tr>
+  <tr><th>规格</th><th>$value[guige]</th></tr>
+  <tr><th>单位</th><th>$value[danwei]</th></tr>
+  <tr><th>单价</th><th>$value[danjia]</th></tr>
+  <tr><th>自费</th><th>$value[zifei]</th></tr>
+  <tr><th>自费比例</th><th>$value[zifeibili]</th></tr>
+  <tr><th>社保比例</th><th>$value[shebaobili]</th></tr>
+</table>
+<br/><br/><hr style="height:1px;border:none;border-top:1px dashed #555555;"/><br/><br/>
 <!--{/loop}-->
 <!--{else}-->
 <style>

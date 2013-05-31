@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_news_view|template/green/header|template/green/space_menu|template/green/space_click|template/green/space_comment_li|template/green/footer', '1369496255', 'template/green/space_news_view');?><?php $_TPL['titles'] = array($news['subject'], '今日资讯'); ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_news_view|template/green/header|template/green/space_menu|template/green/space_click|template/green/space_comment_li|template/green/footer', '1369983788', 'template/green/space_news_view');?><?php $_TPL['titles'] = array($news['subject'], '今日资讯'); ?>
 <?php $friendsname = array(1 => '仅好友可见',2 => '指定好友可见',3 => '仅自己可见',4 => '凭密码可见'); ?>
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -41,7 +41,6 @@
 <h1 class="logo"><a href="index.php"><img src="template/<?=$_SCONFIG['template']?>/image/logo.gif" alt="<?=$_SCONFIG['sitename']?>" /></a></h1>
 <ul class="menu">
 <?php if($_SGLOBAL['supe_uid']) { ?>
-<li><a href="space.php?do=home">首页</a></li>
 <li><a href="space.php?do=medicine">用药助手</a></li>
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
@@ -585,10 +584,11 @@ showreward();
             <li class="home"><a href="space.php?do=home" title="首页"></a></li>
              <li class="about"><a href="space.php?do=medicine" title="用药助手"></a></li>
             <li class="search"><a href="space.php?do=activity" title="活动"></a></li>
-            <li class="photos"><a href="" title="Photos"></a></li>
-            <li class="rssfeed"><a href="" title="Rss Feed"></a></li>
-            <li class="podcasts"><a href="" title="Podcasts"></a></li>
-            <li class="contact"><a href="" title="Contact"></a></li>
+            <li class="photos"><a href="space.php?do=group" title="群组"></a></li>
+            <li class="rssfeed"><a href="space.php?do=discussion" title="案例讨论"></a></li>
+            <li class="podcasts"><a href="space.php?do=joke" title="医疗笑话"></a></li>
+            <li class="contact"><a href="space.php?do=news&orderby=dateline" title="今日资讯"></a></li>
+            <li class="zhuanti"><a href="space.php?do=subject" title="本周专题"></a></li>
         </ul>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
          <script type="text/javascript">

@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_group', '1369389146', 'template/green/space_group');?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_group', '1369994735', 'template/green/space_group');?>
 
 <!DOCTYPE html>
 <html>
@@ -30,6 +30,8 @@ checkVersion();
 <!-- CSS -->
 <link href="template/default/group.css" rel="stylesheet" type="text/css" />
 <link href="template/default/group1.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="image/favicon.ico" />
+<link rel="edituri" type="application/rsd+xml" title="rsd" href="xmlrpc.php?rsd=<?=$space['uid']?>" />
 
     <!-- link href="http://www.paseoitaigara.com.br/css/home.css" rel="stylesheet" type="text/css" / -->
     
@@ -56,8 +58,8 @@ checkVersion();
 <script type="text/javascript" src="http://www.paseoitaigara.com.br/js/modernizr.js"></script>
 
 </head>
-<body>
 
+<body>
 
 <div id="Geral" class="home">
 
@@ -97,12 +99,12 @@ checkVersion();
                                             
 
 </p>
-<div class="thumb_cinema">
+<div class="tumb_cinema">
 <div class="border-thumb">
 <span class="border-left"></span>
 <span class="border-bottom"></span>
 </div>
-<a href="cinema_interna.cfm?filme=1031" title="Somos Tão Jovens"><img src="http://www.paseoitaigara.com.br/conteudo/filme/339762B2-3048-9A96-8289F0F19E0996A0.png" alt="Os Croods"  width="90" height="134" style="margin-top:15px;"/></a>
+<a href="cinema_interna.cfm?filme=1031" title="群组"><img src="./template/default/image/camera.png" alt="Os Croods"  width="90" height="90" style="margin-top:45px;"/></a>
 </div>
 </div>
 </li>
@@ -163,8 +165,8 @@ checkVersion();
                     </div>
                     
 <div class="box veja_mais l5 c5">
-<div class="inner_rotate">
-<a href="lojas.cfm" title="Clique para ver mais lojas" class="marca_box link_mais box_lojas">更多</a>
+<div class="inner_rotate"style="padding-left:20px;padding-top:50px;">
+<a href="space.php?do=mtag" title="更多" >更多</a>
 </div>
 </div>
 <div class="clear"></div>
@@ -259,8 +261,8 @@ checkVersion();
 </div>
 
 <div class="box veja_mais l7 c5">
-<div class="inner_rotate">
-<a href="servicos.cfm" title="Clique para ver mais serviços" class="marca_box box_servicos">更多</a>
+<div class="inner_rotate" style="padding-left:20px;padding-top:50px;">
+<a href="space.php?do=mtag&view=hot&fieldid=0&orderby=threadnum" title="更多群组">更多</a>
 </div>
 </div>
 <div class="clear"></div>
@@ -317,8 +319,8 @@ checkVersion();
 </div>
 
 <div class="box veja_mais l9 c5">
-<div class="inner_rotate">
-<a href="novidades.cfm" title="Clique para ver mais eventos" class="marca_box box_noticias">更多</a>
+<div class="inner_rotate" style="padding-left:20px;padding-top:50px;">
+<a href="space.php?do=mtag&view=hot&fieldid=0&orderby=postnum" title="更多群组">更多</a>
 </div>
 </div>
 <div class="clear"></div>
@@ -375,8 +377,8 @@ checkVersion();
 </div>
 
 <div class="box veja_mais l11 c5">
-<div class="inner_rotate">
-<a href="space.php?do=mtag&view=hot&fieldid=0&orderby=membernum" title="Clique para ver mais filmes" class="marca_box box_cinema">更多</a>
+<div class="inner_rotate" style="padding-left:20px;padding-top:50px;">
+<a href="space.php?do=mtag&view=hot&fieldid=0&orderby=membernum" title="更多群组">更多</a>
 </div>
 </div>
 
@@ -391,13 +393,14 @@ checkVersion();
 
 
  <ul id="navigation">
-            <li class="home"><a href="space.php?do=home" title="首页"></a></li>
-             <li class="about"><a href="space.php?do=medicine" title="用药助手"></a></li>
+           	<li class="home"><a href="space.php?do=home" title="首页"></a></li>
+            <li class="about"><a href="space.php?do=medicine" title="用药助手"></a></li>
             <li class="search"><a href="space.php?do=activity" title="活动"></a></li>
-            <li class="photos"><a href="" title="Photos"></a></li>
-            <li class="rssfeed"><a href="" title="Rss Feed"></a></li>
-            <li class="podcasts"><a href="" title="Podcasts"></a></li>
-            <li class="contact"><a href="" title="Contact"></a></li>
+            <li class="photos"><a href="space.php?do=group" title="群组"></a></li>
+            <li class="rssfeed"><a href="space.php?do=discussion" title="案例讨论"></a></li>
+            <li class="podcasts"><a href="space.php?do=joke" title="医疗笑话"></a></li>
+            <li class="contact"><a href="space.php?do=news&orderby=dateline" title="今日资讯"></a></li>
+            <li class="zhuanti"><a href="space.php?do=subject" title="本周专题"></a></li>
         </ul>
      
      <style>
@@ -408,32 +411,36 @@ ul#navigation li {
 }
 
 ul#navigation .home a{
-    background-image: url(template/default/image/home.png);
+    background-image: url(./template/default/image/home.png);
 }
 ul#navigation .about a      {
-    background-image: url(template/default/image/id_card.png);
+    background-image: url(./template/default/image/id_card.png);
 }
 ul#navigation .search a      {
-    background-image: url(template/default/image/search.png);
+    background-image: url(./template/default/image/search.png);
 }
 ul#navigation .podcasts a      {
-    background-image: url(template/default/image/ipod.png);
+    background-image: url(./template/default/image/ipod.png);
 }
 ul#navigation .rssfeed a   {
-    background-image: url(template/default/image/rss.png);
+    background-image: url(./template/default/image/rss.png);
 }
 ul#navigation .photos a     {
-    background-image: url(template/default/image/camera.png);
+    background-image: url(./template/default/image/camera.png);
 }
 ul#navigation .contact a    {
-    background-image: url(template/default/image/mail.png);
+    background-image: url(./template/default/image/mail.png);
 }
+ul#navigation .zhuanti a    {
+    background-image: url(./template/default/image/zhuanti.png);
+}
+
      ul#navigation {
     position: fixed;
     margin: 0 auto;
     padding: 0px;
     bottom:-30px;
-    left:24%;
+    left:21%;
     list-style: none;
     z-index:9999;
 }

@@ -1,9 +1,10 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_news', '1369496252', 'template/green/space_news');?><head>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_news', '1369994769', 'template/green/space_news');?><head>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 
-<title>Newscast - a premium magazine template</title>
+<title>今日资讯</title>
+<link rel="shortcut icon" href="image/favicon.ico" />
 
 <link rel="stylesheet" href="http://www.kriesi.at/demos/newscast/light/style.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="http://www.kriesi.at/demos/newscast/light/css/style1.css" type="text/css" media="screen" />

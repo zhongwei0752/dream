@@ -7,6 +7,9 @@
 	exit('Access Denied');
 }
 $searchkey = stripsearchkey($_GET['lusername']);
+if(empty($_GET['lusername'])){
+	showmessage("请填写查询关键字","space.php?do=medicine");
+}
 $query = $_SGLOBAL['db']->query("SELECT * FROM ".tname('medicine')." WHERE mingcheng LIKE '%$searchkey%'
 				ORDER BY id DESC LIMIT 0,10");
 while ($value = $_SGLOBAL['db']->fetch_array($query)) 

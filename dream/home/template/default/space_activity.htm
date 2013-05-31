@@ -11,13 +11,14 @@
 
     <script type="text/javascript" src="./assets/js/modernizr.js"></script>
     <!-- Icons -->
-    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link rel="shortcut icon" href="image/favicon.ico" />
+<link rel="edituri" type="application/rsd+xml" title="rsd" href="xmlrpc.php?rsd=$space[uid]" />
     <meta name="google-site-verification" content="ATYnx8c2gxK19wgm6phbzYjSPaWKf8of7pVUx9wl2eU" />
     <meta property="fb:page_id" content="186460418057963" />
     </head>
 <body class="">
      <div id="topBox">
-  <div class="m-logbg" id="m_bg"> <img id="bg"  src="http://ww2.sinaimg.cn/large/ae1d320cjw1e3i8ono4tfj.jpg" style= "display:none " onload="this.style.display='';$('.imgload').hide();"/> </div>
+  <div class="m-logbg" id="m_bg"> <img id="bg"  src="./template/default/image/image/activity/activity.jpg" style= "display:none " onload="this.style.display='';$('.imgload').hide();"/> </div>
 </div>
     <div id="page-border">
 
@@ -31,7 +32,7 @@
             <div class="hex grid-3 secondary large-img">
                 <a href="space.php?do=activity" title="About Built by Buffalo Web Design">
                     <div class="inner" style="margin-top:10px;">
-                        <img src="./assets/img/hex-img-1@2x.png" width="133" height="140" alt="About Built by Buffalo Web Design" />
+                        <img src="./assets/img/hex-img-1@2x.png" width="133" height="140" alt="活动" />
                         <h3>活动</h3>
                     </div>
                     <div class="hex-1"><span class="after"></span></div>
@@ -42,7 +43,7 @@
             <br class="mq-wide" />
 
             <div class="hex grid-3 full-img">
-                <a href="space.php?do=event&view=all" title="About Built by Buffalo Web Design">
+                <a href="space.php?do=event&view=all" title="全部活动">
                     <div class="inner" style="margin-top:40px;">
                         <p>全部活动</p>
                         <hr class="grid-1 center" />
@@ -57,7 +58,7 @@
            
 
             <div class="hex grid-3 full-img">
-                <a href="space.php?uid=1&do=event&view=me" title="About Built by Buffalo Web Design">
+                <a href="space.php?uid=1&do=event&view=me" title="我的活动">
                     <div class="inner" style="margin-top:40px;">
                         <p>我的活动</p>
                         <hr class="grid-1 center" />
@@ -75,7 +76,7 @@
 
 
             <div class="hex grid-3 full-img">
-                <a href="space.php?do=event&view=recommend" title="全部活动">
+                <a href="space.php?do=event&view=recommend" title="推荐活动">
                     <div class="inner" style="margin-top:40px;">
                         <p>推荐活动</p>
                         <hr class="grid-1 center" />
@@ -88,7 +89,7 @@
             </div>  
             
             <div class="hex grid-3 align-top">
-                <a href="cp.php?ac=event" style="background-image: url(http://builtbybuffalo.com/uploads/work/300/1993047586.jpg);" title="Clear Channel International - Expression Engine CMS Example">
+                <a href="cp.php?ac=event" style="background-image: url(http://builtbybuffalo.com/uploads/work/300/1993047586.jpg);" title="发起新活动">
                     <div class="inner" style="margin-top:40px;">
                         <p>发起新活动</p>
                         <hr class="grid-1 center" />
@@ -101,7 +102,7 @@
             </div>
 
             <div class="hex grid-3 full-img">
-                <a href="space.php?do=event&view=city" title="About Built by Buffalo Web Design">
+                <a href="space.php?do=event&view=city" title="同城活动">
                     <div class="inner" style="margin-top:40px;">
                         <p>同城活动</p>
                         <hr class="grid-1 center" />
@@ -127,13 +128,14 @@
        
     </div>
     <ul id="navigation">
-            <li class="home"><a href="space.php?do=home" title="首页"></a></li>
-             <li class="about"><a href="space.php?do=medicine" title="用药助手"></a></li>
+             <li class="home"><a href="space.php?do=home" title="首页"></a></li>
+            <li class="about"><a href="space.php?do=medicine" title="用药助手"></a></li>
             <li class="search"><a href="space.php?do=activity" title="活动"></a></li>
-            <li class="photos"><a href="" title="Photos"></a></li>
-            <li class="rssfeed"><a href="" title="Rss Feed"></a></li>
-            <li class="podcasts"><a href="" title="Podcasts"></a></li>
-            <li class="contact"><a href="" title="Contact"></a></li>
+            <li class="photos"><a href="space.php?do=group" title="群组"></a></li>
+            <li class="rssfeed"><a href="space.php?do=discussion" title="案例讨论"></a></li>
+            <li class="podcasts"><a href="space.php?do=joke" title="医疗笑话"></a></li>
+            <li class="contact"><a href="space.php?do=news&orderby=dateline" title="今日资讯"></a></li>
+            <li class="zhuanti"><a href="space.php?do=subject" title="本周专题"></a></li>
         </ul>
         <script language="javascript" type="text/javascript" src="http://www.familyday.com.cn/template/aifaxian/js/jquery-1.9.1.min.js"></script>
      <style>
@@ -142,7 +144,7 @@
     margin: 0 auto;
     padding: 0px;
     bottom:-30px;
-    left:24%;
+    left:21%;
     list-style: none;
     z-index:9999;
 }

@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_joke|template/green/firstheader|template/green/space_jokeclick', '1369496354', 'template/green/space_joke');?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_joke|template/green/firstheader|template/green/space_jokeclick', '1369994757', 'template/green/space_joke');?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" style="height:100%;">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -114,14 +114,15 @@ return false;
 </script>
 
 
-<link rel="shortcut icon" href="http://www.inwebson.com/wp-content/themes/inwebson2/favicon.ico" />
+<link rel="shortcut icon" href="image/favicon.ico" />
 <link rel="canonical" href="http://www.inwebson.com/demo/blocksit-js/demo2/" />
+<title>医疗笑话</title>
 </head>
 <body>
 
 <!-- Content -->
 <section id="wrapper" >
-  <div class="m-logbg" id="m_bg"> <img id="bg"  src="http://ww3.sinaimg.cn/large/ae1d320cgw1e3i933i9ksj.jpg" style= "display:none " onload="this.style.display='';$('.imgload').hide();"/> </div>
+  <div class="m-logbg" id="m_bg"> <img id="bg"  src="./template/default/image/image/joke/joke.jpg" style= "display:none " onload="this.style.display='';$('.imgload').hide();"/> </div>
 <div id="container" style="width:1024px;">
 <?php if(is_array($list)) { foreach($list as $value) { ?>
 <div class="grid">
@@ -158,12 +159,13 @@ var bglist = new Array('http://ww2.sinaimg.cn/large/ae1d320cjw1e3i8oujesuj.jpg',
 </script>
 <ul id="navigation">
             <li class="home"><a href="space.php?do=home" title="首页"></a></li>
-             <li class="about"><a href="space.php?do=medicine" title="用药助手"></a></li>
+            <li class="about"><a href="space.php?do=medicine" title="用药助手"></a></li>
             <li class="search"><a href="space.php?do=activity" title="活动"></a></li>
-            <li class="photos"><a href="" title="Photos"></a></li>
-            <li class="rssfeed"><a href="" title="Rss Feed"></a></li>
-            <li class="podcasts"><a href="" title="Podcasts"></a></li>
-            <li class="contact"><a href="" title="Contact"></a></li>
+            <li class="photos"><a href="space.php?do=group" title="群组"></a></li>
+            <li class="rssfeed"><a href="space.php?do=discussion" title="案例讨论"></a></li>
+            <li class="podcasts"><a href="space.php?do=joke" title="医疗笑话"></a></li>
+            <li class="contact"><a href="space.php?do=news&orderby=dateline" title="今日资讯"></a></li>
+            <li class="zhuanti"><a href="space.php?do=subject" title="本周专题"></a></li>
         </ul>
      
      <style>
@@ -174,32 +176,35 @@ ul#navigation li {
 }
 
 ul#navigation .home a{
-    background-image: url(template/default/image/home.png);
+    background-image: url(./template/default/image/home.png);
 }
 ul#navigation .about a      {
-    background-image: url(template/default/image/id_card.png);
+    background-image: url(./template/default/image/id_card.png);
 }
 ul#navigation .search a      {
-    background-image: url(template/default/image/search.png);
+    background-image: url(./template/default/image/search.png);
 }
 ul#navigation .podcasts a      {
-    background-image: url(template/default/image/ipod.png);
+    background-image: url(./template/default/image/ipod.png);
 }
 ul#navigation .rssfeed a   {
-    background-image: url(template/default/image/rss.png);
+    background-image: url(./template/default/image/rss.png);
 }
 ul#navigation .photos a     {
-    background-image: url(template/default/image/camera.png);
+    background-image: url(./template/default/image/camera.png);
 }
 ul#navigation .contact a    {
-    background-image: url(template/default/image/mail.png);
+    background-image: url(./template/default/image/mail.png);
+}
+ul#navigation .zhuanti a    {
+    background-image: url(./template/default/image/zhuanti.png);
 }
      ul#navigation {
     position: fixed;
     margin: 0 auto;
     padding: 0px;
     bottom:-30px;
-    left:24%;
+    left:21%;
     list-style: none;
     z-index:9999;
 }

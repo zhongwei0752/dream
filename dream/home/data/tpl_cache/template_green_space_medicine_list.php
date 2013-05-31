@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_medicine_list|template/green/firstheader', '1369390688', 'template/green/space_medicine_list');?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_medicine_list|template/green/firstheader', '1369992228', 'template/green/space_medicine_list');?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" style="height:100%;">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -46,19 +46,20 @@ DD_belatedPNG.fix('.whybox font,background');
 
 <head>
   <title>医药助手</title>
+<link rel="shortcut icon" href="image/favicon.ico" />
   </head>
 <div id="topBox">
-  <div class="m-logbg" id="m_bg"> <img id="bg"  src="http://ww3.sinaimg.cn/large/ae1d320cgw1e3i933i9ksj.jpg" style= "display:none " onload="this.style.display='';$('.imgload').hide();"/> </div>
+  <div class="m-logbg" id="m_bg"> <img id="bg"  src="./template/default/image/image/medicine/medicine1.jpg" style= "display:none " onload="this.style.display='';$('.imgload').hide();"/> </div>
 
   <div class="w830">
 
     <div class="homebox" >
-      <div class="logo_login"><div class="logo_index"></div></div>
+      <div class="logo_login" style="margin-top:100px;"></div>
   <div class="toplogin_index"style="margin-top:70px;">
-       <form id="loginform" name="loginform" action="cp.php" method="get" >
+       <form id="loginform" name="loginform" action="cp.php?ac=medicine" method="get" >
         <div class="textbox"style="margin-top:-60px;" >
  <div class="reg_username" >
- <label for = "lusername" id="lusername_p" style=" ">药品关键字</label>
+ <label for = "lusername" id="lusername_p"  style=" ">药品关键字</label>
  <div>
  <input type="text" id="lusername" name="lusername"  value="" tabindex="1" autocomplete="off"/>
  
@@ -85,7 +86,7 @@ DD_belatedPNG.fix('.whybox font,background');
 
 
 
-
+<script src="http://www.familyday.com.cn/template/aifaxian/js/important.js" type="text/javascript"></script>
 <script type="text/javascript">
 
 var bglist = new Array('http://ww2.sinaimg.cn/large/ae1d320cjw1e3i8oujesuj.jpg','http://ww2.sinaimg.cn/large/ae1d320cjw1e3i8ono4tfj.jpg','http://ww2.sinaimg.cn/large/ae1d320cjw1e3i8om3w12j.jpg','http://ww4.sinaimg.cn/large/ae1d320cgw1e3i9373555j.jpg','http://ww3.sinaimg.cn/large/ae1d320cgw1e3i933i9ksj.jpg');
@@ -96,10 +97,11 @@ var bglist = new Array('http://ww2.sinaimg.cn/large/ae1d320cjw1e3i8oujesuj.jpg',
             <li class="home"><a href="space.php?do=home" title="首页"></a></li>
             <li class="about"><a href="space.php?do=medicine" title="用药助手"></a></li>
             <li class="search"><a href="space.php?do=activity" title="活动"></a></li>
-            <li class="photos"><a href="" title="Photos"></a></li>
-            <li class="rssfeed"><a href="" title="Rss Feed"></a></li>
-            <li class="podcasts"><a href="" title="Podcasts"></a></li>
-            <li class="contact"><a href="" title="Contact"></a></li>
+            <li class="photos"><a href="space.php?do=group" title="群组"></a></li>
+            <li class="rssfeed"><a href="space.php?do=discussion" title="案例讨论"></a></li>
+            <li class="podcasts"><a href="space.php?do=joke" title="医疗笑话"></a></li>
+            <li class="contact"><a href="space.php?do=news&orderby=dateline" title="今日资讯"></a></li>
+            <li class="zhuanti"><a href="space.php?do=subject" title="本周专题"></a></li>
         </ul>
         <script language="javascript" type="text/javascript" src="http://www.familyday.com.cn/template/aifaxian/js/jquery-1.9.1.min.js"></script>
      <style>
@@ -108,7 +110,7 @@ var bglist = new Array('http://ww2.sinaimg.cn/large/ae1d320cjw1e3i8oujesuj.jpg',
     margin: 0 auto;
     padding: 0px;
     bottom:-30px;
-    left:24%;
+    left:21%;
     list-style: none;
     z-index:9999;
 }

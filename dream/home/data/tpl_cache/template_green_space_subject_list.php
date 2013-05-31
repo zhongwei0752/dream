@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_subject_list|template/green/firstheader', '1369498861', 'template/green/space_subject_list');?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_subject_list|template/green/firstheader', '1369994788', 'template/green/space_subject_list');?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" style="height:100%;">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -44,6 +44,10 @@ DD_belatedPNG.fix('.whybox font,background');
 
 
 
+<head>
+  <title>h7n9</title>
+<link rel="shortcut icon" href="image/favicon.ico" />
+</head>
   <div> <img id="bg"  src="./template/default/image/h7n9.jpg" style= "display:none " onload="this.style.display='';$('.imgload').hide();"/> </div>
 <div style="position: absolute;left: 46%;top:80%;"><a href="space.php?do=othersubject"><input type="button" style="width:150px;height:60px;" value="进入h7n9专题"></input></a></div>
 
