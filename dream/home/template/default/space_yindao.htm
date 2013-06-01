@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+<!--Huge props to Jonathan Nicol of f6design.com whose parallax tutorial serves as the base for this site-->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+	
+	<head>
+		<title>资讯分享平台 - 天使，你的家</title>
+
+		<meta charset="utf-8" />
+
+		<link rel="stylesheet" media="all" href="http://www.thesearethings.com/css/main.css" />
+		<script type="text/javascript" src="./template/default/tmodernizr.custom.37797.js"></script> 
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="./template/default/parallax.js"></script>
+		<script type="text/javascript" src="./template/default/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="./template/default/jquery.easing.compatibility.js"></script>
+		<script type="text/javascript" src="./template/default/jquery.timers-1.1.2.js" ></script> 
+		<script type="text/javascript" src="./template/default/googler.js" ></script> 
+		
+		<script type="text/javascript" src="http://use.typekit.com/kfg7nzp.js"></script>
+		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+
+				$(".btn-slide").click(function(){
+				  $("#panel").slideToggle('slow', 'easeOutBounce');
+				});
+				
+			});
+		</script>
+		<style type="text/css">
+		#topbar {
+background: url("./template/default/image/topbar.png") repeat scroll left top transparent;
+height: 75px;
+padding: 0;
+position: fixed;
+top: 0;
+width: 100%;
+z-index: 5000;
+}
+#jando_sprite {
+background: url("../img/ando.png") no-repeat scroll center top transparent;
+display: block;
+height: 310px;
+position: fixed;
+top: 345px;
+z-index: 70;
+}
+body {
+	line-height: 1;
+}
+body {
+	background: #f9f5f0 url("./template/default/image/bg-full2.jpg") center 0;
+	background-repeat: repeat-x;
+	overflow-x: visible;
+	color: #000;
+	
+	font-size: 14px;
+	line-height: 16px;
+	font-family: "museo-slab-1","museo-slab-2",'Georgia',serif;
+}
+nav#primary1 {
+	z-index: 5000;
+	position: fixed;
+	top: 50%;
+	left: 16px;
+	margin-top: -40px;
+}
+nav#primary {
+	z-index: 5000;
+	position: fixed;
+	top: 50%;
+	right: 16px;
+	margin-top: -40px;
+}
+nav#primary li {
+	position: relative;
+	height: 20px;
+}
+nav#primary a {
+	display: block;
+	width: 20px;
+	height: 20px;
+	text-indent: -9999px;
+	background: transparent url('http://www.thesearethings.com//img/nav-dot.png') 4px -16px no-repeat;
+	
+	-webkit-transition: all 0s ease-out;
+	-moz-transition: all 0s ease-out;
+	-o-transition: all 0s ease-out;
+	transition: all 0s ease-out;
+}
+nav#primary a:hover, nav#primary a.active {
+	background: transparent url('http://www.thesearethings.com//img/nav-dot.png') 4px 4px no-repeat;
+}
+nav#primary h1 {
+	position: absolute;
+	right: 22px;
+	top: -7px;
+	display: none;
+	padding: 3px 10px;
+	color: #fff;
+	white-space: nowrap;
+	background: #f0542f;
+	
+	box-shadow: 0 0 10px rgba(128, 78, 34, 0.5);
+	
+	font-size: 12px;
+	font-family: futura-pt-1, Futura, Arial, sans-serif;
+	line-height: 28px;
+	letter-spacing: 2px;
+	font-weight: bold;
+	text-transform: uppercase;
+	}
+	
+nav.next-prev {
+	margin: -5px auto;
+    width: 44px;
+	}
+	a.prev,
+	a.next {
+		display: block;
+		width: 22px;
+		height: 16px;
+		text-indent: -9999px;
+		float: left;
+		
+			-webkit-transition: all 0s ease-out;
+		-moz-transition: all 0s ease-out;
+		-o-transition: all 0s ease-out;
+		transition: all 0s ease-out;
+	
+		}
+	a.prev {
+		margin: 0 auto 5px auto;
+		background: transparent url('http://www.thesearethings.com//img/scroll-arrow-up.png') 0 0 no-repeat;
+		}
+		a.prev:hover {
+			background: transparent url('http://www.thesearethings.com//img/scroll-arrow-up.png') 0 -16px no-repeat;
+			}
+	a.next {
+		margin: 2px auto 0 auto;
+		background: transparent url('http://www.thesearethings.com//img/scroll-arrow-down.png') -1px -16px no-repeat;
+		}
+		a.next:hover {
+			background: transparent url('http://www.thesearethings.com//img/scroll-arrow-down.png') -1px 0 no-repeat;
+			}
+	
+	a.next2 {
+		margin: -5px auto 0 auto;
+		background: transparent url('http://www.thesearethings.com//img/scroll-arrow-down.gif') 0 0 no-repeat;
+		display: block;
+		width: 22px;
+		height: 32px;
+		text-indent: -9999px;
+		}
+		a.next2:hover {
+			background: transparent url('http://www.thesearethings.com//img/scroll-arrow-down.gif') 0 0 no-repeat;
+			}
+
+	#jando_sprite {
+background: url("./template/default/image/jando.png") no-repeat scroll center top transparent;
+display: block;
+height: 310px;
+position: fixed;
+top: 345px;
+z-index: 70;
+}
+
+
+</style>
+		
+
+	
+	</head>
+
+	<body>
+		
+
+			
+
+		
+			<div id="topbar">			
+	
+				<div style="width:960px;margin:auto">
+				
+					<a href="#"><img src="./template/default/image/topbar-logo.png" alt="资讯分享平台 - 天使，你的家" /></a>
+					
+					<p class="nav">
+					<a href="space.php?do=medicine">用药助手</a> • 
+					<a href="space.php?do=discussion">案例讨论</a> • 
+					<a href="space.php?do=joke">医疗笑话</a> • 
+					<a href="space.php?do=news&orderby=dateline">今日资讯</a> • 
+					<a href="space.php?do=timer">关于我们</a>
+					</p>
+	
+				</div>
+	
+			</div>
+			
+			<nav id="primary">
+
+				<ul>
+				
+					<li>
+						<h1>欢迎页</h1>
+						<a class="scene01-about" href="#scene01-about">View</a>
+					</li>
+					<li>
+						<h1>用药助手</h1>
+						<a class="scene02-shop" href="#scene02-shop">View</a>
+					</li>
+					<li>
+						<h1>案例讨论</h1>
+						<a class="scene03-studio" href="#scene03-studio">View</a>
+					</li>
+					<li>
+						<h1>医疗笑话</h1>
+						<a class="scene04-blog" href="#scene04-blog">View</a>
+					</li>
+					<li>
+						<h1>今日资讯</h1>
+						<a class="scene05-about" href="#scene05-about">View</a>
+					</li>
+					<li>
+						<h1>关于我们</h1>
+						<a class="scene06-contact" href="#scene06-contact">View</a>
+					</li>
+					
+				</ul>
+			</nav>
+			
+			<nav id="primary1">
+			<img src="./template/default/image/weixin.jpg"/>
+			</nav>
+			
+
+			<div id="content">
+				
+							<div id="socialsign">
+			<p><a style="font-weight:bold;float:left" href="http://weibo.com/zhongwei0752">新浪微博</a> <span style="font-style:italic;float:right">13mi</span></p>
+			
+			
+			</div>
+			
+				<article id="scene01-about">
+					<h1>你好</h1>
+					<p>欢迎来到资讯交流平台<br>你的好友正等着你呢.</p><br/>
+					<p><a href="space.php?do=home">进入我家</a></p>
+					
+					<div class="bouncer" style="top:0;position:relative">
+					
+					<nav class="next-prev" style="width:22px">
+						<a class="next2 scene02-shop" href="#scene02-shop"></a>
+					</nav>
+					
+					</div>
+					
+				</article>
+				
+				<article id="scene02-shop">
+					<h1><a href="http://shop.thesearethings.com">用药助手</a></h1>
+					<p>在这里，你可以查找你想知道的药品，为你在需要相关医药知识给你献上一分力量.</p>
+					
+					
+					
+					<nav class="next-prev">
+					
+						<div class="bouncer" style="top:0;position:relative">
+						<a class="prev scene01-about" href="#scene01-about">Prev</a>
+						</div>
+						
+						<div class="bouncerup" style="position:relative">
+						<a class="next scene03-studio" href="#scene03-studio">Next</a>
+						</div>
+						
+						</nav>
+
+					
+				</article>
+				
+				<article id="scene03-studio">
+					<h1><a href="http://thesearethings.com/work">案例讨论</a></h1>
+					<p>讨论，交集，一起解决问题的感觉真好，这种感觉，就在这里.</p>
+					
+					<nav class="next-prev">
+					
+						<div class="bouncer" style="top:0;position:relative">
+						<a class="prev scene02-shop" href="#scene02-shop">Prev</a>
+						</div>
+						
+						<div class="bouncerup" style="position:relative">
+						<a class="next scene04-blog" href="#scene04-blog">Next</a>
+						</div>
+						
+					</nav>
+					
+				</article>
+				
+				<article id="scene04-blog">
+					<h1><a href="http://www.makingit.co">医疗笑话</a></h1>
+					<p>放开心扉，肆无忌惮的放声大笑，你，是否好久没笑了，来这，让心灵栖息.</p>
+					
+					<nav class="next-prev">
+					
+						<div class="bouncer" style="top:0;position:relative">
+						<a class="prev scene03-studio" href="#scene03-studio">Prev</a>
+						</div>
+						
+						<div class="bouncerup" style="position:relative">
+						<a class="next scene05-about" href="#scene05-about">Next</a>
+						</div>
+						
+					</nav>
+					
+				</article>
+				
+				<article id="scene05-about">
+				
+					<h1><a href="http://thesearethings.com/about">今日资讯</a></h1>
+					<p>网罗全球最新消息，获知全球最新资讯，大家好，这里是资讯交流平台今日资讯栏目.</p>
+					
+					<nav class="next-prev">
+					
+						<div class="bouncerup" style="position:relative">
+						<a class="prev scene04-blog" href="#scene04-blog">Prev</a>
+						<a class="next scene06-contact" href="#scene06-contact">Next</a>
+						</div>
+						
+					</nav>
+				</article>
+				
+				
+				<article id="scene06-contact">
+				
+					<h1><a class="btn-slide">关于我们</a></h1>
+
+						<p>青春不放弃 <a class="btn-slide" href="http://weibo.com/zhongwei0752">钟魏</a>,</p><br/><p> 跟着感觉走 <a href="http://weibo.com/ganwensi">甘文思</a>,</p><br/> <p>自由，快乐，幸福<a href="http://weibo.com/u/1850905795">何碧燕</a>.</p>
+					
+					<nav class="next-prev"  style="width:15px">
+					
+						<div class="bouncerup" style="position:relative">
+						<a class="prev scene05-about" href="#scene05-about">Prev</a>
+						</div>
+						
+					</nav>
+				</article>
+				
+				
+			</div>
+			
+			
+			<div id="bg3-6"></div>
+			
+
+			
+			
+			<div id="panel" style="display: none;">
+			
+			<iframe name="contactform" id="contactform" src="http://www.thesearethings.com/contact.php" width="490" height="475" style="border:none;overflow:hidden">
+			
+			</iframe>
+			
+			</div>
+
+
+
+
+			
+			
+			<!-- Parallax foreground -->
+			<div id="parallax-bg3">
+				<img id="bg3-2" src="http://www.thesearethings.com/img/scene02-counter.png" alt="counter"/>
+
+				<img id="bg3-32" src="http://www.thesearethings.com/img/scene03-suit.png"  alt="suit"/>
+				<img id="bg3-4" src="http://www.thesearethings.com/img/scene04-diary.png" alt="diary"/>
+				<img id="bg3-51" src="http://www.thesearethings.com/img/scene05-travelgear.png" alt="travel gear"/>
+			</div>
+			
+			<!-- Parallax  midground -->
+			<div id="parallax-bg2">
+				<img id="bg2-1" src="./template/default/image/scene01-ground.png" alt="ground"/>
+				<img id="bg3-1" src="http://www.thesearethings.com/img/scene01-cats.png" alt="cats"/>
+				<img id="bg3-12" src="http://www.thesearethings.com/img/scene01-flowers.png" alt="flowers"/>
+				<img id="bg2-2" src="http://www.thesearethings.com/img/scene02-globe.png" alt="globe"/>
+				<img id="bg2-4" src="http://www.thesearethings.com/img/scene04-pile1.png" alt="pile"/>
+				<img id="bg2-5" src="http://www.thesearethings.com/img/scene05-mapelements.png" alt="map elements"/>
+
+				
+			</div>
+			
+			<!-- Parallax  background -->
+			<div id="parallax-bg1">
+				
+				<img id="bg1-1" src="./template/default/image/scene01-clouds.png" alt="cloud"/>
+				<img id="bg1-11" src="http://www.thesearethings.com/img/scene01-clouds.png" alt="cloud"/>
+				<img id="bg1-12" src="http://www.thesearethings.com/img/scene01-clouds.png" alt="cloud"/>
+				<img id="bg2-12" src="http://www.thesearethings.com/img/scene01-plane.png" alt="plane" />
+				<img id="bg1-2" src="./template/default/image/scene02-maps.png" alt="maps"/>
+				<img id="bg1-3" src="./template/default/image/scene03-wallart.png" alt="wallart"/>
+				<img id="bg1-4" src="http://www.thesearethings.com/img/scene04-pile2.png" alt="pile"/>
+				<img id="bg1-41" src="http://www.thesearethings.com/img/scene04-polaroidbg.png" alt="polaroidbg"/>
+				<img id="bg3-5" src="http://www.thesearethings.com/img/scene05-map.png" alt="map"/>
+				<img id="bg3-7" src="http://www.thesearethings.com/img/scene06-nightbg.png" alt="night"/>
+				<img id="bg3-8" src="http://www.thesearethings.com/img/scene06-stars.png" alt="stars"/>
+				<img id="bg3-9" src="http://www.thesearethings.com/img/scene06-stars.png" alt="stars"/>	
+				
+			</div>
+		
+		
+		<div id="jando">
+
+			<div class="jando_container">
+
+			<div id="jando_sprite" class="jando_container"></div>
+			
+			</div>
+
+		</div>
+		
+		<div class="btn-slide" style="cursor: pointer;
+    display: block;
+    height: 168px;
+    left: 50%;
+    margin-left: -400px;
+    position: absolute;
+    top: 3580px;
+    width: 100px;
+    z-index: 5000;"></div>
+		
+<!--FOOTER-->
+
+
+
+
+	<article id="footer">
+	
+		<div style="width:960px;margin:auto">
+			
+			
+			<div id="footernav">
+				<p>
+					<a href="space.php?do=medicine">用药助手</a> • 
+					<a href="http://thesearethings.com/work">群组</a> • 
+					<a href="http://www.makingit.co">医疗笑话</a> • 
+					<a href="http://thesearethings.com/about">今日资讯</a> • 
+					<a href="space.php?do=timer">关于我们</a>
+				</p>
+				
+				<div id="fb-root"></div>
+				
+				<a style="margin-top:5px" href="http://weibo.com/zhongwei0752" class="twitter-follow-button" data-show-count="true" data-show-screen-name="false">Follow @小冬树的夏天</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+			
+			</div>
+			
+			
+			
+			<div id="footermailinglist">
+			
+			<!-- Begin MailChimp Signup Form -->
+				
+			
+			
+			<div id="mc_embed_signup">
+		
+			</div><!--close mc_embed_signup-->
+		
+		
+		</div><!--close footermailinglist-->	
+
+		
+		
+		</div><!--CLOSE CENTERING DIV-->
+		
+			<div id="bottombanner">
+			
+				dream PRODUCTION © 2013 天使，你的家
+			
+			</div>
+		
+		
+	
+	</article>
+<!--CLOSE FOOTER-->
+
+	
+	</body>
+  
+</html>

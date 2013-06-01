@@ -1,5 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/help|template/green/header|template/green/footer', '1369984763', 'template/green/help');?><?php $_TPL['titles'] = array('帮助'); ?>
-<?php if(empty($_SGLOBAL['inajax'])) { ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_joke|template/green/header|template/green/cp_topic_menu|template/green/footer|template/green/space_topic_inc', '1370024073', 'template/green/cp_joke');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -57,8 +56,6 @@
 <?php if($_SGLOBAL['supe_uid']) { ?>
 <li><a href="space.php?do=pm<?php if(!empty($_SGLOBAL['member']['newpm'])) { ?>&filter=newpm<?php } ?>">消息<?php if(!empty($_SGLOBAL['member']['newpm'])) { ?><span style="background-color: #e74c3c;border-radius: 30px;color: white;font-size: 12px;font-weight: 500;line-height: 18px;min-width: 8px;padding: 0 5px;margin-left:30px;margin-top:-20px;text-align: center;text-shadow: none;z-index: 10;display: block;"><?=$_SGLOBAL['member']['newpm']?></span><?php } ?></a></li>
 <?php if($_SGLOBAL['member']['allnotenum']) { ?><li class="notify" id="membernotemenu" onmouseover="showMenu(this.id)"><a href="space.php?do=notice"><?=$_SGLOBAL['member']['allnotenum']?>个提醒</a></li><?php } ?>
-<?php } else { ?>
-<li><a href="help.php">帮助</a></li>
 <?php } ?>
 </ul>
 
@@ -100,125 +97,117 @@
 
 <?php } ?>
 
+<script language="javascript" src="image/editor/editor_function.js"></script>
+<script language="javascript" src="source/script_joke.js"></script>
 
-<div id="content">
-<table cellpadding="0" cellspacing="0" class="formtable">
-
-<?php if($_GET['ac']=='register') { ?>
-<caption>
-<h2>注册</h2>
-</caption>
-<tr><td>
-注册非常简单，只需选择自己想要用户名、密码，输入一个可用的邮箱地址，就可以立即注册成为站内一员。<br /><br />
-<img src="image/help/register.gif" alt="" /><br /><br />
-</td></tr>
-
-<?php } elseif($_GET['ac']=='home') { ?>
-<caption>
-<h2>在首页查看好友的最新动态和通知</h2>
-</caption>
-<tr><td>
-<h2>好友的最新动态</h2>
-登录后，在首页你可以一目了然地看到好友们的最新动态，包括他们最新发布的记录、日志、上传的图片、分享以及发起的话题等等。<br /><br />
-<img src="image/help/home.gif"><br /><br />
-</td></tr>
-<tr><td>
-<h2>最新通知</h2>
-在首页右侧，你可以处理最新的好友申请、站内的通知和朋友们的招呼等等。<br /><br />
-<img src="image/help/home2.gif"><br /><br />
-</td></tr>
-
-<?php } elseif($_GET['ac']=='space') { ?>
-<caption>
-<h2>我的主页</h2>
-</caption>
-<tr><td>
-这里记录着你的全部动作，是你的朋友了解你的窗口。你可以在“我的主页”填写个人资料、完善个人群组等等。<br /><br />
-<img src="image/help/space.gif"><br /><br />
-</td></tr>
-
-<?php } elseif($_GET['ac']=='doing') { ?>
-<caption>
-<h2>记录</h2>
-</caption>
-<tr><td>
-可以非常方便的用一句话记录自己的点点滴滴与好友分享。<br /><br />
-<img src="image/help/doing.gif"><br /><br />
-</td></tr>
-
-<?php } elseif($_GET['ac']=='blog') { ?>
-<caption>
-<h2>日志</h2>
-</caption>
-<tr><td>
-可以撰写图文并茂的日志。<br /><br />
-<img src="image/help/blog.gif"><br /><br />
-</td></tr>
-
-<?php } elseif($_GET['ac']=='album') { ?>
-<caption>
-<h2>相册</h2>
-</caption>
-<tr><td>
-可以非常方便的批量上传自己的图片，也可进行大头贴拍照。<br /><br />
-<img src="image/help/album.gif"><br /><br />
-</td></tr>
-
-<?php } elseif($_GET['ac']=='share') { ?>
-<caption>
-<h2>分享</h2>
-</caption>
-<tr><td>
-轻松分享站内的主页、日志、相册、图片、话题、群组等各类信息。<br /><br />
-<img src="image/help/share1.gif"><br /><br />
-也可以与好友一起分享一个网址。<br /><br />
-<img src="image/help/share2.gif"><br /><br />
-</td></tr>
-
-<?php } elseif($_GET['ac']=='mtag') { ?>
-<caption>
-<h2>群组</h2>
-</caption>
-<tr><td>
-加入自己感兴趣的群组，可以与更多的朋友一起讨论话题。<br /><br />
-<img src="image/help/mtag1.gif" /><br /><br />
-不同的群组随你选择，由你做主。<br /><br />
-<img src="image/help/mtag2.gif"><br /><br />
-加入群组后就可以发起话题了。<br /><br />
-<img src="image/help/mtag3.gif"><br /><br />
-</td></tr>
-
-<?php } elseif($_GET['ac']=='cp') { ?>
-<caption>
-<h2>空间设置</h2>
-</caption>
-<tr><td>
-可以设置自己的空间属性、选择主页风格、隐私设置。<br /><br />
-<img src="image/help/cp.gif"><br /><br />
-通过隐私设置，自己的主页由谁看，自己说了算。<br /><br />
-<img src="image/help/cp2.gif"><br /><br />
-</td></tr>
+<?php if($topic) { ?>
+<h2 class="title">
+<img src="image/app/topic.gif" />热闹 - <a href="space.php?do=topic&topicid=<?=$topicid?>"><?=$topic['subject']?></a>
+</h2>
+<div class="tabs_header">
+<ul class="tabs">
+<li class="active"><a href="javascript:;"><span>凑个热闹</span></a></li>
+<li><a href="space.php?do=topic&topicid=<?=$topicid?>"><span>查看热闹</span></a></li>
+</ul>
+<?php if(checkperm('managetopic') || $topic['uid']==$_SGLOBAL['supe_uid']) { ?>
+<div class="r_option">
+<a href="cp.php?ac=topic&op=edit&topicid=<?=$topic['topicid']?>">编辑</a> | 
+<a href="cp.php?ac=topic&op=delete&topicid=<?=$topic['topicid']?>" id="a_delete_<?=$topic['topicid']?>" onclick="ajaxmenu(event,this.id);">删除</a>
+</p>
+</div>
 <?php } ?>
-</table>
 </div>
 
-<div id="sidebar">
-<div class="sidebox">
-<h2 class="title">帮助</h2>
-<ul class="line_list">
-<li<?=$actives['register']?>><a href="help.php?ac=register">注册</a></li>
-<li<?=$actives['home']?>><a href="help.php?ac=home">我的首页</a></li>
-<li<?=$actives['space']?>><a href="help.php?ac=space">我的主页</a></li>
-<li<?=$actives['doing']?>><a href="help.php?ac=doing">记录</a></li>
-<li<?=$actives['blog']?>><a href="help.php?ac=blog">日志</a></li>
-<li<?=$actives['album']?>><a href="help.php?ac=album">相册</a></li>
-<li<?=$actives['share']?>><a href="help.php?ac=share">分享</a></li>
-<li<?=$actives['mtag']?>><a href="help.php?ac=mtag">群组</a></li>
-<li<?=$actives['cp']?>><a href="help.php?ac=cp">空间设置</a></li>
+
+<div class="affiche">
+<table width="100%">
+<tr>
+<?php if($topic['pic']) { ?>
+<td width="160" id="event_icon" valign="top">
+<img src="<?=$topic['pic']?>" width="150">
+</td>
+<?php } ?>
+<td valign="top">
+<h2>
+<a href="space.php?do=topic&topicid=<?=$topic['topicid']?>"><?=$topic['subject']?></a>
+</h2>
+
+<div style="padding:5px 0;"><?=$topic['message']?></div>
+<ul>
+<li class="gray">发起作者: <a href="space.php?uid=<?=$topic['uid']?>"><?=$_SN[$topic['uid']]?></a></li>
+<li class="gray">发起时间: <?=$topic['dateline']?></li>
+<?php if($topic['endtime']) { ?><li class="gray">参与截止: <?=$topic['endtime']?></li><?php } ?>
+<?php if($topic['joinnum']) { ?>
+<li class="gray">参与人次: <?=$topic['joinnum']?></li>
+<?php } ?>
+<li class="gray">最后参与: <?=$topic['lastpost']?></li>
+</ul>
+
+<?php if($topic['allowjoin']) { ?>
+<a href="<?=$topic['joinurl']?>" class="feed_po" id="hot_add" onmouseover="showMenu(this.id)">凑个热闹</a>
+<ul id="hot_add_menu" class="dropmenu_drop" style="display:none;">
+<?php if(in_array('blog', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=blog&topicid=<?=$topicid?>">发表日志</a></li>
+<?php } ?>
+<?php if(in_array('pic', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=upload&topicid=<?=$topicid?>">上传图片</a></li>
+<?php } ?>
+<?php if(in_array('thread', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=thread&topicid=<?=$topicid?>">发起话题</a></li>
+<?php } ?>
+<?php if(in_array('poll', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=poll&topicid=<?=$topicid?>">发起投票</a></li>
+<?php } ?>
+<?php if(in_array('event', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=event&topicid=<?=$topicid?>">发起活动</a></li>
+<?php } ?>
+<?php if(in_array('share', $topic['jointype'])) { ?>
+<li><a href="cp.php?ac=share&topicid=<?=$topicid?>">添加分享</a></li>
+<?php } ?>
+</ul>
+<?php } else { ?>
+<p class="r_option">该热闹已经截止</p>
+<?php } ?>
+</td>
+</tr></table>
+</div>
+
+<?php } else { ?>
+<h2 class="title"><img src="image/icon/joke.gif" />发布笑话</h2>
+<div class="tabs_header">
+<ul class="tabs">
+<?php if($joke['jokeid']) { ?>
+<li class="active"><a href="cp.php?ac=joke&jokeid=<?=$joke['jokeid']?>"><span>编辑笑话</span></a></li>
+<?php } ?>
+<li<?php if(empty($joke['jokeid'])) { ?> class="active"<?php } ?>><a href="cp.php?ac=joke"><span>发表新笑话</span></a></li>
+<li><a href="space.php?uid=<?=$space['uid']?>&do=news&orderby=dateline"><span>返回我的笑话</span></a></li>
 </ul>
 </div>
-</div>
+<?php } ?>
 
+<div class="c_form">
+
+<style type="text/css">
+.userData {behavior:url(#default#userdata);}
+</style>
+
+笑话发布:<hr style="height:1px;border:none;border-top:1px dashed #555555;"/>
+<form method="post" action="cp.php?ac=joke" enctype="multipart/form-data">
+<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
+<tr>
+<td>
+笑话标题:<input type="text" class="t_input" id="subject" name="subject" value="<?=$joke['subject']?>" size="60" onblur="relatekw();" /><br/>
+笑话内容:<textarea name="message"></textarea>
+</td>
+</tr>
+</table>
+<input type="hidden" name="jokesubmit" value="true" />
+<input type="submit" id="jokebutton" name="jokebutton" value="提交发布" onclick="validate(this);"  />
+<input type="hidden" name="topicid" value="<?=$_GET['topicid']?>" />
+<input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
+</form>
+
+</div>
 
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>

@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_event_list|template/green/header|template/green/space_menu|template/green/footer', '1369994733', 'template/green/space_event_list');?><?php $_TPL['titles'] = array('活动'); ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_event_list|template/green/header|template/green/space_menu|template/green/footer', '1370027269', 'template/green/space_event_list');?><?php $_TPL['titles'] = array('活动'); ?>
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

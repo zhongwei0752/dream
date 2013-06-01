@@ -1,0 +1,44 @@
+<!--{template header}-->
+<script language="javascript" src="image/editor/editor_function.js"></script>
+<script language="javascript" src="source/script_joke.js"></script>
+
+<!--{if $topic}-->
+	<!--{template cp_topic_menu}-->
+<!--{else}-->
+	<h2 class="title"><img src="image/icon/joke.gif" />发布笑话</h2>
+	<div class="tabs_header">
+		<ul class="tabs">
+			<!--{if $joke[jokeid]}-->
+			<li class="active"><a href="cp.php?ac=joke&jokeid=$joke[jokeid]"><span>编辑笑话</span></a></li>
+			<!--{/if}-->
+			<li<!--{if empty($joke[jokeid])}--> class="active"<!--{/if}-->><a href="cp.php?ac=joke"><span>发表新笑话</span></a></li>
+			<li><a href="space.php?uid=$space[uid]&do=news&orderby=dateline"><span>返回我的笑话</span></a></li>
+		</ul>
+	</div>
+<!--{/if}-->
+
+<div class="c_form">
+
+	<style type="text/css">
+		.userData {behavior:url(#default#userdata);}
+	</style>
+
+笑话发布:<hr style="height:1px;border:none;border-top:1px dashed #555555;"/>
+	<form method="post" action="cp.php?ac=joke" enctype="multipart/form-data">
+		<table cellspacing="4" cellpadding="4" width="100%" class="infotable">
+			<tr>
+				<td>
+					笑话标题:<input type="text" class="t_input" id="subject" name="subject" value="$joke[subject]" size="60" onblur="relatekw();" /><br/>
+					笑话内容:<textarea name="message"></textarea>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="jokesubmit" value="true" />
+		<input type="submit" id="jokebutton" name="jokebutton" value="提交发布" onclick="validate(this);"  />
+		<input type="hidden" name="topicid" value="$_GET[topicid]" />
+		<input type="hidden" name="formhash" value="<!--{eval echo formhash();}-->" />
+	</form>
+
+</div>
+
+<!--{template footer}-->

@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_feed|template/green/header|template/green/space_status|template/green/space_menu|template/green/space_feed_li|template/green/space_feed_li|template/green/space_feed_li|template/green/footer', '1369994786', 'template/green/space_feed');?><?php if(empty($_TPL['getmore'])) { ?>	
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_feed|template/green/header|template/green/space_status|template/green/space_menu|template/green/space_feed_li|template/green/space_feed_li|template/green/space_feed_li|template/green/footer', '1370025498', 'template/green/space_feed');?><?php if(empty($_TPL['getmore'])) { ?>	
 <?php $_TPL['titles'] = array('首页'); ?>
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

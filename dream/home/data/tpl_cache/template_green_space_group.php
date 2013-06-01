@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_group', '1369994735', 'template/green/space_group');?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_group', '1370027400', 'template/green/space_group');?>
 
 <!DOCTYPE html>
 <html>

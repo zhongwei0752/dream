@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_mtag_index|template/green/header|template/green/footer', '1369992682', 'template/green/space_mtag_index');?><?php $_TPL['titles'] = array($mtag['tagname'], $mtag['title'], '首页'); ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/space_mtag_index|template/green/header|template/green/footer', '1370027557', 'template/green/space_mtag_index');?><?php $_TPL['titles'] = array($mtag['tagname'], $mtag['title'], '首页'); ?>
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

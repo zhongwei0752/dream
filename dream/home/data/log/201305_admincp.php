@@ -318,3 +318,7 @@
 <?PHP exit;?>	2013-05-24 16:54:07		127.0.0.1	1	/dream/dream/home/admincp.php?ac=cache	GET{ac=cache;}
 <?PHP exit;?>	2013-05-24 16:54:08		127.0.0.1	1	/dream/dream/home/admincp.php?ac=cache	GET{ac=cache;}POST{formhash=1b189720;cachetype=a:4:{i:0;s:3:"tpl";i:1;s:5:"block";i:2;s:8:"database";i:3;s:7:"network";};cachesubmit=缓存更新;}
 <?PHP exit;?>	2013-05-24 16:54:09		127.0.0.1	1	/dream/dream/home/admincp.php?ac=cache	GET{ac=cache;}
+<?PHP exit;?>	2013-05-31 23:18:56		127.0.0.1	1	/dream/dream/home/admincp.php	
+<?PHP exit;?>	2013-05-31 23:19:01		127.0.0.1	1	/dream/dream/home/admincp.php?ac=cache	GET{ac=cache;}
+<?PHP exit;?>	2013-05-31 23:19:02		127.0.0.1	1	/dream/dream/home/admincp.php?ac=cache	GET{ac=cache;}POST{formhash=aa04d76b;cachetype=a:4:{i:0;s:3:"tpl";i:1;s:5:"block";i:2;s:8:"database";i:3;s:7:"network";};cachesubmit=缓存更新;}
+<?PHP exit;?>	2013-05-31 23:19:04		127.0.0.1	1	/dream/dream/home/admincp.php?ac=cache	GET{ac=cache;}

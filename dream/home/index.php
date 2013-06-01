@@ -64,9 +64,9 @@ if(empty($_SCONFIG['networkpublic'])) {
 	realname_get();
 	
 	$_TPL['css'] = 'network';
-	include_once(S_ROOT.'./space.php');
+	include_once(S_ROOT.'./source/space_yindao.php');
 } else {
-	include_once(S_ROOT.'./space.php');
+	include_once(S_ROOT.'./source/space_yindao.php');
 }
 
 ?>

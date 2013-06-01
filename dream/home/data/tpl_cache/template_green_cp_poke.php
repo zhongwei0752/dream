@@ -1,4 +1,4 @@
-<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_avatar|template/green/header|template/green/cp_header|template/green/footer', '1369495078', 'template/green/cp_avatar');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
+<?php if(!defined('IN_UCHOME')) exit('Access Denied');?><?php subtplcheck('template/green/cp_poke|template/green/header|template/green/footer', '1370021919', 'template/green/cp_poke');?><?php if(empty($_SGLOBAL['inajax'])) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -39,7 +39,6 @@
 <h1 class="logo"><a href="index.php"><img src="template/<?=$_SCONFIG['template']?>/image/logo.gif" alt="<?=$_SCONFIG['sitename']?>" /></a></h1>
 <ul class="menu">
 <?php if($_SGLOBAL['supe_uid']) { ?>
-<li><a href="space.php?do=home">首页</a></li>
 <li><a href="space.php?do=medicine">用药助手</a></li>
 <li><a href="space.php?do=activity">活动</a></li>
 <li><a href="space.php?do=group">群组</a></li>
@@ -57,8 +56,6 @@
 <?php if($_SGLOBAL['supe_uid']) { ?>
 <li><a href="space.php?do=pm<?php if(!empty($_SGLOBAL['member']['newpm'])) { ?>&filter=newpm<?php } ?>">消息<?php if(!empty($_SGLOBAL['member']['newpm'])) { ?><span style="background-color: #e74c3c;border-radius: 30px;color: white;font-size: 12px;font-weight: 500;line-height: 18px;min-width: 8px;padding: 0 5px;margin-left:30px;margin-top:-20px;text-align: center;text-shadow: none;z-index: 10;display: block;"><?=$_SGLOBAL['member']['newpm']?></span><?php } ?></a></li>
 <?php if($_SGLOBAL['member']['allnotenum']) { ?><li class="notify" id="membernotemenu" onmouseover="showMenu(this.id)"><a href="space.php?do=notice"><?=$_SGLOBAL['member']['allnotenum']?>个提醒</a></li><?php } ?>
-<?php } else { ?>
-<li><a href="help.php">帮助</a></li>
 <?php } ?>
 </ul>
 
@@ -100,59 +97,149 @@
 
 <?php } ?>
 
-<h2 class="title"><img src="image/icon/profile.gif">个人设置</h2>
+
+<?php $icons = array(
+	0 => '不用动作',
+	1 => '<img src="image/poke/cyx.gif" /> 踩一下',
+	2 => '<img src="image/poke/wgs.gif" /> 握个手',
+	3 => '<img src="image/poke/wx.gif" /> 微笑',
+	4 => '<img src="image/poke/jy.gif" /> 加油',
+	5 => '<img src="image/poke/pmy.gif" /> 抛媚眼',
+	6 => '<img src="image/poke/yb.gif" /> 拥抱',
+	7 => '<img src="image/poke/fw.gif" /> 飞吻',
+	8 => '<img src="image/poke/nyy.gif" /> 挠痒痒',
+	9 => '<img src="image/poke/gyq.gif" /> 给一拳',
+	10 => '<img src="image/poke/dyx.gif" /> 电一下',
+	11 => '<img src="image/poke/yw.gif" /> 依偎',
+	12 => '<img src="image/poke/ppjb.gif" /> 拍拍肩膀',
+	13 => '<img src="image/poke/yyk.gif" /> 咬一口'
+); ?>
+
+<?php if($op == 'send' || $op == 'reply') { ?>
+
+<?php if($_SGLOBAL['inajax']) { ?>
+
+<h1>打招呼</h1>
+<a href="javascript:hideMenu();" title="关闭" class="float_del">关闭</a>
+
+<?php } else { ?>
+
+<h2 class="title"><img src="image/icon/poke.gif">打招呼</h2>
 <div class="tabs_header">
-<a href="cp.php?ac=advance" class="r_option">&raquo; 高级管理</a>
 <ul class="tabs">
-<li<?=$actives['profile']?>><a href="cp.php?ac=profile"><span>个人资料</span></a></li>
-<li<?=$actives['avatar']?>><a href="cp.php?ac=avatar"><span>我的头像</span></a></li>
-<?php if($_SCONFIG['videophoto']) { ?>
-<li<?=$actives['videophoto']?>><a href="cp.php?ac=videophoto"><span>视频认证</span></a></li>
-<?php } ?>
-<li<?=$actives['credit']?>><a href="cp.php?ac=credit"><span>我的积分</span></a></li>
-<?php if($_SCONFIG['allowdomain'] && $_SCONFIG['domainroot'] && checkperm('domainlength')) { ?>
-<li<?=$actives['domain']?>><a href="cp.php?ac=domain"><span>我的域名</span></a></li>
-<?php } ?>
-<?php if($_SCONFIG['sendmailday']) { ?>
-<li<?=$actives['sendmail']?>><a href="cp.php?ac=sendmail"><span>邮件提醒</span></a></li>
-<?php } ?>
-<li<?=$actives['privacy']?>><a href="cp.php?ac=privacy"><span>隐私筛选</span></a></li>
-<li<?=$actives['theme']?>><a href="cp.php?ac=theme"><span>个性化设置</span></a></li>
+<li><a href="cp.php?ac=poke"><span>收到的招呼</span></a></li>
+<li class="null"><a href="cp.php?ac=poke&op=send">打招呼</a></li>
 </ul>
 </div>
+<?php } ?>
 
-<script type="text/javascript">
-function updateavatar() {
-window.location.reload();
-}
-</script>
-<form method="post" action="cp.php?ac=avatar&ref" class="c_form">
-<table cellspacing="0" cellpadding="0" class="formtable">
-<caption>
-<h2>当前我的头像</h2>
-<p>如果您还没有设置自己的头像，系统会显示为默认头像，您需要自己上传一张新照片来作为自己的个人头像。</p>
-</caption>
+<div class="popupmenu_inner" id="__pokeform_<?=$tospace['uid']?>">
+<form method="post" id="pokeform_<?=$tospace['uid']?>" name="pokeform_<?=$tospace['uid']?>" action="cp.php?ac=poke&op=<?=$op?>&uid=<?=$tospace['uid']?>">
+<table cellspacing="0" cellpadding="3">
 <tr>
+<?php if($tospace['uid']) { ?>
+<th width="52"><div class="avatar48"><a href="space.php?uid=<?=$tospace['uid']?>"><?php echo avatar($tospace[uid],small); ?></div></th>
+<?php } else { ?>
+<th></th><td class="l_status">用户名: <input type="text" name="username" value=""></td></tr>
+<tr><th></th>
+<?php } ?>
 <td>
-<?php echo avatar($space[uid],big); ?>
+<?php if($tospace['uid']) { ?>
+向 <strong><?=$_SN[$tospace['uid']]?></strong> 打招呼：<br />
+<?php } ?>
+<ul class="list2col" style="width:300px;">
+<?php if(is_array($icons)) { foreach($icons as $k => $v) { ?>
+<li><input type="radio" name="iconid" id="poke_<?=$k?>" value="<?=$k?>" /><label for="poke_<?=$k?>"><?=$v?></label></li>
+<?php } } ?>
+</ul>
+<input type="text" name="note" id="note" value="" size="16" class="t_input" onkeydown="ctrlEnter(event, 'pokesubmit_btn', 1);" style="width: 300px;" maxlength="25" />
+<div class="gray">(内容为可选，并且会覆盖之前的招呼，最多25个汉字)</div>
 </td>
 </tr>
-</table>
-
-<table cellspacing="0" cellpadding="0" class="formtable">
-<caption>
-<h2>设置我的新头像</h2>
-<p>请选择一个新照片进行上传编辑。</p>
-</caption>
 <tr>
-<td><?=$uc_avatarflash?></td>
-</tr>
-<tr>
-<td>提示：头像保存后，您可能需要刷新一下本页面(按F5键)，才能查看最新的头像效果。</td>
-</tr>
+<th>&nbsp;</th>
+<td>
+<input type="hidden" name="refer" value="<?=$_SGLOBAL['refer']?>">
+<input type="hidden" name="pokesubmit" value="true" />
+<?php if($_SGLOBAL['inajax']) { ?>
+<input type="button" name="pokesubmit_btn" id="pokesubmit_btn" value="确定" class="submit" onclick="ajaxpost('pokeform_<?=$tospace['uid']?>', 'poke_send', 2000)" />
+<?php } else { ?>
+<input type="submit" name="pokesubmit_btn" id="pokesubmit_btn" value="确定" class="submit" />
+<?php } ?>
+</td>
 </table>
 <input type="hidden" name="formhash" value="<?php echo formhash(); ?>" />
 </form>
+</div>
+
+<?php } else { ?>
+
+<h2 class="title"><img src="image/icon/poke.gif">打招呼</h2>
+<div class="tabs_header">
+<ul class="tabs">
+<li class="active"><a href="cp.php?ac=poke"><span>收到的招呼</span></a></li>
+<li class="null"><a href="cp.php?ac=poke&op=send">打招呼</a></li>
+</ul>
+</div>
+
+<div class="h_status">您可以回复招呼或者进行忽略<span class="pipe">|</span><a href="cp.php?ac=poke&op=ignore" id="a_poke" onclick="ajaxmenu(event, this.id, 0, 2000, 'mypoke_all')">全部忽略</a></div>
+
+<?php if($list) { ?>
+<style>
+.list_td td { border-bottom: 1px solid #EBE6C9; padding: 0.5em; }
+.list_td img { vertical-align: middle; }
+</style>
+<div class="c_form" id="poke_ul">
+<table cellpadding="0" cellspacing="0" width="100%" class="list_td">
+<?php if(is_array($list)) { foreach($list as $key => $value) { ?>
+<tbody id="poke_<?=$value['uid']?>">
+<tr>
+<td width="70">
+<div class="avatar48">
+<a href="space.php?uid=<?=$value['uid']?>"><?php echo avatar($value[uid],small); ?></a>
+</div>
+</td>
+<td>
+<p><a href="space.php?uid=<?=$value['uid']?>"><?=$_SN[$value['uid']]?></a> <span class="gray"><?php echo sgmdate('m-d H:i',$value[dateline],1); ?></span></p>
+
+<div style="padding:10px 0 10px 0;font-size:14px;">
+<?php if($value['iconid']) { ?><?=$icons[$value['iconid']]?><?php } else { ?>打个招呼<?php } ?>
+<?php if($value['note']) { ?>，并对您说：<?=$value['note']?><?php } ?>
+</div>
+<div style="padding:10px 0 10px 0;">
+<a href="cp.php?ac=poke&op=reply&uid=<?=$value['uid']?>" id="a_p_r_<?=$value['uid']?>" onclick="ajaxmenu(event, this.id, 1)" class="submit">回打招呼</a> 
+<?php if(!$value['isfriend']) { ?><a href="cp.php?ac=friend&op=add&uid=<?=$value['uid']?>" id="a_friend_<?=$key?>" onclick="ajaxmenu(event, this.id, 1)" class="submit">加为好友</a> <?php } ?>
+</div>
+
+</td>
+<td align="right" width="80">
+<a href="cp.php?ac=poke&op=ignore&uid=<?=$value['uid']?>" id="a_p_i_<?=$value['uid']?>" onclick="ajaxmenu(event, this.id, 0, 2000, 'mypoke')" class="button">忽略</a>
+</td>
+</tr>
+</tbody>
+<?php } } ?>
+</table>
+<div class="page"><?=$multi?></div>
+</div>
+
+<?php } else { ?>
+<div class="c_form">
+还没有新招呼。
+</div>
+<?php } ?>
+
+<script>
+function mypoke(id) {
+var liid = id.substr(6);
+$('poke_'+liid).style.display = "none";
+}
+function mypoke_all(id) {
+$('poke_ul').innerHTML = "忽略了全部的招呼";
+}
+</script>
+
+<?php } ?>
+
 <?php if(empty($_SGLOBAL['inajax'])) { ?>
 <?php if(empty($_TPL['nosidebar'])) { ?>
 <?php if($_SGLOBAL['ad']['contentbottom']) { ?><br style="line-height:0;clear:both;"/><div id="ad_contentbottom"><?php adshow('contentbottom'); ?></div><?php } ?>
@@ -263,10 +350,11 @@ showreward();
             <li class="home"><a href="space.php?do=home" title="首页"></a></li>
              <li class="about"><a href="space.php?do=medicine" title="用药助手"></a></li>
             <li class="search"><a href="space.php?do=activity" title="活动"></a></li>
-            <li class="photos"><a href="" title="Photos"></a></li>
-            <li class="rssfeed"><a href="" title="Rss Feed"></a></li>
-            <li class="podcasts"><a href="" title="Podcasts"></a></li>
-            <li class="contact"><a href="" title="Contact"></a></li>
+            <li class="photos"><a href="space.php?do=group" title="群组"></a></li>
+            <li class="rssfeed"><a href="space.php?do=discussion" title="案例讨论"></a></li>
+            <li class="podcasts"><a href="space.php?do=joke" title="医疗笑话"></a></li>
+            <li class="contact"><a href="space.php?do=news&orderby=dateline" title="今日资讯"></a></li>
+            <li class="zhuanti"><a href="space.php?do=subject" title="本周专题"></a></li>
         </ul>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
          <script type="text/javascript">
@@ -287,5 +375,4 @@ showreward();
         <?php } ?>
 </body>
 </html>
-<?php } ?>
-<?php ob_out();?>
+<?php } ?><?php ob_out();?>
