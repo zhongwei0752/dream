@@ -1,4 +1,17 @@
+
 <head>
+	<style type="text/css">
+@import url(template/default/style.css);
+@import url(template/green/style.css);
+.comments { padding: 0px 0; }
+.trace h2 { padding: 0 0 0px; }
+
+
+</style>
+<script language="javascript" type="text/javascript" src="http://www.familyday.com.cn/source/script_ajax.js"></script>
+
+<script language="javascript" type="text/javascript" src="http://www.familyday.com.cn/template/aifaxian/js/jquery-1.9.1.min.js"></script>
+<script src="http://www.familyday.com.cn/template/aifaxian/js/common.js" type="text/javascript"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -7,7 +20,7 @@
 	<link rel="shortcut icon" href="image/favicon.ico" />
 	
 	<link rel="stylesheet" href="http://www.kriesi.at/demos/newscast/light/style.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="http://www.kriesi.at/demos/newscast/light/css/style1.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="./template/default/new2.css" type="text/css" media="screen" />
 	<!--
 	<link rel="stylesheet" href="http://www.kriesi.at/demos/newscast/light/css/style2.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="http://www.kriesi.at/demos/newscast/light/css/style3.css" type="text/css" media="screen" />
@@ -40,7 +53,7 @@
 			<div id="featured">
 			<!--{loop $list2 $value2}-->
 					<div class="featured featured1">
-						<a href="single.html">
+						<a href="#">
 							<span class='feature_excerpt'>
 								<strong class='sliderheading'>$value2[subject]</strong>
 								<span class='slidercontent'>
@@ -188,12 +201,13 @@
 	<!-- ###################################################################### -->
 
 <!-- Footer     ########################################################### -->
+	<!--{if {$_SN[$_SGLOBAL[supe_uid]]}=='admin'}-->
 	<div id="footerwrap">
 		<div id="footer">
 	<!-- ###################################################################### -->
 	<div class="column column1">
 		<div class="box box_small">
-			<!--{if {$_SN[$_SGLOBAL[supe_uid]]}=='admin'}-->
+		
 	        <h3>管理员发布</h3>
 			<ul>
 	        	<li><a title="发布新闻" href="cp.php?ac=news">发布新闻</a></li>
@@ -202,7 +216,7 @@
 				<li><a title="发布笑话" href="cp.php?ac=joke">发布笑话</a></li>
 				
 	        </ul>
-	        <!--{else}-->
+	        <!--
 	        <h3>用户快捷入口</h3>
 			<ul>
 	        	<li><a title="查询药品" href="space.php?do=medicine">查询药品</a></li>
@@ -214,8 +228,8 @@
 				<li><a title="查看本周专题" href="space.php?do=subject">查看本周专题</a></li>
 				
 				
-	        </ul>
-	        <!--{/if}-->
+	        </ul>-->
+	        
 	    </div><!--end box -->
 	    
 	   
@@ -237,9 +251,73 @@
 			
 		</div>
     </div>
-    
+     
 	
 	<!-- ###################################################################### -->
 		</div><!-- end footer --> 
 	</div><!-- end footerwrap --> 
 	<!-- ###################################################################### -->	
+	<ul id="navigation">
+             <li class="home"><a href="space.php?do=home" title="首页"></a></li>
+            <li class="about"><a href="space.php?do=medicine" title="用药助手"></a></li>
+            <li class="search"><a href="space.php?do=activity" title="活动"></a></li>
+            <li class="photos"><a href="space.php?do=group" title="群组"></a></li>
+            <li class="rssfeed"><a href="space.php?do=discussion" title="案例讨论"></a></li>
+            <li class="podcasts"><a href="space.php?do=joke" title="医疗笑话"></a></li>
+            <li class="contact"><a href="space.php?do=news&orderby=dateline" title="今日资讯"></a></li>
+            <li class="zhuanti"><a href="space.php?do=subject" title="本周专题"></a></li>
+        </ul>
+        
+     <style>
+     ul#navigation {
+    position: fixed;
+    margin: 0 auto;
+    padding: 0px;
+    bottom:-30px;
+    left:21%;
+    list-style: none;
+    z-index:9999;
+}
+     ul#navigation li a {
+    display: block;
+    margin-top: -2px;
+    width: 100px;
+    height: 70px;    
+    background-color:#CFCFCF;
+    background-repeat:no-repeat;
+    background-position:center center;
+    border:1px solid #AFAFAF;
+    -moz-border-radius:0px 10px 10px 0px;
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -khtml-border-bottom-right-radius: 10px;
+    -khtml-border-top-right-radius: 10px;
+    /*-moz-box-shadow: 0px 4px 3px #000;
+    -webkit-box-shadow: 0px 4px 3px #000;
+    */
+    opacity: 0.6;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=60);
+}
+     </style>
+         <script type="text/javascript">
+        
+            $(function() {
+                  $('#navigation a').stop().animate({'margin-top':'20px'},1000);
+
+                $('#navigation > li').hover(
+                    function () {
+                        $('a',$(this)).stop().animate({'margin-top':'-2px'},200);
+                    },
+                    function () {
+                        $('a',$(this)).stop().animate({'margin-top':'20px'},200);
+                    }
+                );
+
+});
+        </script>
+	   <!--{else}-->
+	   
+	        <!--{template footer}-->
+
+    <!--{/if}-->
+	 

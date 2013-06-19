@@ -14,7 +14,7 @@ $clicks = empty($_SGLOBAL['click']['jokeid'])?array():$_SGLOBAL['click']['jokeid
 	$idtype = 'jokeid';
 	$newlist = array();
 	$count = $_SGLOBAL['db']->result($_SGLOBAL['db']->query("SELECT COUNT(*) FROM ".tname('joke')." b"),0);
-	$perpage = 10;
+	$perpage = 4;
 	$theurl="space.php?do=joke";
 	$page = empty($_GET['page'])?1:intval($_GET['page']);
 	if($page<1) $page=1;
