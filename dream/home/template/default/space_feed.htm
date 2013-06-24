@@ -73,19 +73,6 @@
 	</div>
 	<!--{/if}-->
 
-	<!--{if $isnewer && $task}-->
-	<div class="ye_r_t"><div class="ye_l_t"><div class="ye_r_b"><div class="ye_l_b">
-		<div class="task_notice">
-			<div class="task_notice_body">
-				<div class="notice">您好，{$_SN[$space[uid]]}，欢迎加入我们。有新任务等着您，挺简单的，赶快来参加吧</div>
-				<img src="$task[image]" alt="" class="icon" />
-				<h3><a href="cp.php?ac=task&op=do&taskid=$task[taskid]">$task[name]</a></h3>
-				<p>可获得 <span class="num">$task[credit]</span> 积分</p>
-			</div>
-		</div>
-	</div></div></div></div><br>
-	<!--{/if}-->
-
 	<!--{if empty($_SCOOKIE['closefeedbox']) && $_SGLOBAL['ad']['feedbox']}-->
 	<div id="feed_box" class="ye_r_t"><div class="ye_l_t"><div class="ye_r_b"><div class="ye_l_b">
 		<div class="task_notice">

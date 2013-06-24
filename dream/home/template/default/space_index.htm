@@ -75,33 +75,6 @@
 					<!--{/if}-->
 					<img src="image/icon/profile.gif"><a href="javascript:;" onclick="getindex('info');">个人资料</a>
 				</li>
-				<li>
-					<!--{if $space[self]}-->
-					<a href="space.php?do=doing&view=me" class="r_option" target="_blank">记录</a>
-					<!--{/if}-->
-					<img src="image/icon/doing.gif"><a href="javascript:;" onclick="getindex('doing');">记录</a><!--{if $space[doingnum]}--><em>($space[doingnum])</em><!--{/if}-->
-				</li>
-				<li>
-					<!--{if $space[self]}-->
-					<a href="cp.php?ac=blog" class="r_option" target="_blank">发表</a>
-					<!--{/if}-->
-					<img src="image/icon/blog.gif"><a href="javascript:;" onclick="getindex('blog');">日志</a><!--{if $space[blognum]}--><em>($space[blognum])</em><!--{/if}--></li>
-				<li><!--{if $space[self]}-->
-					<a href="cp.php?ac=upload" class="r_option" target="_blank">上传</a>
-					<!--{/if}-->
-					<img src="image/icon/album.gif"><a href="javascript:;" onclick="getindex('album');">相册</a><!--{if $space[albumnum]}--><em>($space[albumnum])</em><!--{/if}--></li>
-				<li><!--{if $space[self]}-->
-					<a href="cp.php?ac=thread" class="r_option" target="_blank">发表</a>
-					<!--{/if}-->
-					<img src="image/icon/thread.gif"><a href="javascript:;" onclick="getindex('thread');">话题</a><!--{if $space[threadnum]}--><em>($space[threadnum])</em><!--{/if}--></li>
-				<li><!--{if $space[self]}-->
-					<a href="cp.php?ac=poll" class="r_option" target="_blank">发起</a>
-					<!--{/if}-->
-					<img src="image/icon/poll.gif"><a href="javascript:;" onclick="getindex('poll');">投票</a><!--{if $space[pollnum]}--><em>($space[pollnum])</em><!--{/if}--></li>
-				<li><!--{if $space[self]}-->
-					<a href="cp.php?ac=event" class="r_option" target="_blank">发起</a>
-					<!--{/if}-->
-					<img src="image/icon/event.gif"><a href="javascript:;" onclick="getindex('event');">活动</a><!--{if $space[eventnum]}--><em>($space[eventnum])</em><!--{/if}--></li>
 				<li><!--{if $space[self]}-->
 					<a href="space.php?do=share&view=me" class="r_option" target="_blank">添加</a>
 					<!--{/if}-->
@@ -289,28 +262,7 @@
 		</div>
 		<!--{/if}-->
 
-		<!--{if $bloglist}-->
-		<div id="space_blog" class="feed">
-			<h3 class="feed_header">
-				<a href="space.php?uid=$space[uid]&do=blog&view=me" class="r_option">全部</a>
-				日志
-			</h3>
-			<ul class="line_list">
-			<!--{loop $bloglist $value}-->
-				<li>
-					
-					<h4>
-						<span class="gray r_option"><!--{date('m-d H:i',$value[dateline],1)}--></span>
-						<a href="space.php?uid=$space[uid]&do=blog&id=$value[blogid]" target="_blank">$value[subject]</a>
-					</h4>
-					<div class="detail">
-						$value[message]
-					</div>
-				</li>
-			<!--{/loop}-->
-			</ul>
-		</div>
-		<!--{/if}-->
+	
 
 
 		<!--{loop $widelist $value}-->
